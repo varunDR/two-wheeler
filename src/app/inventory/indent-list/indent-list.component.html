@@ -1,0 +1,289 @@
+<simple-notifications [options]="options"></simple-notifications>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#f5c585" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<div class="add_promotions padding-20">
+  <div class="row">
+    <div class="col-sm-6">
+      <h3 style="font-weight:600; padding: 7px;">Indent List</h3>
+    </div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-2">
+      <button type="button" class="btn backBtn" (click)="backToInventory()">Back</button>
+    </div>
+  </div>
+  <div class="indent-list">
+    <div class="col-md-4 col-sm-4 col-xs-12">
+      <div class="form-group">
+        <label for="input" class="col-md-3 control-label">Category</label>
+        <div class="col-md-7">
+          <select class="form-control" [(ngModel)]="vehicleTypeFilter">
+            <option value="0" selected>All</option>
+            <option *ngFor="let data of this.typeData" [ngValue]=" data.vehicle_type_id">{{data.type_name}}</option>
+          </select>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-4 col-xs-12">
+      <div class="form-group">
+        <label for="input" class="col-md-3 control-label">Model</label>
+        <div class="col-md-7">
+          <select class="form-control" [(ngModel)]="vehicleModelFilter">
+            <option value="0" selected>All</option>
+            <option *ngFor="let data of this.modelData" [ngValue]=" data.vehicle_model_id">{{data.model_name}}</option>
+          </select>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-4 col-xs-12">
+      <div class="form-group">
+        <label for="input" class="col-md-3 control-label">Color</label>
+        <div class="col-md-7">
+          <select class="form-control" [(ngModel)]="vehicleColorFilter">
+            <option value="0" selected>All</option>
+            <option *ngFor="let data of this.colorData" [ngValue]=" data.vehicle_color_id">{{data.color_name}}</option>
+          </select>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-4 col-xs-12">
+      <div class="form-group">
+        <label for="input" class="col-md-3 control-label">Variant</label>
+        <div class="col-md-7">
+          <select class="form-control" [(ngModel)]="vehicleVariantFilter">
+            <option value="0" selected>All</option>
+            <option *ngFor="let data of this.variantData" [ngValue]=" data.vehicle_variant_id">{{data.variant_name}}</option>
+          </select>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-4 col-xs-12">
+      <div class="form-group">
+        <label for="input" class="col-md-3 control-label">From</label>
+        <div class="col-md-7">
+          <div class="input-group">
+            <p-calendar [(ngModel)]="fromDate" [inputStyle]="{'width':'190px'}" [showIcon]="true" placeholder="Select Date"
+              name="fromDate" (ngModelChange)="fromDa($event)" dateFormat="yy-mm-dd"></p-calendar>
+          </div>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-4 col-xs-12">
+      <div class="form-group">
+        <label for="input" class="col-md-3 control-label">To</label>
+        <div class="col-md-7">
+          <div class="input-group">
+            <p-calendar [(ngModel)]="toDate" [inputStyle]="{'width':'190px'}" [showIcon]="true" placeholder="Select Date"
+              name="toDate" (ngModelChange)="toDa($event)" dateFormat="yy-mm-dd"></p-calendar>
+          </div>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-4 col-xs-12"></div>
+    <div class="col-md-4 col-sm-4 col-xs-12"></div>
+    <div class="col-md-1 col-sm-1 col-xs-12">
+      <button type="submit" class="btn btn-primary" (click)="detailsGo()">Submit</button>
+    </div>
+    <div class="col-md-1 col-sm-1 col-xs-12">
+      <button type="submit" class="btn btn-warning" (click)="detailsReset()">Reset</button>
+    </div>
+    <div class="clear"></div>
+  </div>
+  &nbsp;
+
+
+  <p-table #dt [columns]="cols" [value]="indents" [paginator]="true" [rows]="4">
+    <ng-template pTemplate="caption">
+      <div style="text-align: right">
+        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+        <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')"
+          style="width:auto">
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let col of cols" [pSortableColumn]="col.field">
+          {{col.header}}
+          <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
+            ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+        </th>
+        <th>Update</th>
+      </tr>
+
+    </ng-template>
+    <ng-template pTemplate="body" let-i="rowIndex" let-indent>
+      <tr>
+        <td *ngFor="let col of cols">
+          {{ col.type ? col.type.transform(indent[col.field], col.arg1, col.arg2, col.arg3) : indent[col.field] }}
+        </td>
+        <td href="#" data-toggle="modal" data-target="#editIndent" (click)="editIndent(indent,i)"><i class="fa fa-edit"
+            style="color:orange"></i></td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<br>
+
+<div class="modal fade" id="editIndent" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h3 class="modal-title" id="myModalLabel">Edit Indent</h3>
+      </div>
+      <div class="modal-body">
+        <br>
+
+        <div class=" row form-group">
+          <div class="col-md-1"></div>
+          <label for="input" class="col-sm-4 control-label">Indent Req ID
+            <a style="color:red">*</a>
+          </label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control" [(ngModel)]="indent.indentReqId" disabled>
+          </div>
+          <div class="clear"></div>
+        </div>
+
+
+        <div class=" row form-group">
+          <div class="col-md-1"></div>
+          <label for="input" class="col-sm-4 control-label">Vehicle Type
+          </label>
+          <div class="col-sm-5">
+            <select class="form-control" [(ngModel)]="indent.vehType">
+              <option *ngFor="let data of this.typeData" [ngValue]=" data.vehicle_type_id">{{data.type_name}}</option>
+            </select>
+          </div>
+          <div class="clear"></div>
+        </div>
+
+        <div class=" row form-group">
+          <div class="col-md-1"></div>
+          <label for="input" class="col-sm-4 control-label">Vehicle Model
+          </label>
+          <div class="col-sm-5">
+            <select class="form-control" [(ngModel)]="indent.vehModel">
+              <option *ngFor="let data of this.modelData" [ngValue]=" data.vehicle_model_id">{{data.model_name}}</option>
+            </select>
+          </div>
+          <div class="clear"></div>
+        </div>
+
+        <div class=" row form-group">
+          <div class="col-md-1"></div>
+          <label for="input" class="col-sm-4 control-label">Vehicle Variant
+          </label>
+          <div class="col-sm-5">
+            <select class="form-control" [(ngModel)]="indent.vehVariant">
+              <option *ngFor="let data of this.variantData" [ngValue]=" data.vehicle_variant_id">{{data.variant_name}}</option>
+            </select>
+          </div>
+          <div class="clear"></div>
+        </div>
+
+
+        <div class=" row form-group">
+          <div class="col-md-1"></div>
+          <label for="input" class="col-sm-4 control-label">Vehicle Color
+          </label>
+          <div class="col-sm-5">
+            <select class="form-control" [(ngModel)]="indent.vehColor">
+              <option *ngFor="let data of this.colorData" [ngValue]=" data.vehicle_color_id">{{data.color_name}}</option>
+            </select>
+          </div>
+          <div class="clear"></div>
+        </div>
+
+        <div class=" row form-group">
+          <div class="col-md-1"></div>
+          <label for="input" class="col-sm-4 control-label">Required Quantity
+          </label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control" placeholder="Enter Required Quantity" [(ngModel)]="indent.reqQty">
+            <div class="clear"></div>
+          </div>
+        </div>
+
+        <div class=" row form-group">
+          <div class="col-md-1"></div>
+          <label for="input" class="col-sm-4">Assaigned Quantity
+          </label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control" [(ngModel)]=indent.assignedQty>
+            <div class="clear"></div>
+          </div>
+        </div>
+
+        <div class=" row form-group">
+          <div class="col-md-1"></div>
+          <label for="input" class="col-sm-4 control-label">Shipping Id
+            <a style="color:red">*</a>
+          </label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control" placeholder="Auto Generated" [(ngModel)]="shipId" disabled>
+          </div>
+          <div class="clear"></div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col-md-1"></div>
+          <label class="col-sm-4 col-form-label required">Shipped By
+          </label>
+          <div class="col-sm-5">
+            <select class="form-control" [(ngModel)]="indent.shippedBy">
+              <option value="" disabled select></option>
+              <option value="0">Auto</option>
+              <option value="1">Trolley</option>
+              <option value="2">Lorry</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col-md-1"></div>
+          <label class="col-sm-4 col-form-label required">Vehicle No.
+          </label>
+          <div class="col-sm-5">
+            <input type="text" maxlength="50" class="form-control" [(ngModel)]="indent.shippedVechileNo">
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col-md-1"></div>
+          <label class="col-sm-4 col-form-label required">Shipped Status
+            <span style="color:red">*</span>
+          </label>
+          <div class="col-sm-5">
+            <select class="form-control" [(ngModel)]="indent.shipping_status">
+              <option value="" disabled select></option>
+              <option value="0">Shipped</option>
+              <option value="1">Rejected</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" (click)=cancelIndent()>Cancel</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updateIndent()">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

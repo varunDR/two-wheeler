@@ -1,0 +1,10 @@
+.printOptions{
+    margin: 10px;
+}
+.scrollableTable{
+    height: 200px;
+    overflow: auto;
+}
+.backBtnForApp{
+    font-size:36px;color:green; margin-left: 25%;
+}

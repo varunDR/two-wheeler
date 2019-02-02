@@ -1,0 +1,587 @@
+<script>
+  $('tab-pane').on('click', function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  })
+</script>
+<script>
+  $(".nav-link").click(function (e) {
+    $(this).addClass("active").siblings().removeClass("active");
+  });
+</script>
+<script>
+  $(".myTabContent").click(function (e) {
+    $(this).addClass("show").siblings().removeClass("show");
+  });
+</script>
+<script>
+  $('#myTab li:first-child a').tab('show')
+</script>
+<br>
+<div class="vehicle-search">
+  <div class="row">
+    <div class="container">
+      <div class="col=sm-6"></div>
+      <div class="col-sm-4"></div>
+      <div class="col-sm-2" style="float:right">
+        <button type="submit" class="btn btn-warning" [routerLink]="['../../sale/new-sale']">New Sales</button>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <!-- <div class="row">
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <div class="form-group">
+        <label for="input" class="col-md-3 control-label">Type</label>
+        <div class="col-md-7">
+          <select class="form-control" [(ngModel)]="vehicleTypeFilter">
+            <option value="" selected>All</option>
+            <option value="1">New</option>
+            <option value="2">Exchange</option>
+            <option value="3">Csd</option>
+          </select>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <div class="form-group">
+        <label for="input" class="col-md-3 control-label">Branch</label>
+        <div class="col-md-7">
+          <select class="form-control" [(ngModel)]="vehicleModelFilter">
+            <option value="" selected>All</option>
+            <option *ngFor="let data of branchData" [ngValue]=" data.branch_id">{{data.branch_name}}</option>
+          </select>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <div class="form-group">
+        <label for="input" class="col-md-3 control-label">From</label>
+        <div class="col-md-7">
+          <div class="input-group">
+            <p-calendar [(ngModel)]="date1" name="fromDate" [monthNavigator]="true" [yearNavigator]="true" yearRange="1990:2030" [inputStyle]="{'width':'190px'}"
+              [showIcon]="true" [(ngModel)]="fromDate" dateFormat="dd-mm-yy" (ngModelChange)=" fromDa($event)"></p-calendar>
+          </div>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <div class="form-group">
+        <label for="input" class="col-md-3 control-label">To</label>
+        <div class="col-md-7">
+          <div class="input-group">
+            <p-calendar [(ngModel)]="date2" name="toDate" [monthNavigator]="true" [yearNavigator]="true" yearRange="1990:2030" [inputStyle]="{'width':'190px'}"
+              [showIcon]="true" [(ngModel)]="toDate" dateFormat="dd-mm-yy" (ngModelChange)=" fromDa($event)"></p-calendar>
+          </div>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+  </div> -->
+  <!-- <div class="row">
+    <div class="col-md-4 col-sm-4 col-xs-12"></div>
+    <div class="col-md-4 col-sm-4 col-xs-12"></div>
+    <div class="col-md-1 col-sm-1 col-xs-12">
+      <button type="submit" class="btn btn-primary" (click)=" detailsGo()">Search</button>
+    </div>
+    <div class="col-md-1 col-sm-1 col-xs-12">
+      <button type="submit" class="btn btn-warning" (click)="detailsReset()">Reset</button>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div> -->
+  &nbsp;
+  <p-table #dt [columns]="cols" [value]="lists" [paginator]="true" [rows]="4">
+    <ng-template pTemplate="caption">
+      <div style="text-align: right">
+        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+        <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')"
+          style="width:auto">
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let col of cols" [pSortableColumn]="col.field" >
+          {{col.header}}
+          <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+        </th>
+        <th>Edit</th>
+        <th>Invoice</th>
+        <th>DC</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-i="rowIndex" let-bike>
+      <tr>
+        <td *ngFor="let col of cols">
+          {{ col.type ? col.type.transform(bike[col.field], col.arg1) : bike[col.field] }}
+        </td>
+        <td href="#" data-toggle="modal" data-target="#editList" (click)="editList(lists,i)">
+          <i class="fa fa-edit" style="color:orange"></i>
+        </td>
+        <td>
+          <a *ngIf="bike.sale_account_check == 1" href="#" [routerLink]="['../invoice-list']" (click)="invoiceList(bike,i)">
+            <i class="fa fa-file" style="color:rgb(243, 8, 0)"></i>
+          </a>
+          <p *ngIf="bike.sale_account_check == 0">
+            Sales Approval Pending
+          </p>
+        </td>
+        <td>
+          <a *ngIf="bike.sale_account_check == 1" href="#" [routerLink]="['../dc-form']" (click)="dcFormList(bike,i)">
+            <i class="fa fa-file" style="color:#6c9caf"></i>
+          </a>
+          <p *ngIf="bike.sale_account_check == 0">
+            Sales Approval Pending
+          </p>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <div class="modal fade" id="editList" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h3 class="modal-title" id="myModalLabel">Edit Details</h3>
+        </div>
+        <br>
+        <div class="modal-body">
+          <div class="tabs-services">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item active">
+                <a class="nav-link" id="editList" data-toggle="tab" href="#sales" role="tab" aria-controls="personal" aria-selected="true">Personal Info</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#time" role="tab" aria-controls="vehicle" aria-selected="false">Vehicle Info</a>
+              </li>
+
+              <li class="nav-item" *ngIf="user_type == 1">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#inventory" role="tab" aria-controls="exchange" aria-selected="false">Exchange</a>
+              </li>
+
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade active in" id="sales" role="tabpanel" aria-labelledby="personal-tab">
+                <div class="col-sm-10">
+                  <h3>Personal Information</h3>
+                  <div class="row form-group">
+                    <label class="col-sm-4 col-form-label required">Name of the Customer
+                      <span style="color:red">*</span>
+                    </label>
+                    <div class="col-sm-5">
+                      <input type="text" name="name" maxlength="50" class="form-control" [(ngModel)]="firstname">
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-sm-4 col-form-label required">Display Name On RC
+                      <span style="color:red">*</span>
+                    </label>
+                    <div class="col-sm-5">
+                      <input type="text" name="rcname" maxlength="50" class="form-control" [(ngModel)]="display_name_on_rc">
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-sm-4 col-form-label required">Date Of Birth
+                      <span style="color:red">*</span>
+                    </label>
+                    <div class="col-sm-5">
+                      <p-calendar name="date1" [monthNavigator]="true" [yearNavigator]="true" yearRange="1990:2030" [inputStyle]="{'width':'190px'}"
+                        [showIcon]="true" [(ngModel)]="dob" dateFormat="dd-mm-yy" (ngModelChange)="getDob()"></p-calendar>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-sm-4 col-form-label required">Father/Daughter/Wife
+                      <span style="color:red">*</span>
+                    </label>
+                    <div class="col-sm-5">
+                      <input type="text" name="relation" maxlength="50" class="form-control" [(ngModel)]="relation">
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-sm-4 col-form-label required">Address
+                      <span style="color:red">*</span>
+                    </label>
+                    <div class="col-sm-5">
+                      <textarea class="form-control" maxlength="1000" rows="2" name="address" style="padding-left:1.6em" [(ngModel)]="address"></textarea>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-sm-4 col-form-label required">Mandal
+                      <span style="color:red">*</span>
+                    </label>
+                    <div class="col-sm-5">
+                      <input type="text" name="mandal" maxlength="50" class="form-control" [(ngModel)]="mandal">
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-sm-4 col-form-label required">District Name
+                      <span style="color:red">*</span>
+                    </label>
+                    <div class="col-sm-5">
+                      <input type="text" name="district" maxlength="50" class="form-control" [(ngModel)]="district">
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-sm-4 col-form-label required">Mobile
+                      <span style="color:red">*</span>
+                    </label>
+                    <div class="col-sm-5">
+                      <input type="text" name="mobile" maxlength="50" class="form-control" [(ngModel)]="mobile">
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-sm-4 col-form-label required">Address Proof
+                      <span style="color:red">*</span>
+                    </label>
+                    <div class="col-sm-5">
+                      <select name="state" class="form-control" [(ngModel)]="proof_type">
+                        <option value="" disabled select>Select</option>
+                        <option value="aadhar">Aadhar Card</option>
+                        <option value="license">License</option>
+                        <option value="voter">Voter Id</option>
+                        <option value="ration">Ration Card</option>
+                        <option value="current">Current Bill</option>
+                        <option value="water">Water Bill</option>
+                        <option value="gas">Gas Bill</option>
+                        <option value="mobile">Mobile Postpaid </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-sm-4 col-form-label required"></label>
+                    <div class="col-sm-5">
+                      <input type="text" name="aadharNumber" maxlength="50" class="form-control" [(ngModel)]="proof_num">
+                    </div>
+                  </div>
+                  <div class=" row form-group">
+                    <label class="col-sm-4 col-form-label required">passport size photo
+                      <span style="color:red">*</span>
+                    </label>
+                    <div class="col-sm-5">
+                      <input type="file" name="photo" accept="image/*" (change)="onFileChanged($event)">
+                    </div>
+
+                    <img *ngIf="!isShowOriginalImg" style="width:100px" src="{{user_image}}">
+                    <img *ngIf="!!isShowOriginalImg" [src]="url.result" style="width:100px">
+                    <br />
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updatePersonInfo()">Update</button>
+                  </div>
+                </div>
+                <div class="clear"></div>
+              </div>
+
+              <div class="tab-pane fade" id="time" role="tabpanel" aria-labelledby="time-tab">
+                <div class="col-sm-10">
+                  <h3>Vehicle Information</h3>
+                  <div class="row form-group">
+                    <label class="col-sm-4 col-form-label required">Engine No
+                      <span style="color:red">*</span>
+                    </label>
+                    <div class="col-sm-5">
+                      <input type="text" name="Engine" maxlength="50" [(ngModel)]="eng_no" class="form-control" readonly>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-sm-4 col-form-label required">Frame No
+                      <span style="color:red">*</span>
+                    </label>
+                    <div class="col-sm-5">
+                      <input type="text" name="frame" maxlength="50" class="form-control" [(ngModel)]="frame_no" readonly>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-sm-4 col-form-label required">DC No
+                      <span style="color:red">*</span>
+                    </label>
+                    <div class="col-sm-5">
+                      <input type="text" name="dcnum" maxlength="50" class="form-control" [(ngModel)]="dc_no" readonly>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-sm-4 col-form-label required">Key No
+                      <span style="color:red">*</span>
+                    </label>
+                    <div class="col-sm-5">
+                      <input type="text" name="keyno" maxlength="50" class="form-control" [(ngModel)]="key_no" readonly>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-sm-4 col-form-label required">Vehicle Color</label>
+                    <div class="col-sm-5">
+                      <input type="text" name="color" maxlength="50" class="form-control" [(ngModel)]="vechicle_color" readonly>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-sm-4 col-form-label required">Nominee Name
+                      <span style="color:red">*</span>
+                    </label>
+                    <div class="col-sm-5">
+                      <input type="text" name="nomini" maxlength="50" class="form-control" [(ngModel)]="Nominee_name" readonly>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-sm-4 col-form-label required">Second vehicle
+                      <span style="color:red">*</span>
+                    </label>
+                    <div class="col-sm-5">
+                      <div class="form-check pull-left">
+                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <div class="col-sm-12">
+                      <h3>Pricing</h3>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-sm-3 col-form-label required">ON ROAD PRICE
+                      <span style="color:red">*</span>
+                    </label>
+                    <div class="col-sm-2">
+                      <div class="input-group">
+                        <input type="text" name="basic" maxlength="50" class="form-control" [(ngModel)]="basic_price" readonly>
+                        <span>Basic Price</span>
+                      </div>
+                    </div>
+                    <div class="col-sm-1">
+                      <span>+</span>
+                    </div>
+                    <div class="col-sm-2">
+                      <div class="input-group">
+                        <input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="life_tax" readonly>
+                        <span>Life Tax</span>
+                      </div>
+                    </div>
+                    <div class="col-sm-1">
+                      <span>+</span>
+                    </div>
+                    <div class="col-sm-2">
+                      <div class="input-group">
+                        <input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="insurance" readonly>
+                        <span>insurance</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-sm-3 col-form-label required"> </label>
+                    <div class="col-sm-2">
+                      <div class="input-group">
+                        <input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="handling" readonly>
+                        <span> Handling C</span>
+                      </div>
+                    </div>
+                    <div class="col-sm-1">
+                      <span>+</span>
+                    </div>
+                    <div class="col-sm-2">
+                      <div class="input-group">
+                        <input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="registration" readonly>
+                        <span> Registration</span>
+                      </div>
+                    </div>
+                    <div class="col-sm-1">
+                      <span>+</span>
+                    </div>
+                    <div class="col-sm-2">
+                      <div class="input-group">
+                        <input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="warranty" readonly>
+                        <span>warranty</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-sm-3 col-form-label required"> </label>
+                    <div class="col-sm-2">
+                      <div class="input-group">
+                        <input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="accessories" readonly>
+                        <span>Accessories</span>
+                      </div>
+                    </div>
+                    <div class="col-sm-1">
+                      <span>+</span>
+                    </div>
+                    <div class="col-sm-2">
+                      <div class="input-group">
+                        <input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="hp" readonly>
+                        <span> HP</span>
+                      </div>
+                    </div>
+                    <div class="col-sm-1">
+                      <span>-</span>
+                    </div>
+                    <div class="col-sm-2">
+                      <div class="input-group">
+                        <input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="discount" readonly>
+                        <span>Discount</span>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="tableShow" [style.visibility]="disableApprovedBy">
+                    <div class="row form-group">
+                      <label class="col-sm-4 col-form-label required">Discount Approved By
+                        <span style="color:red">*</span>
+                      </label>
+                      <div class="col-sm-5">
+                        <select name="emp" class="form-control" [(ngModel)]="discount_approved_by" disabled>
+                          <option value="" disabled select>select</option>
+                          <option *ngFor="let manager of branchManagerData" [ngValue]="manager.employee_id">{{manager.employee_firstname}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <label class="col-sm-4 col-form-label required">Total Amount
+                    </label>
+                    <div class="col-sm-5">
+                      <input type="number" min="0" name="model" maxlength="50" class="form-control" [(ngModel)]="total_amt" readonly>
+                    </div>
+                  </div>
+                  <br>
+                  <div *ngIf="accountLogin">
+                    <div class="row form-group">
+                      <label class="col-sm-4 col-form-label required">Amount Checked
+                        <span style="color:red">*</span>
+                      </label>
+                      <div class="col-sm-5">
+                        <div class="form-check pull-left">
+                          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" [(ngModel)]="amountChecked">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row form-group">
+                      <div claas="container">
+                        <button type="submit" class="btn btn-warning" style="float:right;margin-right: 20%" data-dismiss="modal" (click)="redirectToInvoice(sale_user_id,editPersonalInfo.index)">Submit</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="tab-pane fade" id="inventory" role="tabpanel" aria-labelledby="exchange-tab">
+                <div class="personal-info ">
+                  <div class="container">
+                    <div class="col-sm-12">
+                      <h3>Exchange</h3>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="row form-group">
+                        <label class="col-sm-4 col-form-label required">Vehicle No
+                          <span style="color:red">*</span>
+                        </label>
+                        <div class="col-sm-5">
+                          <input type="number" min="0" name="exchange" maxlength="50" class="form-control" [(ngModel)]="exc_vechile_no">
+                        </div>
+                      </div>
+                      <div class="row form-group">
+                        <label class="col-sm-4 col-form-label required">Engine No
+                          <span style="color:red">*</span>
+                        </label>
+                        <div class="col-sm-5">
+                          <input type="text" name="disbursement" maxlength="50" class="form-control" [(ngModel)]="exc_eng_no">
+                        </div>
+                      </div>
+                      <div class="row form-group">
+                        <label class="col-sm-4 col-form-label required">frame No
+                          <span style="color:red">*</span>
+                        </label>
+                        <div class="col-sm-5">
+                          <input type="text" name="payment" maxlength="50" class="form-control" [(ngModel)]="exc_frame_no">
+                        </div>
+                      </div>
+                      <div class="row form-group">
+                        <label class="col-sm-4 col-form-label required">Vehicle Color
+                          <span style="color:red">*</span>
+                        </label>
+                        <div class="col-sm-5">
+                          <input type="text" name="color" maxlength="50" class="form-control" [(ngModel)]="exc_vechile_color">
+                        </div>
+                      </div>
+                      <div class="row form-group">
+                        <label class="col-sm-4 col-form-label required">Vehicle Model
+                          <span style="color:red">*</span>
+                        </label>
+                        <div class="col-sm-5">
+                          <input type="text" name="model" maxlength="50" class="form-control" [(ngModel)]="exc_vechile_mode">
+                        </div>
+                      </div>
+                      <div class="row form-group">
+                        <label class="col-sm-4 col-form-label required">Customer Name
+                          <span style="color:red">*</span>
+                        </label>
+                        <div class="col-sm-5">
+                          <input type="text" name="vat" maxlength="50" class="form-control" [(ngModel)]="exc_customer_name">
+                        </div>
+                      </div>
+                      <div class="row form-group">
+                        <label class="col-sm-4 col-form-label required"> Exchange Amount
+                          <span style="color:red">*</span>
+                        </label>
+                        <div class="col-sm-5">
+                          <input type="text" name="vat" maxlength="50" class="form-control" [(ngModel)]="exchange_amt">
+                        </div>
+                      </div>
+                      <div class="row form-group">
+                        <label class="col-sm-4 col-form-label required">Exchange Amount Approved By
+                          <span style="color:red">*</span>
+                        </label>
+                        <div class="col-sm-5">
+                          <select name="state" class="form-control" [(ngModel)]="exchange_amt_approval_by">
+                            <option value="" disabled select>select</option>
+                            <option *ngFor="let manager of branchManagerData" [ngValue]="manager.employee_id">{{manager.employee_firstname}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updateExchangeInfo(bike,i)">Update</button>
+                </div>
+              </div>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="deleteVehicle" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h3 class="modal-title" id="myModalLabel">Are you Sure To Delete</h3>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+          <button type="button" class="btn btn-warning" data-dismiss="modal" (click)="deletePerson()">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#f5c585" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+  </ngx-spinner>
+  <style>
+    .alertRed {
+      color: red;
+    }
+  </style>

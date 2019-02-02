@@ -1,0 +1,26 @@
+<div class="add_promotions padding-20">
+  <div class="row">
+    <div class="col-sm-6">
+      <h3 style="font-weight:600; padding: 7px;">Vehicle Details</h3>
+    </div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-2">
+      <button type="button" class="btn backBtn" (click)="backToSetup()">Back</button>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-2 col-sm-2 col-xs-12 manager-tap-left">
+  <div class="nav flex-column nav-pills rs-1-left-button" id="__Vehicle" role="tablist" aria-orientation="vertical">
+    <a class="nav-link vehicle-detail" id="v-pills-home-tab" (click)="redirectToType()" data-toggle="pill" href="#vehicleDetail"
+      role="tab" aria-controls="vehicle" aria-selected="true">Vehicle Type</a>
+    <a class="nav-link vehicle-detail" id="v-pills-home-tab" (click)="redirectToModel()" data-toggle="pill" href="#vehicleDetail"
+      role="tab" aria-controls="vehicle" aria-selected="true">Vehicle Model</a>
+    <a class="nav-link vehicle-detail" id="v-pills-home-tab" (click)="redirectToVariant()" data-toggle="pill" href="#vehicleDetail"
+      role="tab" aria-controls="vehicle" aria-selected="true">Vehicle Variant</a>
+    <a class="nav-link vehicle-detail" id="v-pills-home-tab" (click)="redirectToColor()" data-toggle="pill" href="#vehicleDetail"
+      role="tab" aria-controls="vehicle" aria-selected="true">Vehicle Color</a>
+    <a class="nav-link vehicle-detail" id="v-pills-home-tab" (click)="redirectToMade()" data-toggle="pill" href="#vehicleDetail"
+      role="tab" aria-controls="vehicle" aria-selected="true">Vehicle Make</a>
+  </div>
+</div>

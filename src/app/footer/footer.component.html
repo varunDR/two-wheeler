@@ -1,0 +1,261 @@
+<div class="sales-tab2">
+  <div class="col-md-4 col-sm-5 stl-sec2">
+    <div class="sales-walkin">
+      Walk in
+      <span class="walk-progress1"></span> 0M
+      <div class="waillist1">
+        <ul>
+          <li>Waitlist:2</li>
+          <li>Call Ahead:0</li>
+          <li> Walks:1</li>
+          <li>Stylish:2</li>
+        </ul>
+      </div>
+    </div>
+    <div class="sales-waitlist">
+      <ul>
+        <li class="sales-waitlist-1">
+          <a>New</a>
+        </li>
+        <li class="sales-waitlist-2">
+          <a>Ready</a>
+        </li>
+        <li class="sales-waitlist-3">
+          <a>Call Ahead</a>
+        </li>
+        <li class="sales-waitlist-4">
+          <a>Request</a>
+        </li>
+        <li class="sales-waitlist-5">
+          <a>Appt</a>
+        </li>
+        <li class="sales-waitlist-6">
+          <a>Online Ticket</a>
+        </li>
+      </ul>
+      <div class="clear"></div>
+    </div>
+  </div>
+  <div class="col-md-8 col-sm-7 str-sec2">
+    <ul>
+      <!-- <li>
+        <a>
+          <i class="fas fa-calendar-alt"></i>
+          <br>Appointments</a>
+      </li> -->
+      <li data-toggle="modal" data-target="#service-next">
+        <a>
+          <i class="fas fa-angle-double-right"></i>
+          <br>Service Next</a>
+      </li>
+      <li [routerLink]="['../sale/new-ticket']">
+        <a>
+          <i class="fas fa-tags"></i>
+          <br>New Ticket</a>
+      </li>
+      <li>
+        <a>
+          <i class="fas fa-caret-right"></i>
+          <br>Quick Sale</a>
+      </li>
+      <li>
+        <a>
+          <i class="fas fa-lock-open"></i>
+          <br>Open Till</a>
+      </li>
+      <li data-toggle="modal" data-target="#moreModal">
+        <a>
+          <i class="far fa-lightbulb"></i>
+          <br>More</a>
+      </li>
+      <li>
+        <a>
+          <i class="fas fa-dollar-sign"></i>
+          <br>Today's sale</a>
+      </li>
+      <li data-toggle="modal" data-target="#priceCheckModel">
+        <a>
+          <i class="fas fa-check"></i>
+          <br>Price Check</a>
+      </li>
+      <li [routerLink]="['../login']">
+        <a>
+          <i class="fas fa-sign-out-alt"></i>
+          <br>Log out</a>
+      </li>
+    </ul>
+  </div>
+  <div class="clear"></div>
+</div>
+<div id="priceCheckModel" class="modal fade" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="price-info">
+        <h2>Price Check</h2>
+      </div>
+      <div class="search">
+        <!-- <input type="text" maxlength="50" name="search" style="padding:5px;" [(ngModel)]="selectedValue" (ngModelChange)='customerSearch($event)'
+          [typeahead]="product" typeaheadOptionField="name" class="form-control"> -->
+
+        <div class="btn-search">
+
+          <a (click)="priceSearch()">
+            <i class="fas fa-search">
+              <span>Search</span>
+              <span style="color:red">[Enter]</span>
+            </i>
+          </a>
+
+        </div>
+      </div>
+      <div class="sul-show-result">
+        <br>
+        <br>
+        <button class="btn btn-primary submit-button" *ngFor="let item of states " (click)="onSelect(item)">
+          <span>
+            <a href="#"></a>{{item.name}}</span><br>
+          <span>
+            <a href="#"></a>{{item.type}}</span><br>
+          <span>
+            <a href="#"></a>{{item.price}}</span>
+        </button>
+        <div class="no-search" *ngIf="states == null">
+          <h3>No records Found</h3>
+        </div>
+
+      </div>
+      <hr>
+      <div class="select-stylist-footer-right">
+        <ul>
+          <li>
+            <a data-dismiss="modal">
+              <i class="fas fa-times"></i>
+              <br>Cancel</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div id="moreModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="price-info">
+
+        <h2>More</h2>
+      </div>
+      <div class="select-stylist-search1">
+
+        <div class="input-group">
+          <input class="form-control">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button">
+              <i class="fas fa-search"></i>
+            </button>
+          </span>
+        </div>
+        <!-- /input-group -->
+
+      </div>
+      <div class="button-group">
+        <div class="container">
+          <div class="row">
+
+            <div class="col-sm-3">
+              <span>Suggested Services</span>
+            </div>
+            <div class="col-sm-3">
+              <span>Suggested Membership</span>
+            </div>
+            <div class="col-sm-3">
+              <span>Suggested Package</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="select-stylist-footer-right">
+        <ul>
+          <li>
+            <a data-dismiss="modal">
+              <i class="fas fa-times"></i>
+              <br>Close</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="service-next" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="customer-info">
+        <h2>Customer Waiting List </h2>
+      </div>
+      <div class="next-customer">
+
+        <h2>Click on the next customer to serve</h2>
+      </div>
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+
+          <ul class="nav navbar-nav">
+            <li class="active">
+              <a>Customer Name</a>
+            </li>
+            <li>
+              <a>Wait Time</a>
+            </li>
+            <li>
+              <a>Service</a>
+            </li>
+            <li>
+              <a>Gender</a>
+            </li>
+            <li>
+              <a>Category</a>
+            </li>
+            <li>
+              <a>Request</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div class="label-ticket">
+        <h4>
+          No Waiting Tickets Availabel
+        </h4>
+      </div>
+      <hr>
+      <div class="ticket-left">
+        <ul>
+          <li>
+            <a>
+              <i class="fas fa-fast-backward"></i>
+              <br>Back</a>
+          </li>
+          <li>
+            <a>
+              <i class="fas fa-fast-forward"></i>
+              <br>Next</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="select-stylist-footer-right">
+        <ul>
+          <li>
+            <a data-dismiss="modal">
+              <i class="fas fa-times"></i>
+              <br>Close</a>
+          </li>
+        </ul>
+      </div>
+      <div class="clear"></div>
+
+    </div>
+  </div>
+</div>

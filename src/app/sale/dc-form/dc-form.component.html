@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="container">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-6"></div>
+    <div class="col-sm-2">
+      <button type="button" class="btn backBtn pull-right" [routerLink]="['../../sale/view-sale']" (click)="backsaleDetails()">Back</button>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+<div class="csd-form" id="deliveryform">
+  <div class="container">
+    <table style="width:90%;border:1px solid black" cellspacing="10" cellpadding="10">
+      <tr>
+        <td>Taken Delivery Of One TVS</td>
+        <td>1122333</td>
+      </tr>
+      <tr>
+        <td>Bearing Engine No. </td>
+        <td> {{engineNo}}</td>
+      </tr>
+      <tr>
+        <td>Frame No.</td>
+        <td> {{frameNo}}</td>
+      </tr>
+      <tr>
+        <td>color</td>
+        <td>{{vehicleColor}}</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          Along with tools and owner manual as supplied by TVS-M for Display purpose not for sale at our showroom.
+        </td>
+      </tr>
+      <tr>
+        <td>Toolkit/ Manual Book</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Address of outlet</td>
+        <td></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="row form-group">
+  <div claas="container">
+    <button type="submit" class="btn btn-warning" style="float:right;margin-right: 20%" (click)="printComponent('deliveryform')">Print</button>
+  </div>
+</div>

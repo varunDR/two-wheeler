@@ -1,0 +1,643 @@
+<div class="row">
+    <div class="container">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-6"></div>
+        <div class="col-sm-2">
+            <button type="button" class="btn backBtn pull-right" [routerLink]="['../../sale/view-sale']" (click)="backsaleDetails()">Back</button>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div class="invoice-detailsS">
+    <div class="personal-info">
+        <div class="container">
+            <div class="col-sm-12">
+                <h3>Personal Information</h3>
+                <div class="row form-group">
+                    <label class="col-sm-4 ">Name of the Customer
+                    </label>
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <input type="text" name="name" maxlength="50" class="form-control" [(ngModel)]="firstName"
+                                #inputTarget readonly>
+                            <span class="input-group-addon">
+                                <i class="fa fa-clipboard" aria-hidden="true" [ngxClipboard]="inputTarget" style="cursor:pointer"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-sm-4">Display Name On RC
+                    </label>
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <input type="text" name="rcname" maxlength="50" class="form-control" [(ngModel)]="nameOnRc"
+                                #nameRc readonly>
+                            <span class="input-group-addon">
+                                <i class="fa fa-clipboard" aria-hidden="true" [ngxClipboard]="nameRc" style="cursor:pointer"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-sm-4">Father/Daughter/Wife
+                    </label>
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <input type="text" name="relation" maxlength="50" class="form-control" [(ngModel)]="Relation"
+                                #relationName readonly>
+                            <span class="input-group-addon">
+                                <i class="fa fa-clipboard" aria-hidden="true" [ngxClipboard]="relationName" style="cursor:pointer"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-sm-4">Address
+                    </label>
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <textarea class="form-control" maxlength="1000" rows="2" name="address" style="padding-left:1.6em"
+                                [(ngModel)]="Address" #custAddress readonly>
+
+                                </textarea>
+                            <span class="input-group-addon">
+                                <i class="fa fa-clipboard" aria-hidden="true" [ngxClipboard]="custAddress" style="cursor:pointer"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-sm-4">Mandal
+                    </label>
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <input type="text" name="mandal" maxlength="50" class="form-control" [(ngModel)]="Mandal"
+                                #custMandal readonly>
+                            <span class="input-group-addon">
+                                <i class="fa fa-clipboard" aria-hidden="true" [ngxClipboard]="custMandal" style="cursor:pointer"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-sm-4">District Name
+                    </label>
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <input type="text" name="district" maxlength="50" class="form-control" [(ngModel)]="District"
+                                #custDist readonly>
+                            <span class="input-group-addon">
+                                <i class="fa fa-clipboard" aria-hidden="true" [ngxClipboard]="custDist" style="cursor:pointer"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-sm-4">Mobile
+                    </label>
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <input type="text" name="mobile" maxlength="50" class="form-control" [(ngModel)]="Mobile"
+                                #custMobile readonly>
+                            <span class="input-group-addon">
+                                <i class="fa fa-clipboard" aria-hidden="true" [ngxClipboard]="custMobile" style="cursor:pointer"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-sm-4">Address Proof
+                        <span style="color:red">*</span>
+                    </label>
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <select name="state" class="form-control" [(ngModel)]="proofType" #prType readonly>
+                                <option value="" disabled select>Select</option>
+                                <option value="aadhar">Aadhar Card</option>
+                                <option value="license">License</option>
+                                <option value="voter">Voter Id</option>
+                                <option value="ration">Ration Card</option>
+                                <option value="current">Current Bill</option>
+                                <option value="water">Water Bill</option>
+                                <option value="gas">Gas Bill</option>
+                                <option value="mobile">Mobile Postpaid </option>
+                            </select>
+                            <span class="input-group-addon">
+                                <i class="fa fa-clipboard" aria-hidden="true" [ngxClipboard]="prType" style="cursor:pointer"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-sm-4"></label>
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <input type="text" name="aadharNumber" maxlength="50" class="form-control" [(ngModel)]="proofNum"
+                                #proofNumber readonly>
+                            <span class="input-group-addon">
+                                <i class="fa fa-clipboard" aria-hidden="true" [ngxClipboard]="proofNumber" style="cursor:pointer"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <h3>Vehicle Information</h3>
+                <div class="row form-group">
+                    <label class="col-sm-4">Engine No
+                    </label>
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <input type="text" name="Engine" maxlength="50" [(ngModel)]="EngineNo" (ngModelChange)='engineSearch($event)'
+                                class="form-control" #engineNumber readonly>
+                            <span class="input-group-addon">
+                                <i class="fa fa-clipboard" aria-hidden="true" [ngxClipboard]="engineNumber" style="cursor:pointer"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-sm-4">Frame No
+                    </label>
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <input type="text" name="frame" maxlength="50" class="form-control" [(ngModel)]="FrameNo"
+                                #FrameNumber readonly>
+                            <span class="input-group-addon">
+                                <i class="fa fa-clipboard" aria-hidden="true" [ngxClipboard]="FrameNumber" style="cursor:pointer"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-sm-4">DC No
+                    </label>
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <input type="text" name="dcnum" maxlength="50" class="form-control" [(ngModel)]="DcNo"
+                                #DcNumber readonly>
+                            <span class="input-group-addon">
+                                <i class="fa fa-clipboard" aria-hidden="true" [ngxClipboard]="DcNumber" style="cursor:pointer"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-sm-4">Vehicle Color</label>
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <input type="text" name="color" maxlength="50" class="form-control" [(ngModel)]="vehicleColor"
+                                #vehColor readonly>
+                            <span class="input-group-addon">
+                                <i class="fa fa-clipboard" aria-hidden="true" [ngxClipboard]="vehColor" style="cursor:pointer"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-sm-4">Nominee Name
+                    </label>
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <input type="text" name="nomini" maxlength="50" class="form-control" [(ngModel)]="nomineeName"
+                                #nomiName readonly>
+                            <span class="input-group-addon">
+                                <i class="fa fa-clipboard" aria-hidden="true" [ngxClipboard]="nomiName" style="cursor:pointer"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-sm-12">
+                        <h3>Pricing</h3>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-sm-12">ON ROAD PRICE
+                    </label>
+                </div>
+                <div class="row form-group">
+                    <div class="col-sm-2">
+                        <div class="input-group">
+                            <input type="text" name="basic" maxlength="50" class="form-control" [(ngModel)]="basciPrice"
+                                #vehicleCost readonly>
+                            <span class="input-group-addon">
+                                <i class="fa fa-clipboard" aria-hidden="true" [ngxClipboard]="vehicleCost" style="cursor:pointer"></i>
+                            </span>
+                        </div>
+                        <span>Basic Price</span>
+                    </div>
+                    <div class="col-sm-1">
+                        <span>+</span>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="input-group">
+                            <input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="lifeTax"
+                                #vehiclelifeTax readonly>
+                            <span class="input-group-addon">
+                                <i class="fa fa-clipboard" aria-hidden="true" [ngxClipboard]="vehiclelifeTax" style="cursor:pointer"></i>
+                            </span>
+                        </div>
+                        <span>Life Tax</span>
+                    </div>
+                    <div class="col-sm-1">
+                        <span>+</span>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="input-group">
+                            <input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="Insurence"
+                                #vehicleInsurence readonly>
+                            <span class="input-group-addon">
+                                <i class="fa fa-clipboard" aria-hidden="true" [ngxClipboard]="vehicleInsurence" style="cursor:pointer"></i>
+                            </span>
+                        </div>
+                        <span>insurance</span>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-sm-2">
+                        <div class="input-group">
+                            <input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="Handling"
+                                #vehicleHandling readonly>
+                            <span class="input-group-addon">
+                                <i class="fa fa-clipboard" aria-hidden="true" [ngxClipboard]="vehicleHandling" style="cursor:pointer"></i>
+                            </span>
+
+                        </div>
+                        <span> Handling C</span>
+                    </div>
+                    <div class="col-sm-1">
+                        <span>+</span>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="input-group">
+                            <input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="Registration"
+                                #vehicleReg readonly>
+                            <span class="input-group-addon">
+                                <i class="fa fa-clipboard" aria-hidden="true" [ngxClipboard]="vehicleReg" style="cursor:pointer"></i>
+                            </span>
+                        </div>
+                        <span> Registration</span>
+                    </div>
+                    <div class="col-sm-1">
+                        <span>+</span>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="input-group">
+                            <input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="standardAcc"
+                                #vehicleWarranty readonly>
+                            <span class="input-group-addon">
+                                <i class="fa fa-clipboard" aria-hidden="true" [ngxClipboard]="vehicleWarranty" style="cursor:pointer"></i>
+                            </span>
+                        </div>
+                        <span>Standard Accessories </span>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-sm-2">
+                        <div class="input-group">
+                            <input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="Accessories"
+                                #vahicleAccessories readonly>
+                            <span class="input-group-addon">
+                                <i class="fa fa-clipboard" aria-hidden="true" [ngxClipboard]="vahicleAccessories" style="cursor:pointer"></i>
+                            </span>
+                        </div>
+                        <span>Accessories</span>
+                    </div>
+                    <div class="col-sm-1">
+                        <span>+</span>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="input-group">
+                            <input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="HpTax"
+                                #vehicleHpTax readonly>
+                            <span class="input-group-addon">
+                                <i class="fa fa-clipboard" aria-hidden="true" [ngxClipboard]="vehicleHpTax" style="cursor:pointer"></i>
+                            </span>
+                        </div>
+                        <span> HP</span>
+                    </div>
+                    <div class="col-sm-1">
+                        <span>-</span>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="input-group">
+                            <input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="Discount"
+                                #vehicleDiscount readonly>
+                            <span class="input-group-addon">
+                                <i class="fa fa-clipboard" aria-hidden="true" [ngxClipboard]="vehicleDiscount" style="cursor:pointer"></i>
+                            </span>
+                        </div>
+                        <span>Discount</span>
+                    </div>
+                </div>
+                <br>
+                <div class="row form-group">
+                    <label class="col-sm-4">Total Amount
+                    </label>
+                    <div class="col-sm-4">
+                        <div class="input-group">
+                            <input type="number" min="0" name="model" maxlength="50" class="form-control" [(ngModel)]="totalAmount"
+                                #vehicleTotalAmount readonly>
+                            <span class="input-group-addon">
+                                <i class="fa fa-clipboard" aria-hidden="true" [ngxClipboard]="vehicleTotalAmount" style="cursor:pointer"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="invoice-header">
+    <h3></h3>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-warning pull-right" (click)="printInvoice('printlist')">Print</button>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<div class="tableShow" id="printlist" [style.visibility]="printStyle" style="display:none">
+    <div class="invoice-box">
+        <table cellspacing="5" cellpadding="5">
+            <tr class="top">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td class="title">
+                                <h3 style="background: #0f3e73;padding: 10px;display: inline;position: relative;font-size: 15px;">
+                                    <br /> Invoice No:{{invoiceNumber}}</h3>
+                            </td>
+                            <td>
+                                <h3>
+                                    Vehicle Invoice
+                                </h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h3 style="background: #0f3e73;padding: 10px;display: inline;position: relative;font-size: 15px;">
+                                    <br /> Invoice Date:{{today | date:'fullDate'}}</h3>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="information">
+                <td colspan="3">
+                    <table style="border: 1px solid black;" cellspacing="5">
+                        <tr>
+                            <td style="width: 70%;border-right:1px solid black;">
+                                <table cellspacing="5">
+                                    <tr>
+                                        <td>
+                                            <b>Shampoorna Automotives</b>
+                                            <br> {{branchAddress}}
+                                            <br> {{branchArea}},
+                                            <br>{{branchLocation}},
+                                            <br>Phone:{{branchContact}}
+                                            <br>GST NO-36AH0PB5828N1ZU,
+                                            <br>CST No :
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="width: 60%;">
+                                <table class="user-summary" cellspacing="5">
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Name:</td>
+                                        <td>{{firstName}} </td>
+                                    </tr>
+                                    <tr>
+                                        <td> S/W/D:</td>
+                                        <td>{{Relation}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td> Address:</td>
+                                        <td>{{Address}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mobile:</td>
+                                        <td>{{Mobile}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>GST No :</td>
+                                        <td>36AABCD1821C1ZC
+                                            <br>Bill Type:</td>
+                                    </tr>
+
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr class="heading">
+                <td colspan="2">
+                    <table width="100%" style="border:1px solid black">
+                        <tr>
+                            <th>Particulars</th>
+                            <th>Category</th>
+                            <th>Unit Cost<br> with Tax</th>
+                            <th>Unit Cost</th>
+                            <th>HSN Code</th>
+                            <th>Qty</th>
+                            <th>Total</th>
+                        </tr>
+                        <tr>
+                            <td width="10%">{{vehicleColor}}</td>
+                            <td>SCOOTERETT</td>
+                            <td>{{totalAmount}}</td>
+                            <td>{{basciPrice}}</td>
+                            <td>-</td>
+                            <td>1</td>
+                            <td>{{totalAmount}}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>CGST-14%</td>
+                            <td>{{cgst}}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>SGST-14%</td>
+                            <td>{{sgst}}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Round off</td>
+                            <td>{{totalRoundOff}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">{{words}}</td>
+                            <td>Grand Total</td>
+                            <td>{{totalWithTax}}</td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+            <tr class="heading">
+                <td colspan="3">
+                    <table width="100%" style="border:1px solid black" cellspacing="5" cellpadding="5">
+                        <tr>
+                            <td> Part Description </td>
+                            <td> Frame No. </td>
+                            <td> Engine No. </td>
+                            <td>CWI Booklet No.</td>
+                        </tr>
+                        <tr>
+                            <td>{{vehicleColor}}</td>
+                            <td> {{FrameNo}} </td>
+                            <td> {{EngineNo}} </td>
+                            <td>{{DcNo}}</td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+            <td style="width: 50%;">
+                <table width="100%" class="user-summary" cellspacing="5">
+                    <tr>
+                        <td>Sale Executive Name:-</td>
+                        <td>{{salesBy}} </td>
+                    </tr>
+                    <tr>
+                        <td> DC No:-</td>
+                        <td>{{DcNo}} </td>
+                    </tr>
+                    <tr>
+                        <td> Booking No:</td>
+                        <td>{{invoiceNumber}}</td>
+                    </tr>
+                    <tr>
+                        <td>Received:</td>
+                        <td> </td>
+                    </tr>
+                    <tr>
+                        <td>1.Tools</td>
+                        <td>
+                            <i class="fas fa-check"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2.Manual Book</td>
+                        <td>
+                            <i class="fas fa-check"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3. Duplicate Keys </td>
+                        <td>
+                            <i class="fas fa-check"></i>
+                        </td>
+                        <td>
+                            {{firstName}}
+                        </td>
+                    </tr>
+                    <!-- <tr>
+                            <td>30 </td>
+                            <td>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                For (Shampoorna Automotives)
+                            </td>
+                        </tr> -->
+                    <!-- <tr>
+                            <td>Message From Dealer
+                                <br>Message From Tvs </td>
+                            <td>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                Authorised Signatory
+
+                            </td>
+                        </tr> -->
+
+
+                </table>
+                <tr class="heading">
+                    <td colspan="3">
+                        <table width="100%">
+                            <tr>
+                                <td> 30 </td>
+                                <td></td>
+                                <td colspan="2" style="text-align: right !important;"> For (Shampoorna Automotives)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Message from Dealer
+                                    <br>Message From TVS</td>
+                                <td></td>
+                                <td colspan="2" style="text-align: right !important;"> Authorised Signatory </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+            </td>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="tableShow" >
+  <div class="col-md-2 col-sm-2 col-xs-12 manager-tap-left">
+    <div class="nav flex-column nav-pills rs-1-left-button" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+      <a class="nav-link vehicle-detail" id="v-pills-home-tab" (click)="redirectToVehicle()" data-toggle="pill" href="#vehicleDetail"
+        role="tab" aria-controls="vehicle" aria-selected="true" *ngIf="vehicledetails">Vehicle Details</a>
+      <a class="nav-link inventory-list" id="v-pills-home-tab" (click)="redirectToInvList()" data-toggle="pill" href="#inventoryList"
+        role="tab" aria-controls="invlist" aria-selected="true" *ngIf="inventorylist" >Inventory List</a>
+      <a class="nav-link indent-raise" id="v-pills-home-tab" (click)="redirectToIndent()" data-toggle="pill" href="#indentRaise"
+        role="tab" aria-controls="raise" aria-selected="true" *ngIf="indentraise" >Indent Raising</a>
+      <a class="nav-link indent-list" id="v-pills-home-tab" (click)="redirectToInList()" data-toggle="pill" href="#indentList"
+        role="tab" aria-controls="indlist" aria-selected="true" *ngIf="listindent">List Of Indent</a>
+      <!-- <a class="nav-link com-mark-info" id="v-pills-home-tab" (click)="sparePartClick()" data-toggle="pill" href="#reports"
+      role="tab" aria-controls="reports" aria-selected="true">Spare Parts</a> -->
+      <a class="nav-link inventory-assn" id="v-pills-home-tab" (click)="redirectToInvAss()" data-toggle="pill" href="#inventoryAssaign"
+        role="tab" aria-controls="invassn" aria-selected="true" *ngIf="inventoryass">Inventory Assigning</a>
+      <a class="nav-link inventory-ack" id="v-pills-home-tab" (click)="redirectToInvAck()" data-toggle="pill" href="#acknowledgement"
+        role="tab" aria-controls="invack" aria-selected="true" *ngIf="acknowledgement">Acknowledgement</a>
+      <a class="nav-link inventory-rev" id="v-pills-home-tab" (click)="redirectToInvReverse()" data-toggle="pill" href="#reversal"
+        role="tab" aria-controls="invrev" aria-selected="true" *ngIf="reversal">Reversal</a>
+      <a class="nav-link inventory-revlist" id="v-pills-home-tab" (click)="redirectToInvReverseList()" data-toggle="pill" href="#reversalList"
+        role="tab" aria-controls="invrevlist" aria-selected="true" *ngIf="reversallist">Reversal Request List</a>
+    </div>
+  </div>
+</div>
+
+<div class="clear"></div>

@@ -1,0 +1,85 @@
+<div class="sale-dashboard">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4 pointer" (click)="todaySaleClick()">
+          <div class="income-dashone-total shadow-reset nt-mg-b-30">
+            <div class="income-title">
+              <div class="main-income-head">
+                <a>
+                  <h2 style="text-align:center">Today Sales</h2>
+                  <h2 style="text-align:center">{{todaySaleCount}}</h2>
+                </a>
+              </div>
+            </div>
+            <div class="form-group text-center">
+              <label *ngIf="errorMessage" class="alertRed">You are not Authorized to access Sales List</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+        </div>
+        <div class="col-sm-4 pointer" (click)="totalSaleClick()">
+          <div class="income-dashone-total shadow-reset nt-mg-b-30">
+            <div class="income-title">
+              <div class="main-income-head">
+                <a>
+                  <h2 style="text-align:center">Total Sales</h2>
+                  <h2 style="text-align:center">{{totalsaleCount}}</h2>
+                </a>
+              </div>
+            </div>
+            <div class="form-group text-center">
+              <label *ngIf="errorMessage2" class="alertRed">You are not Authorized to access Sales List</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4 pointer" (click)="newSaleClick()" [routerLink]="['../../sale/new-sale']">
+          <div class="income-dashone-total shadow-reset nt-mg-b-30">
+            <div class="income-title">
+              <div class="main-income-head">
+                <a>
+                  <h2 style="text-align:center">New Sale</h2>
+                </a>
+              </div>
+            </div>
+            <div class="income-dashone-pro">
+              <div class="income-rate-total">
+                <div class="price-adminpro-rate">
+                </div>
+                <div class="price-graph">
+                  <span id="sparkline6"></span>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+        </div>
+        <div class="col-sm-4 pointer" [routerLink]="['../../sale/view-sale']">
+          <div class="income-dashone-total shadow-reset nt-mg-b-30">
+            <div class="income-title">
+              <div class="main-income-head">
+                <a>
+                  <h2 style="text-align:center">View Sales</h2>
+                </a>
+              </div>
+            </div>
+            <div class="income-dashone-pro">
+              <div class="income-rate-total">
+                <div class="price-adminpro-rate">
+                </div>
+                <div class="price-graph">
+                  <span id="sparkline6"></span>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,52 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#f5c585" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<div class="add padding-20">
+  <div class="row">
+    <div class="col-sm-6">
+      <h3 style="font-weight:600; padding: 7px;">Price List</h3>
+    </div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-2">
+      <button type="button" class="btn backBtn" (click)="backToSetup()">Back</button>
+    </div>
+  </div>
+  &nbsp;
+  <div class="row">
+    <div class="col-sm-9">
+    </div>
+    <div class="col-sm-1">
+    </div>
+    <div class="col-sm-1">
+      <button type="button" class="btn btn-success" (click)="redirctToAddPriceList()">ADD LIST
+      </button>
+    </div>
+  </div>&nbsp;
+
+  <p-table #dt [columns]="cols" [value]="addList" [paginator]="true" [rows]="4">
+    <ng-template pTemplate="caption">
+      <div style="text-align: right">
+        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+        <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')"
+          style="width:auto">
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let col of cols" [pSortableColumn]="col.field">
+          {{col.header}}
+          <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
+            ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-i="rowIndex" let-add>
+      <tr>
+        <td *ngFor="let col of cols">
+          {{ col.type ? col.type.transform(add[col.field], col.arg1, col.arg2, col.arg3) : add[col.field] }}
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

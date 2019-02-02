@@ -1,0 +1,117 @@
+<div class="container" style="width: 1330px">
+  <div class="category">
+    <div class="row">
+      <div class="col-sm-6">
+        <h3 style="font-weight:600; padding: 7px;">Wallet Details</h3>
+      </div>
+      <div class="col-sm-4"></div>
+      <div class="col-sm-2">
+        <button type="button" class="btn backBtn" (click)="backToSetup()">Back</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-10">
+      </div>
+      <div class="col-sm-2">
+        <button type="button" class="btn btn-success" (click)="removeFields()" data-toggle="modal" data-target="#addWallet">ADD
+          NEW
+        </button>
+      </div>
+    </div>&nbsp;
+  </div>
+
+
+  <p-table #dt [columns]="cols" [value]="walletData" [paginator]="true" [rows]="4" [rowsPerPageOptions]='[4,8,12]'>
+    <ng-template pTemplate="caption">
+      <div style="text-align: right">
+        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+        <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')"
+          style="width:auto">
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let col of cols" [pSortableColumn]="col.field">
+          {{col.header}}
+          <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
+            ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+        </th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-i="rowIndex" let-wallet>
+      <tr>
+        <td *ngFor="let col of cols">
+          {{wallet[col.field]}}
+        </td>
+        <td href="#" data-toggle="modal" data-target="#addWallet" (click)="editWallets(walletData,i)">
+          <i class="fa fa-edit" style="color:orange"></i>
+        </td>
+        <td href="#" data-toggle="modal" data-target="#deleteWallet" (click)="deleteWallets(walletData,i)">
+          <i class="fa fa-trash"></i>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+
+
+<div class="modal fade" id="addWallet" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h3 class="modal-title" id="myModalLabel">Add New Wallet</h3>
+      </div>
+      <div class="modal-body">
+        <br>
+        <div class="form-group">
+          <div class="col-md-1"></div>
+          <label for="input" class="col-md-3 control-label">Wallet Name
+            <a style="color:red">*</a>
+          </label>
+          <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Enter Wallet Name" [(ngModel)]="wallet.name">
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="removeFields()">Cancel</button>
+        &nbsp;&nbsp;
+        <span [style.visibility]="addEnableorDisable">
+          <button type="button" class="btn btn-primary" (click)="addWallets()">ADD</button>
+        </span>
+        <span [style.visibility]="updateEnableorDisable">
+          <button type="button" class="btn btn-primary" (click)="updateWallets()">Update</button>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteWallet" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h3 class="modal-title" id="myModalLabel">Are you Sure To Delete</h3>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal" (click)="yesWalletDelete()">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#f5c585" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

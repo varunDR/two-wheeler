@@ -1,0 +1,396 @@
+<simple-notifications [options]="options"></simple-notifications>
+
+<div class="add_promotions padding-20">
+  <div class="row">
+    <div class="col-sm-6">
+      <h3 style="font-weight:600; padding: 7px;">Vehicle Details</h3>
+    </div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-2">
+      <button type="button" class="btn backBtn" (click)="backToInventory()">Back</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-9">
+    </div>
+    <div class="col-sm-1">
+      <button type="button" class="btn btn-success" (click)="redirctToAddBulk()">ADD BULK
+      </button>
+    </div>
+    <div class="col-sm-1">
+      <button type="button" class="btn btn-success" (click)="removeFields()" data-toggle="modal" data-target="#addEditVehicle">ADD
+        ONE
+      </button>
+    </div>
+  </div>&nbsp;
+
+  <div class="vehicle details">
+    <div class="col-md-4 col-sm-4 col-xs-12">
+      <div class="form-group">
+        <label for="input" class="col-md-3 control-label">Category</label>
+        <div class="col-md-7">
+          <select class="form-control" [(ngModel)]="vehicleTypeFilter">
+            <option value="" selected>All</option>
+            <option *ngFor="let data of this.typeData" [ngValue]=" data.vehicle_type_id">{{data.type_name}}</option>
+          </select>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-4 col-xs-12">
+      <div class="form-group">
+        <label for="input" class="col-md-3 control-label">Model</label>
+        <div class="col-md-7">
+          <select class="form-control" [(ngModel)]="vehicleModelFilter">
+            <option value="" selected>All</option>
+            <option *ngFor="let data of this.modelData" [ngValue]=" data.vehicle_model_id">{{data.model_name}}</option>
+          </select>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-4 col-xs-12">
+      <div class="form-group">
+        <label for="input" class="col-md-3 control-label">Color</label>
+        <div class="col-md-7">
+          <select class="form-control" [(ngModel)]="vehicleColorFilter">
+            <option value="" selected>All</option>
+            <option *ngFor="let data of this.colorData" [ngValue]=" data.vehicle_color_id">{{data.color_name}}</option>
+          </select>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-4 col-xs-12">
+      <div class="form-group">
+        <label for="input" class="col-md-3 control-label">Variant</label>
+        <div class="col-md-7">
+          <select class="form-control" [(ngModel)]="vehicleVariantFilter">
+            <option value="" selected>All</option>
+            <option *ngFor="let data of this.variantData" [ngValue]=" data.vehicle_variant_id">{{data.variant_name}}</option>
+          </select>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-4 col-xs-12">
+      <div class="form-group">
+        <label for="input" class="col-md-3 control-label">From</label>
+        <div class="col-md-7">
+          <div class="input-group">
+            <p-calendar [(ngModel)]="date1" name="fromDate" [monthNavigator]="true" [yearNavigator]="true" yearRange="1990:2030"
+              [inputStyle]="{'width':'190px'}" [showIcon]="true" placeholder="Select Date" [(ngModel)]="fromDate"
+              dateFormat="dd-mm-yy" (ngModelChange)=" fromDa($event)"></p-calendar>
+          </div>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-4 col-xs-12">
+      <div class="form-group">
+        <label for="input" class="col-md-3 control-label">To</label>
+        <div class="col-md-7">
+          <div class="input-group">
+            <p-calendar [(ngModel)]="date2" name="toDate" [monthNavigator]="true" [yearNavigator]="true" yearRange="1990:2030"
+              [inputStyle]="{'width':'190px'}" [showIcon]="true" [(ngModel)]="toDate" placeholder="Select Date"
+              dateFormat="dd-mm-yy" (ngModelChange)=" toDa($event)"></p-calendar>
+          </div>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-4 col-xs-12"></div>
+    <div class="col-md-5 col-sm-4 col-xs-12"></div>
+    <div class="col-md-1 col-sm-1 col-xs-12">
+      <button type="submit" class="btn btn-primary" (click)=" detailsGo()">Submit</button>
+    </div>
+    <div class="col-md-1 col-sm-1 col-xs-12">
+      <button type="submit" class="btn btn-warning" (click)="detailsReset()">Reset</button>
+    </div>
+    <div class="clear"></div>
+  </div>
+  &nbsp;
+
+  <p-table #dt [columns]="cols" [value]="bikes" [paginator]="true" [rows]="4">
+    <ng-template pTemplate="caption">
+      <div style="text-align: right">
+        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+        <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')"
+          style="width:auto">
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let col of cols" [pSortableColumn]="col.field">
+          {{col.header}}
+          <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
+            ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+        </th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+
+    </ng-template>
+    <ng-template pTemplate="body" let-i="rowIndex" let-bike>
+      <tr>
+        <td *ngFor="let col of cols">
+          {{bike[col.field]}}
+        </td>
+        <td href="#" data-toggle="modal" data-target="#addEditVehicle" (click)="editVehicle(bike,i)">
+          <i class="fa fa-edit" style="color:orange"></i>
+        </td>
+        <td href="#" data-toggle="modal" data-target="#deleteVehicle" (click)="deleteVehicle(bike,i)">
+          <i class="fa fa-trash"></i>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <br>
+</div>
+
+<div class="modal fade" id="addEditVehicle" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form [formGroup]="vehicleForm">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <span *ngIf="!this.vehicle.vehicleId">
+            <h3 class="modal-title" id="myModalLabel">Add Vehicle Details</h3>
+          </span>
+          <span *ngIf="this.vehicle.vehicleId">
+            <h3 class="modal-title" id="myModalLabel">Edit Vehicle Details</h3>
+          </span>
+        </div>
+        <div class="modal-body">
+          <br>
+          <div class="form-group">
+            <div class="col-md-1"></div>
+            <label for="input" class="col-md-3 control-label">TVS-M Invoice No
+              <a style="color:red">*</a>
+            </label>
+            <div class="col-md-6">
+              <input type="text" name="invoice" class="form-control" placeholder="Invoice No" [(ngModel)]="vehicle.invoiceNum"
+                (ngModelChange)="enableSave($event)" (keypress)="only_allow_number($event)" maxlength="50" [(ngModel)]="showMoreControls"
+                [ngModelOptions]="{standalone: true}">
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div *ngIf="!this.vehicle.vehicleId">
+            <div class="form-group">
+              <div class="col-md-1"></div>
+              <label for="input" class="col-md-3 control-label">TVS-M Invoice Date
+                <a style="color:red">*</a>
+              </label>
+              <div class="col-md-6">
+                <div class="input-group">
+                  <p-calendar [(ngModel)]="date1" name="invoiceDate1" [monthNavigator]="true" [yearNavigator]="true"
+                    yearRange="1990:2030" [inputStyle]="{'width':'341px'}" [showIcon]="true" placeholder="Select Date"
+                    [(ngModel)]="vehicle.invoiceDate" dateFormat="dd-mm-yy" (ngModelChange)=" invoiceDateFormat($event)"
+                    [(ngModel)]="showMoreControls" [ngModelOptions]="{standalone: true}"></p-calendar>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+          </div>
+          <div *ngIf="this.vehicle.vehicleId">
+            <div class="form-group">
+              <div class="col-md-1"></div>
+              <label for="input" class="col-md-3 control-label">TVS-M Invoice Date*
+                <a style="color:red">*</a>
+              </label>
+              <div class="col-md-6">
+                <div class="input-group">
+                  <p-calendar name="date3" name="invoiceDate2" [monthNavigator]="true" [yearNavigator]="true" yearRange="1990:2030"
+                    [inputStyle]="{'width':'341px'}" [showIcon]="true" [(ngModel)]="vehicle.invoiceEditDate" dateFormat="dd-mm-yy"
+                    (ngModelChange)="getInvoiceDate()" [(ngModel)]="showMoreControls" [ngModelOptions]="{standalone: true}"></p-calendar>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-1"></div>
+            <label for="input" class="col-md-3 control-label">Sourced From
+              <a style="color:red">*</a>
+            </label>
+            <div class="col-md-6">
+              <input type="text" class="form-control" formControlName="sourcedFrom" id="source" placeholder="Sourced From"
+                [(ngModel)]="vehicle.sourcedFrom" [ngClass]="{ 'is-invalid': submitted && f.sourcedFrom.errors }"
+                (ngModelChange)="enableSave($event)" (keypress)="omit_special_char($event)" maxlength="50">
+              <div *ngIf="submitted && f.sourcedFrom.errors" class="invalid-feedback">
+                <div *ngIf="f.sourcedFrom.errors.required" style="color:red">Sourced from is required</div>
+              </div>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-1"></div>
+            <label for="input" class="col-md-3 control-label">Category
+              <a style="color:red">*</a>
+            </label>
+            <div class="col-md-6">
+              <select class="form-control" formControlName="vehicleType" [(ngModel)]="vehicle.vehicleType" [ngClass]="{ 'is-invalid': submitted && f.vehicleType.errors }">
+                <option *ngFor="let data of this.typeData" [ngValue]=" data.vehicle_type_id">{{data.type_name}}</option>
+              </select>
+              <div *ngIf="submitted && f.vehicleType.errors" class="invalid-feedback">
+                <div *ngIf="f.vehicleType.errors.required" style="color:red">Vehicle Type is required</div>
+              </div>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-1"></div>
+            <label for="input" class="col-md-3 control-label">Model
+              <a style="color:red">*</a>
+            </label>
+            <div class="col-md-6">
+              <select class="form-control" formControlName="vehicleModel" [(ngModel)]="vehicle.vehicleModel" [ngClass]="{ 'is-invalid': submitted && f.vehicleModel.errors }">
+                <option *ngFor="let data of this.modelData" [ngValue]="data.vehicle_model_id">{{data.model_name}}</option>
+              </select>
+              <div *ngIf="submitted && f.vehicleModel.errors" class="invalid-feedback">
+                <div *ngIf="f.vehicleModel.errors.required" style="color:red">Vehicle model is required</div>
+              </div>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-1"></div>
+            <label for="input" class="col-md-3 control-label">Variant
+              <a style="color:red">*</a>
+            </label>
+            <div class="col-md-6">
+              <select class="form-control" formControlName="vehicleVariant" [(ngModel)]="vehicle.vehicleVariant"
+                [ngClass]="{ 'is-invalid': submitted && f.vehicleVariant.errors }">
+                <option *ngFor="let data of this.variantData" [ngValue]=" data.vehicle_variant_id">{{data.variant_name}}</option>
+              </select>
+              <div *ngIf="submitted && f.vehicleVariant.errors" class="invalid-feedback">
+                <div *ngIf="f.vehicleVariant.errors.required" style="color:red">Vehicle Variant is required</div>
+              </div>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-1"></div>
+            <label for="input" class="col-md-3 control-label">Color
+              <a style="color:red">*</a>
+            </label>
+            <div class="col-md-6">
+              <select class="form-control" formControlName="vehicleColor" [(ngModel)]="vehicle.vehicleColor" [ngClass]="{ 'is-invalid': submitted && f.vehicleColor.errors }">
+                <option *ngFor="let data of this.colorData" [ngValue]=" data.vehicle_color_id">{{data.color_name}}</option>
+              </select>
+              <div *ngIf="submitted && f.vehicleColor.errors" class="invalid-feedback">
+                <div *ngIf="f.vehicleColor.errors.required" style="color:red">Vehicle color is required</div>
+              </div>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-1"></div>
+            <label for="input" class="col-md-3 control-label">Engine Number
+              <a style="color:red">*</a>
+            </label>
+            <div class="col-md-6">
+              <input type="text" formControlName="engineNumber" class="form-control" id="eng" placeholder="Engine Number"
+                [ngClass]="{ 'is-invalid': submitted && f.engineNumber.errors }" [(ngModel)]="vehicle.engineNumber"
+                (ngModelChange)="enableSave($event)" maxlength="50" (keypress)="allow_numbers_alphabets($event)">
+              <div *ngIf="submitted && f.engineNumber.errors" class="invalid-feedback">
+                <div *ngIf="f.engineNumber.errors.required" style="color:red">Engine No is required</div>
+              </div>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-1"></div>
+            <label for="input" class="col-md-3 control-label">Frame Number
+              <a style="color:red">*</a>
+            </label>
+            <div class="col-md-6">
+              <input type="text" class="form-control" formControlName="frameNumber" id="frame" placeholder="Frame Number"
+                [(ngModel)]="vehicle.frameNumber" [ngClass]="{ 'is-invalid': submitted && f.frameNumber.errors }"
+                (ngModelChange)="enableSave($event)" (keypress)="allow_numbers_alphabets($event)" maxlength="50">
+              <div *ngIf="submitted && f.frameNumber.errors" class="invalid-feedback">
+                <div *ngIf="f.frameNumber.errors.required" style="color:red">Frame Number is required</div>
+              </div>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-1"></div>
+            <label for="input" class="col-md-3 control-label">DC Number
+              <a style="color:red">*</a>
+            </label>
+            <div class="col-md-6">
+              <input type="text" class="form-control" id="dc" name="dcno" placeholder="DC Number" [(ngModel)]="vehicle.dcNumber"
+                (ngModelChange)="enableSave($event)" (keypress)="allow_numbers_alphabets($event)" [(ngModel)]="showMoreControls"
+                [ngModelOptions]="{standalone: true}" maxlength="50">
+
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-1"></div>
+            <label for="input" class="col-md-3 control-label">Gate Pass
+              <a style="color:red">*</a>
+            </label>
+            <div class="col-md-6">
+              <input type="text" class="form-control" name="gate" id="gate" placeholder="Gate Pass" [(ngModel)]="vehicle.gateNumber"
+                (ngModelChange)="enableSave($event)" (keypress)="only_allow_number($event)" [(ngModel)]="showMoreControls"
+                [ngModelOptions]="{standalone: true}" maxlength="50">
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div *ngIf="this.vehicle.vehicleId">
+            <div class="form-group">
+              <div class="col-md-1"></div>
+              <label for="input" class="col-md-3 control-label">Status
+                <a style="color:red">*</a>
+              </label>
+              <div class="col-md-6">
+                <select class="form-control" name="vehicletype1" [(ngModel)]="vehicle.status" [(ngModel)]="showMoreControls"
+                  [ngModelOptions]="{standalone: true}">
+                  <option value="1">Active</option>
+                  <option value="0">Inactive</option>
+                </select>
+              </div>
+              <div class="clear"></div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" (click)="removeFields()">Cancel</button>
+          &nbsp;&nbsp;
+          <span *ngIf="!this.vehicle.vehicleId">
+            <button type="button" class="btn btn-primary" (click)="addVehicle()">ADD</button>
+          </span>
+          <span *ngIf="this.vehicle.vehicleId">
+            <button type="button" class="btn btn-primary" (click)="updateVehicle(bike)">Update</button>
+          </span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteVehicle" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h3 class="modal-title" id="myModalLabel">Are you Sure To Delete</h3>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal" (click)="yesVehicle()">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#f5c585" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

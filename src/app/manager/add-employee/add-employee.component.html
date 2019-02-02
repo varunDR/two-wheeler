@@ -1,0 +1,369 @@
+
+  
+  <div class="tableShow">
+    <div class="add_promotions padding-20">
+      <div class="row">
+        <div class="col-sm-6">
+          <h3 style="font-weight:600; padding: 7px;">Employees Details</h3>
+        </div>
+        <div class="col-sm-4"></div>
+        <div class="col-sm-2">
+          <button type="button" class="btn backBtn" (click)="backToManager()">Back</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-10">
+        </div>
+        <div class="col-sm-2">
+          <button type="button" class="btn btn-success" (click)="toGetData();removeFields()" data-toggle="modal" data-target="#addEmployee">ADD NEW
+          </button>
+        </div>
+      </div>&nbsp;
+  
+      <p-table #dt [columns]="cols" [value]="employees" [paginator]="true" [rows]="4">
+        <ng-template pTemplate="caption">
+          <div style="text-align: right">
+            <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+            <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')"
+              style="width:auto">
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th *ngFor="let col of cols" [pSortableColumn]="col.field">
+              {{col.header}}
+              <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+            </th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </ng-template>
+  
+        <ng-template pTemplate="body" let-i="rowIndex" let-employee>
+          <tr>
+            <td *ngFor="let col of cols">
+              {{employee[col.field]}}
+            </td>
+            <td href="#" data-toggle="modal" data-target="#editEmployee" (click)="editEmployee(employees,i);toGetData()">
+              <i class="fa fa-edit" style="color:orange"></i>
+            </td>
+            <td href="#" data-toggle="modal" data-target="#deleteEmployee" (click)="deleteEmployee(employees,i)">
+              <i class="fa fa-trash"></i>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <span style="text-align:center"> No Records Found </span>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="addEmployee" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form [formGroup]="employeeForm">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h3 class="modal-title" id="myModalLabel">Add New Employee</h3>
+          </div>
+          <div class="modal-body">
+            <br>
+            <div class="form-group">
+              <div class="col-md-1"></div>
+              <label for="input" class="col-md-3 control-label">First Name
+                <a style="color:red">*</a>
+              </label>
+              <div class="col-md-6">
+                <input type="text" formControlName="employeeFirstName" (keypress)="omit_special_char($event)" class="form-control" placeholder="Enter First Name"
+                  [ngClass]="{ 'is-invalid': submitted && f.employeeFirstName.errors }" [(ngModel)]="firstName" maxlength="50">
+                <div *ngIf="submitted && f.employeeFirstName.errors" class="invalid-feedback">
+                  <div *ngIf="f.employeeFirstName.errors.required" style="color:red">First Name is required</div>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-1"></div>
+              <label for="input" class="col-md-3 control-label">Last Name
+                <a style="color:red">*</a>
+              </label>
+              <div class="col-md-6">
+                <input type="text" formControlName="employeeLastName" (keypress)="omit_special_char($event)" class="form-control" placeholder="Enter Last Name"
+                  [ngClass]="{ 'is-invalid': submitted && f.employeeLastName.errors }" [(ngModel)]="lastName" maxlength="50">
+                <div *ngIf="submitted && f.employeeLastName.errors" class="invalid-feedback">
+                  <div *ngIf="f.employeeLastName.errors.required" style="color:red">Last Name is required</div>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-1"></div>
+              <label for="input" class="col-md-3 control-label">Email Id
+                <a style="color:red">*</a>
+              </label>
+              <div class="col-md-6">
+                <input type="text" formControlName="Email" class="form-control" placeholder="Enter Email Id" [ngClass]="{ 'is-invalid': submitted && f.Email.errors }"
+                  [(ngModel)]="emailId" maxlength="50">
+                <div *ngIf="submitted && f.Email.errors" class="invalid-feedback">
+                  <div *ngIf="f.Email.errors.required" style="color:red">Email is required</div>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-1"></div>
+              <label for="input" class="col-md-3 control-label">Password
+                <a style="color:red">*</a>
+              </label>
+              <div class="col-md-6">
+                <input type="password" formControlName="Password" class="form-control" placeholder="Enter Password" [ngClass]="{ 'is-invalid': submitted && f.Password.errors }"
+                  [(ngModel)]="Password" maxlength="50">
+                <div *ngIf="submitted && f.Password.errors" class="invalid-feedback">
+                  <div *ngIf="f.Password.errors.required" style="color:red">Password is required</div>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-1"></div>
+              <label for="input" class="col-md-3 control-label">Employee Type
+                <a style="color:red">*</a>
+              </label>
+              <div class="col-md-6" *ngIf="empData">
+                <select class="form-control" formControlName="empType" [(ngModel)]="employeeType" [ngClass]="{ 'is-invalid': submitted && f.empType.errors }">
+                  <option *ngFor="let data of this.empData" [ngValue]=" data.id">{{data.emp_type}}</option>
+                </select>
+                <div *ngIf="submitted && f.empType.errors" class="invalid-feedback">
+                  <div *ngIf="f.empType.errors.required" style="color:red">Employee Type Plz</div>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-1"></div>
+              <label for="input" class="col-md-3 control-label">Branch
+                <a style="color:red">*</a>
+              </label>
+              <div class="col-md-6">
+                <select class="form-control" formControlName="employeeBranch" [(ngModel)]="branch" [ngClass]="{ 'is-invalid': submitted && f.employeeBranch.errors }">
+                  <option *ngFor="let data of this.brData" [ngValue]=" data.branch_id ">{{data.branch_name}}</option>
+                </select>
+                <div *ngIf="submitted && f.employeeBranch.errors" class="invalid-feedback">
+                  <div *ngIf="f.employeeBranch.errors.required" style="color:red">Employee Branch Plz</div>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-1"></div>
+              <label for="input" class="col-md-3 control-label">Phone Number
+                <a style="color:red">*</a>
+              </label>
+              <div class="col-md-6">
+                <input type="text" formControlName="Phone" (keypress)="only_allow_number($event)" class="form-control" placeholder="Enter Phone No."
+                  [ngClass]="{ 'is-invalid': submitted && f.Phone.errors }" [(ngModel)]="Phone" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                  maxlength="1onimn0" maxlength="50">
+                <div *ngIf="submitted && f.Phone.errors" class="invalid-feedback">
+                  <div *ngIf="f.Phone.errors.required" style="color:red">Phone Number is required</div>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-1"></div>
+              <label for="input" class="col-md-3 control-label">Address
+                <a style="color:red">*</a>
+              </label>
+              <div class="col-md-6">
+                <input type="text" formControlName="employeeAddress" class="form-control" placeholder="Enter Address" [ngClass]="{ 'is-invalid': submitted && f.employeeAddress.errors }"
+                  [(ngModel)]="address" maxlength="1000">
+                <div *ngIf="submitted && f.employeeAddress.errors" class="invalid-feedback">
+                  <div *ngIf="f.employeeAddress.errors.required" style="color:red">Employee Address is required</div>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-1"></div>
+              <label for="input" class="col-md-3 control-label">Pincode
+                <a style="color:red">*</a>
+              </label>
+              <div class="col-md-6">
+                <input type="text" formControlName="employeePinCode" (keypress)="only_allow_number($event)" class="form-control" placeholder="Enter Pincode"
+                  [ngClass]="{ 'is-invalid': submitted && f.employeePinCode.errors }" [(ngModel)]="pincode" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                  maxlength="1onimn0" maxlength="20">
+                <div *ngIf="submitted && f.employeePinCode.errors" class="invalid-feedback">
+                  <div *ngIf="f.employeePinCode.errors.required" style="color:red">PinCode is required</div>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="removeFields()">Cancel</button>
+            <button type="button" class="btn btn-primary" (click)="addEmployee()">ADD</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="editEmployee" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form [formGroup]="employeeForm">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="removeFields()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h3 class="modal-title" id="myModalLabel">Edit Employee Details</h3>
+          </div>
+          <div class="modal-body">
+            <br>
+            <div class="form-group">
+              <div class="col-md-1"></div>
+              <label for="input" class="col-md-3 control-label">First Name
+                <a style="color:red">*</a>
+              </label>
+              <div class="col-md-6">
+                <input type="text" formControlName="employeeFirstName" class="form-control" id="eefn" placeholder="Enter First Name" [ngClass]="{ 'is-invalid': submitted && f.employeeFirstName.errors }"
+                  [(ngModel)]="employee_firstname">
+                <div *ngIf="submitted && f.employeeFirstName.errors" class="invalid-feedback">
+                  <div *ngIf="f.employeeFirstName.errors.required" style="color:red">First Name is required</div>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-1"></div>
+              <label for="input" class="col-md-3 control-label">Last Name
+                <a style="color:red">*</a>
+              </label>
+              <div class="col-md-6">
+                <input type="text" formControlName="employeeLastName" class="form-control" id="eeln" placeholder="Enter Last Name" [ngClass]="{ 'is-invalid': submitted && f.employeeLastName.errors }"
+                  [(ngModel)]="employee_lastname">
+                <div *ngIf="submitted && f.employeeLastName.errors" class="invalid-feedback">
+                  <div *ngIf="f.employeeLastName.errors.required" style="color:red">Last Name is required</div>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-1"></div>
+              <label for="input" class="col-md-3 control-label">EmailId
+                <a style="color:red">*</a>
+              </label>
+              <div class="col-md-6">
+                <input type="text" formControlName="Email" class="form-control" placeholder="Enter address" [ngClass]="{ 'is-invalid': submitted && f.Email.errors }"
+                  [(ngModel)]="email_id">
+                <div *ngIf="submitted && f.Email.errors" class="invalid-feedback">
+                  <div *ngIf="f.Email.errors.required" style="color:red">Email is required</div>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-1"></div>
+              <label for="input" class="col-md-3 control-label">Employee Type
+                <a style="color:red">*</a>
+              </label>
+              <div class="col-md-6">
+                <select class="form-control" formControlName="empType" [(ngModel)]="emp_type_id" [ngClass]="{ 'is-invalid': submitted && f.empType.errors }">
+                  <option *ngFor="let data of this.empData" [ngValue]=" data.id">{{data.emp_type}}</option>
+                </select>
+                <div *ngIf="submitted && f.empType.errors" class="invalid-feedback">
+                  <div *ngIf="f.empType.errors.required" style="color:red">Employee Type Plz</div>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-1"></div>
+              <label for="input" class="col-md-3 control-label">Branch
+                <a style="color:red">*</a>
+              </label>
+              <div class="col-md-6">
+                <select class="form-control" formControlName="employeeBranch" [(ngModel)]="employee_branch_id" [ngClass]="{ 'is-invalid': submitted && f.employeeBranch.errors }">
+                  <option *ngFor="let data of this.brData" [ngValue]=" data.branch_id ">{{data.branch_name}}</option>
+                </select>
+                <div *ngIf="submitted && f.employeeBranch.errors" class="invalid-feedback">
+                  <div *ngIf="f.employeeBranch.errors.required" style="color:red">Employee Branch Plz</div>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-1"></div>
+              <label for="input" class="col-md-3 control-label">Phone Number
+                <a style="color:red">*</a>
+              </label>
+              <div class="col-md-6">
+                <input type="text" formControlName="Phone" class="form-control" placeholder="Enter Phone No." [ngClass]="{ 'is-invalid': submitted && f.Phone.errors }"
+                  [(ngModel)]="phone">
+                <div *ngIf="submitted && f.Phone.errors" class="invalid-feedback">
+                  <div *ngIf="f.Phone.errors.required" style="color:red">Phone Number is required</div>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-1"></div>
+              <label for="input" class="col-md-3 control-label">Address
+                <a style="color:red">*</a>
+              </label>
+              <div class="col-md-6">
+                <input type="text" formControlName="employeeAddress" class="form-control" placeholder="Enter Address" [ngClass]="{ 'is-invalid': submitted && f.employeeAddress.errors }"
+                  [(ngModel)]="employee_address">
+                <div *ngIf="submitted && f.employeeAddress.errors" class="invalid-feedback">
+                  <div *ngIf="f.employeeAddress.errors.required" style="color:red">Employee Address is required</div>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-1"></div>
+              <label for="input" class="col-md-3 control-label">Pincode
+                <a style="color:red">*</a>
+              </label>
+              <div class="col-md-6">
+                <input type="text" formControlName="employeePinCode" class="form-control" placeholder="Enter Pincode" [ngClass]="{ 'is-invalid': submitted && f.employeePinCode.errors }"
+                  [(ngModel)]="employee_pincode">
+                <div *ngIf="submitted && f.employeePinCode.errors" class="invalid-feedback">
+                  <div *ngIf="f.employeePinCode.errors.required" style="color:red">PinCode is required</div>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="removeFields()">Cancel</button>
+            <button type="button" class="btn btn-primary" (click)="updateEmployee()">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="deleteEmployee" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h3 class="modal-title" id="myModalLabel">Are you Sure To Delete</h3>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+          <button type="button" class="btn btn-warning" data-dismiss="modal" (click)="yesEmployeeDelete()">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#f5c585" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+  </ngx-spinner>

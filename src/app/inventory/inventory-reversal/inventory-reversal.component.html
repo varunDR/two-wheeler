@@ -1,0 +1,131 @@
+<simple-notifications [options]="options"></simple-notifications>
+
+<div class="inv-reversal padding-20">
+  <div class="row">
+    <div class="col-sm-6">
+      <h3 style="font-weight:600;">Reversal Inventory</h3>
+    </div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-2">
+      <button type="button" class="btn backBtn" (click)="backToInventory()">Back</button>
+    </div>
+  </div>
+  <br>
+  <div class="inv-reversal-1">
+    <form [formGroup]="InventoryReversalForm">
+      <div class="col-sm-6">
+        <div class="row form-group">
+          <label class="col-sm-4 col-form-label required">Branch
+            <span style="color:red">*</span>
+          </label>
+          <div class="col-sm-5">
+            <select class="form-control" formControlName="branchId" [(ngModel)]="reversal.branchId" [ngClass]="{ 'is-invalid': submitted && f.branchId.errors }">
+              <option value="" disabled select></option>
+              <option *ngFor="let branch of branchData" [ngValue]="branch.branch_id">{{branch.branch_name}}</option>
+            </select>
+            <div *ngIf="submitted && f.branchId.errors" class="invalid-feedback">
+              <div *ngIf="f.branchId.errors.required" style="color:red">Branch is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="row form-group">
+          <label for="input" class="col-sm-4 control-label">Vehicle Category
+            <a style="color:red">*</a>
+          </label>
+          <div class="col-sm-5">
+            <select class="form-control" formControlName="vehicleType" [(ngModel)]="reversal.vehicleType" [ngClass]="{ 'is-invalid': submitted && f.vehicleType.errors }">
+              <option *ngFor="let data of this.typeData" [ngValue]=" data.vehicle_type_id">{{data.type_name}}</option>
+            </select>
+            <div *ngIf="submitted && f.vehicleType.errors" class="invalid-feedback">
+              <div *ngIf="f.vehicleType.errors.required" style="color:red">Vehicle Type is required</div>
+            </div>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class=" row form-group">
+          <label for="input" class="col-sm-4 control-label">Vehicle Model
+            <a style="color:red">*</a>
+          </label>
+          <div class="col-sm-5">
+            <select class="form-control" formControlName="vehicleModel" [(ngModel)]="reversal.vehicleModel" [ngClass]="{ 'is-invalid': submitted && f.vehicleModel.errors }">
+              <option *ngFor="let data of this.modelData" [ngValue]=" data.vehicle_model_id">{{data.model_name}}</option>
+            </select>
+            <div *ngIf="submitted && f.vehicleModel.errors" class="invalid-feedback">
+              <div *ngIf="f.vehicleModel.errors.required" style="color:red">Vehicle Model is required</div>
+            </div>
+          </div>
+          <div class="clear"></div>
+        </div>
+
+        <div class=" row form-group">
+          <label for="input" class="col-sm-4 control-label">Vehicle Variant
+            <a style="color:red">*</a>
+          </label>
+          <div class="col-sm-5">
+            <select class="form-control" formControlName="vehicleVariant" [(ngModel)]="reversal.vehicleVariant" [ngClass]="{ 'is-invalid': submitted && f.vehicleVariant.errors }">
+              <option *ngFor="let data of this.variantData" [ngValue]=" data.vehicle_variant_id">{{data.variant_name}}</option>
+            </select>
+            <div *ngIf="submitted && f.vehicleVariant.errors" class="invalid-feedback">
+              <div *ngIf="f.vehicleVariant.errors.required" style="color:red">Vehicle Variant is required</div>
+            </div>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class=" row form-group">
+          <label for="input" class="col-sm-4 control-label">Vehicle Color
+            <a style="color:red">*</a>
+          </label>
+          <div class="col-sm-5">
+            <select class="form-control" formControlName="vehicleColor" [(ngModel)]="reversal.vehicleColor" [ngClass]="{ 'is-invalid': submitted && f.vehicleColor.errors }">
+              <option *ngFor="let data of this.colorData" [ngValue]=" data.vehicle_color_id">{{data.color_name}}</option>
+            </select>
+            <div *ngIf="submitted && f.vehicleColor.errors" class="invalid-feedback">
+              <div *ngIf="f.vehicleColor.errors.required" style="color:red">Vehicle Color is required</div>
+            </div>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class=" row form-group">
+          <label for="input" class="col-sm-4 control-label">Required Quantity
+            <a style="color:red">*</a>
+          </label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control" formControlName="reqQuantity" placeholder="Enter Required Quantity"
+              [(ngModel)]="reversal.reqQuantity" [ngClass]="{ 'is-invalid': submitted && f.reqQuantity.errors }" (keypress)="only_allow_number($event)"
+              maxlength="50">
+            <div *ngIf="submitted && f.reqQuantity.errors" class="invalid-feedback">
+              <div *ngIf="f.reqQuantity.errors.required" style="color:red">Quantity is required</div>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+
+        <div class=" row form-group">
+          <label for="input" class="col-sm-4 control-label">Expected On Date</label>
+          <div class="col-sm-8">
+            <div class="input-group">
+              <p-calendar [(ngModel)]="date1" name="reqdate" [maxDate]="dateTime" [monthNavigator]="true" [yearNavigator]="true" yearRange="1990:2030"
+                [inputStyle]="{'width':'190px'}" [showIcon]="true" [(ngModel)]="reversal.reqDate" dateFormat="dd-mm-yy"
+                (ngModelChange)=" getreqDate($event)" [(ngModel)]="showMoreControls" [ngModelOptions]="{standalone: true}"></p-calendar>
+                <!-- <p-calendar  [minDate]="dateTime" [showIcon]="true" showButtonBar="true" [(ngModel)]="dateTime" name="timeOfUse" required #timeOfUse="ngModel" [(ngModel)]="showMoreControls" [ngModelOptions]="{standalone: true}">
+                </p-calendar> -->
+            </div>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+      
+      <div class="col-sm-12">
+        <div class="col-sm-9"></div>
+        <div class="col-sm-2">
+          <button type="submit" class="btn btn-success" (click)="addReversal()">Add</button>&nbsp;
+          <button type="submit" class="btn btn-danger" (click)="clearForm()">Cancel</button>
+        </div>
+      </div>
+      <div class="clear"></div>
+    </form>
+  </div>
+</div>

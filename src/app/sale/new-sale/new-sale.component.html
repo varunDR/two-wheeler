@@ -1,0 +1,1039 @@
+<div class="tab-content" id="myTabContent">
+	<div id="sales" role="tabpanel" aria-labelledby="sales-tab">
+		<div class="sales-tab">
+			<div class="sales-tab1">
+				<div class="col-md-12 col-sm-12 sales-tab-left">
+					<div class="stl-title">
+						<h2>Welcome - Shampoorna {{branchName}}
+							<span>
+								<span id="demonew"></span>&nbsp;&nbsp;
+								<strong>
+									<span id="demo"></span>
+								</strong>
+							</span>
+						</h2>
+					</div>
+					<br>
+					<div class="row">
+						<div class="container">
+							<div class="col-sm-3">
+								<input type="radio" name="optradio" (click)="newUserClick('0')" checked>
+								<label style="font-size:16px">New</label>
+							</div>
+							<div class="col-sm-3">
+								<input type="radio" name="optradio" (click)="exchangeUserClick('0')">
+								<label style="font-size:16px">Exchange</label>
+							</div>
+							<div class="col-sm-3">
+								<input type="radio" name="optradio" (click)="csdUserClick('1')">
+								<label style="font-size:16px">CSD</label>
+							</div>
+							<div class="col-sm-3" style="margin-bottom: 5px;">
+								<button type="button" class="btn btn-success" [routerLink]="['../../sale/view-sale']">View Sales</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<div class="clear"></div>
+
+<div *ngIf="newUser || exchangeUser || csdUser">
+	<div class="personal-info">
+		<div class="container">
+			<div class="col-sm-6">
+				<form [formGroup]="personalinfoForm">
+					<h3>Personal Information</h3>
+					<div class="row form-group">
+						<label class="col-sm-4 col-form-label required">Name of the Customer
+							<span style="color:red">*</span>
+						</label>
+						<div class="col-sm-5">
+							<input type="text" formControlName="FirstName" (keypress)="omit_special_char($event)" maxlength="50" placeholder="Customer Name"
+							 class="form-control" [ngClass]="{ 'is-invalid': submitted && f.FirstName.errors }" [(ngModel)]="name"
+							 (mouseleave)="leaveFields()">
+							<div *ngIf="submitted && f.FirstName.errors" class="invalid-feedback">
+								<div *ngIf="f.FirstName.errors.required" style="color:#ff0000">First Name is required</div>
+							</div>
+						</div>
+					</div>
+					<div class="row form-group">
+						<label class="col-sm-4 col-form-label required">Display Name On RC
+							<span style="color:red">*</span>
+						</label>
+						<div class="col-sm-5">
+							<input type="text" formControlName="nameRc" (keypress)="omit_special_char($event)" placeholder="Display name on Rc"
+							 maxlength="50" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nameRc.errors }" [(ngModel)]="nameOnRc"
+							 (mouseleave)="leaveFields()">
+							<div *ngIf="submitted && f.nameRc.errors" class="invalid-feedback">
+								<div *ngIf="f.nameRc.errors.required" style="color:#ff0000"> Name On Rc is required</div>
+							</div>
+						</div>
+					</div>
+					<div class="row form-group">
+						<label class="col-sm-4 col-form-label required">Date Of Birth
+							<span style="color:red">*</span>
+						</label>
+						<div class="col-sm-5">
+							<p-calendar [(ngModel)]="date1" [monthNavigator]="true" [yearNavigator]="true" yearRange="1940:2030"
+							 [inputStyle]="{'width':'190px'}" [showIcon]="true" dateFormat="dd-mm-yy" [(ngModel)]="dob" (ngModelChange)=" getreqDate($event)"
+							 [(ngModel)]="showMoreControls" [ngModelOptions]="{standalone: true}"></p-calendar>
+						</div>
+					</div>
+					<div class="row form-group">
+						<label class="col-sm-4 col-form-label required">Father/Daughter/Wife
+							<span style="color:red">*</span>
+						</label>
+						<div class="col-sm-5">
+							<input type="text" formControlName="relation" (keypress)="omit_special_char($event)" placeholder="Relation Name"
+							 maxlength="50" class="form-control" [(ngModel)]="relationName" (mouseleave)="leaveFields()" [ngClass]="{ 'is-invalid': submitted && f.relation.errors }">
+							<div *ngIf="submitted && f.relation.errors" class="invalid-feedback">
+								<div *ngIf="f.relation.errors.required" style="color:#ff0000"> Relation Name is required</div>
+							</div>
+						</div>
+					</div>
+					<div class="row form-group">
+						<label class="col-sm-4 col-form-label required">Address
+							<span style="color:red">*</span>
+						</label>
+						<div class="col-sm-5">
+							<textarea class="form-control" formControlName="custAddress" placeholder="Address" maxlength="1000" rows="2"
+							 name="address" style="padding-left:1.6em" [(ngModel)]="address" (mouseleave)="leaveFields()" [ngClass]="{ 'is-invalid': submitted && f.custAddress.errors }"></textarea>
+							<div *ngIf="submitted && f.custAddress.errors" class="invalid-feedback">
+								<div *ngIf="f.custAddress.errors.required" style="color:#ff0000"> Address is required</div>
+							</div>
+						</div>
+					</div>
+					<div class="row form-group">
+						<label class="col-sm-4 col-form-label required">Mandal
+							<span style="color:red">*</span>
+						</label>
+						<div class="col-sm-5">
+							<input type="text" formControlName="custMandal" placeholder="Mandal" (keypress)="omit_special_char($event)"
+							 maxlength="50" class="form-control" [(ngModel)]="mandal" (mouseleave)="leaveFields()" [ngClass]="{ 'is-invalid': submitted && f.custMandal.errors }">
+							<div *ngIf="submitted && f.custMandal.errors" class="invalid-feedback">
+								<div *ngIf="f.custMandal.errors.required" style="color:#ff0000"> Mandal is required</div>
+							</div>
+						</div>
+					</div>
+					<div class="row form-group">
+						<label class="col-sm-4 col-form-label required">Pincode
+							<span style="color:red">*</span>
+						</label>
+						<div class="col-sm-5">
+							<input type="number" formControlName="custPinecode" (keypress)="only_allow_number($event)" placeholder="Pincode"
+							 min="0" class="form-control" [(ngModel)]="pincode" (mouseleave)="leaveFields()" [ngClass]="{ 'is-invalid': submitted && f.custPinecode.errors }"
+							 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+							 maxlength="50">
+							<div *ngIf="submitted && f.custPinecode.errors" class="invalid-feedback">
+								<div *ngIf="f.custPinecode.errors.required" style="color:#ff0000"> pincode is required</div>
+							</div>
+						</div>
+					</div>
+					<div class="row form-group">
+						<label class="col-sm-4 col-form-label required">District Name
+							<span style="color:red">*</span>
+						</label>
+						<div class="col-sm-5">
+							<input type="text" formControlName="custDistrict" (keypress)="omit_special_char($event)" placeholder="District Name"
+							 maxlength="50" class="form-control" [(ngModel)]="districtName" (mouseleave)="leaveFields()" [ngClass]="{ 'is-invalid': submitted && f.custDistrict.errors }">
+							<div *ngIf="submitted && f.custDistrict.errors" class="invalid-feedback">
+								<div *ngIf="f.custDistrict.errors.required" style="color:#ff0000"> District Name is required</div>
+							</div>
+						</div>
+					</div>
+					<div class="row form-group">
+						<label class="col-sm-4 col-form-label required">Mobile
+							<span style="color:red">*</span>
+						</label>
+						<div class="col-sm-5">
+							<input type="number" formControlName="custMobile" (keypress)="only_allow_number($event)" placeholder="Mobile"
+							 min="0" class="form-control" [(ngModel)]="mobile" (mouseleave)="leaveFields()" [ngClass]="{ 'is-invalid': submitted && f.custMobile.errors }"
+							 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+							 maxlength="50">
+							<div *ngIf="submitted && f.custMobile.errors" class="invalid-feedback">
+								<div *ngIf="f.custMobile.errors.required" style="color:#ff0000"> Mobile Number is required</div>
+							</div>
+						</div>
+					</div>
+					<div class="row form-group">
+						<label class="col-sm-4 col-form-label required">Email Id
+							<span style="color:red">*</span>
+						</label>
+						<div class="col-sm-5">
+							<input type="text" formControlName="custEmail" placeholder="email id" min="0" maxlength="50" class="form-control"
+							 [(ngModel)]="email" [ngClass]="{ 'is-invalid': submitted && f.custEmail.errors }" (mouseleave)="leaveFields()">
+							<div *ngIf="submitted && f.custEmail.errors" class="invalid-feedback">
+								<div *ngIf="f.custEmail.errors.required" style="color:#ff0000"> Email id is required</div>
+								<div *ngIf="f.custEmail.errors.email" style="color:#ff0000">Email must be a valid email address</div>
+							</div>
+						</div>
+					</div>
+					<div class="row form-group">
+						<label class="col-sm-4 col-form-label required">Address Proof
+							<span style="color:red">*</span>
+						</label>
+						<div class="col-sm-5">
+							<select class="form-control" formControlName="addressProof" [(ngModel)]="addressProof" [ngClass]="{ 'is-invalid': submitted && f.addressProof.errors }">
+								<option value="" disabled select>Select</option>
+								<option value="aadhar">Aadhar Card</option>
+								<option value="license">License</option>
+								<option value="voter">Voter Id</option>
+								<option value="ration">Ration Card</option>
+								<option value="current">Current Bill</option>
+								<option value="water">Water Bill</option>
+								<option value="gas">Gas Bill</option>
+								<option value="mobile">Mobile Postpaid </option>
+							</select>
+							<div *ngIf="submitted && f.addressProof.errors" class="invalid-feedback">
+								<div *ngIf="f.addressProof.errors.required" style="color:red">AddressProof is required</div>
+							</div>
+						</div>
+					</div>
+					<div class="row form-group">
+						<label class="col-sm-4 col-form-label required"></label>
+						<div class="col-sm-5">
+							<input type="text" formControlName="addressProofNo" placeholder="Address proof Number" (keypress)="allow_numbers_alphabets($event)"
+							 maxlength="50" class="form-control" [(ngModel)]="addressProofNo" (mouseleave)="leaveFields()" [ngClass]="{ 'is-invalid': submitted && f.addressProofNo.errors }">
+							<div *ngIf="submitted && f.addressProofNo.errors" class="invalid-feedback">
+								<div *ngIf="f.addressProofNo.errors.required" style="color:#ff0000"> Address Proof Number is required</div>
+							</div>
+						</div>
+					</div>
+					<div class=" row form-group">
+						<label class="col-sm-4 col-form-label required">passport size photo
+							<span style="color:red">*</span>
+						</label>
+						<div class="col-sm-5">
+							<input type="file" name="photo" accept="image/*" (change)="getFileDetails($event,'p')">
+						</div>
+						<div class="col-sm-3">
+							<img *ngIf="userimagePreview" [src]="userimagePreview.result" height="50">
+							<br />
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="col-sm-6">
+				<h3>Vehicle Information</h3>
+				<div class="row form-group">
+					<label class="col-sm-4 col-form-label required">Engine No
+						<span style="color:red">*</span>
+					</label>
+					<div class="col-sm-5">
+						<input type="text" placeholder="Enter Engine Number" name="Engine" maxlength="50" [(ngModel)]="selectedValue"
+						 [(ngModel)]="vehicleEngineNo" (ngModelChange)='engineSearch($event)' [typeahead]="vehicleInfo"
+						 typeaheadOptionField="Engine No" (typeaheadOnSelect)="onSelect($event)" class="form-control">
+					</div>
+					<span class="input-group-addon" (click)="getCurrentBranchVechiles()" data-toggle="modal" data-target="#showEngineNo"
+					 style="width: 0%;">
+						<i class="fas fa-motorcycle"></i>
+					</span>
+					<div style="color:red" *ngIf="noResult">No Results Found</div>
+				</div>
+				<div class="row form-group">
+					<label class="col-sm-4 col-form-label required">Frame No
+						<span style="color:red">*</span>
+					</label>
+					<div class="col-sm-5">
+						<input type="text" name="frame" maxlength="50" class="form-control" [(ngModel)]="vehicleFrameNo" readonly>
+					</div>
+				</div>
+				<div class="row form-group">
+					<label class="col-sm-4 col-form-label required">DC No
+						<span style="color:red">*</span>
+					</label>
+					<div class="col-sm-5">
+						<input type="text" name="dcnum" maxlength="50" class="form-control" [(ngModel)]="vehicleDcNo" readonly>
+					</div>
+				</div>
+				<div class="row form-group">
+					<label class="col-sm-4 col-form-label required">Gate Pass
+						<span style="color:red">*</span>
+					</label>
+					<div class="col-sm-5">
+						<input type="text" name="keyno" maxlength="50" class="form-control" [(ngModel)]="vehicleKeyNo" readonly>
+					</div>
+				</div>
+				<div class="row form-group">
+					<label class="col-sm-4 col-form-label required">Vehicle Color</label>
+					<div class="col-sm-5">
+						<input type="text" name="color" maxlength="50" class="form-control" [(ngModel)]="vehicleColor" readonly>
+					</div>
+				</div>
+				<div class="row form-group">
+					<label class="col-sm-4 col-form-label required">Vehicle Model </label>
+					<div class="col-sm-5">
+						<input type="text" name="color" maxlength="50" class="form-control" [(ngModel)]="vehicleModel" readonly>
+					</div>
+				</div>
+				<div class="row form-group">
+					<label class="col-sm-4 col-form-label required">Vehicle Variant</label>
+					<div class="col-sm-5">
+						<input type="text" name="color" maxlength="50" class="form-control" [(ngModel)]="vehicleVariant" readonly>
+					</div>
+				</div>
+				<div class="row form-group">
+					<label class="col-sm-4 col-form-label required">Nominee Name
+						<span style="color:red">*</span>
+					</label>
+					<div class="col-sm-5">
+						<input type="text" (keypress)="omit_special_char($event)" name="nomini" maxlength="50" class="form-control"
+						 [(ngModel)]="nomineeName" (ngModelChange)="addTotalAmount()">
+					</div>
+				</div>
+				<div class="row form-group">
+					<label class="col-sm-4 col-form-label required">Nominee DOB
+						<span style="color:red">*</span>
+					</label>
+					<div class="col-sm-5">
+						<!-- <input type="date" name="dob"  [(ngModel)]="dob" placeholder="dd/mm/yy"> -->
+						<p-calendar [(ngModel)]="date3" name="ndob" placeholder="Nominee DOB" [monthNavigator]="true" [yearNavigator]="true"
+						 yearRange="1940:2030" [inputStyle]="{'width':'190px'}" [showIcon]="true" [(ngModel)]="nomineeDob" dateFormat="dd-mm-yy"
+						 (ngModelChange)=" getNomineeDate($event);addTotalAmount()"></p-calendar>
+					</div>
+				</div>
+				<div class="row form-group">
+					<label class="col-sm-4 col-form-label required">Second vehicle
+						<span style="color:red">*</span>
+					</label>
+					<div class="col-sm-5">
+						<div class="form-check pull-left">
+							<input class="form-check-input" type="checkbox" value="" id="defaultCheck1" [(ngModel)]="secondVehicle" (change)="secondVehicleClick();addTotalTax()">
+						</div>
+					</div>
+				</div>
+
+				<div class="row form-group">
+					<label class="col-sm-4 col-form-label required"> PR-
+						<span style="color:red">*</span>
+					</label>
+					<div class="col-sm-5">
+						<input type="radio" name="pr" value="1" [(ngModel)]="prYesChecked" (change)="prChecked()">Yes &nbsp;&nbsp;
+						<input type="radio" name="pr" value="0" [(ngModel)]="prYesChecked" (change)="prChecked()">No &nbsp;&nbsp;
+					</div>
+				</div>
+
+				<!-- <div class="row form-group">
+					<label class="col-sm-4 col-form-label required">Accessories
+						<span style="color:red">*</span>
+					</label>
+					<div class="col-sm-5">
+						<input type="radio" name="acc" value="1" [(ngModel)]="accessriesYes" (change)="accessriesChecked()">Yes
+						&nbsp;&nbsp;
+						<input type="radio" name="acc" value="0" [(ngModel)]="accessriesYes" (change)="accessriesChecked()">No
+						&nbsp;&nbsp;
+					</div>
+				</div> -->
+				<div class="row form-group">
+					<label class="col-sm-4 col-form-label required">Optional Accessories
+						<span style="color:red">*</span>
+					</label>
+					<div class="col-sm-5">
+						<input type="radio" name="op-acc" value="1" [(ngModel)]="optionalAccessriesYes" (change)="optionalAccessriesChecked();addTotalTax()">Yes
+						&nbsp;&nbsp;
+						<input type="radio" name="op-acc" value="0" [(ngModel)]="optionalAccessriesYes" (change)="optionalAccessriesChecked();addTotalTax()">No
+						&nbsp;&nbsp;
+					</div>
+				</div>
+				<div class="row form-group">
+					<label class="col-sm-4 col-form-label required">Optional NIL DIP
+						<span style="color:red">*</span>
+					</label>
+					<div class="col-sm-5">
+						<input type="checkbox" name="op-acc" value="1" [(ngModel)]="optionalNilDip" (change)="optionalNilDipChecked();addTotalTax()">Yes
+					</div>
+				</div>
+				<div *ngIf="newUser || exchangeUser">
+					<div class="row form-group">
+						<label class="col-sm-4 col-form-label required">Hp
+							<span style="color:red">*</span>
+						</label>
+						<div class="col-sm-5">
+							<input type="checkbox" name="hp-charges" value="1" [(ngModel)]="hpSelect" (change)="hpChargeshecked();addTotalTax()">Yes
+						</div>
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-sm-12">
+						<h3>Pricing</h3>
+					</div>
+				</div>
+				<div class="row form-group">
+					<label class="col-sm-3 col-form-label required">ON ROAD PRICE
+						<span style="color:red">*</span>
+					</label>
+					<div class="col-sm-2">
+						<div class="input-group">
+							<input type="number" name="basic" maxlength="50" class="form-control" [(ngModel)]="vehicleBasic" readonly>
+							<span>Basic Price</span>
+						</div>
+					</div>
+					<div class="col-sm-1">
+						<span>+</span>
+					</div>
+					<div class="col-sm-2">
+						<div class="input-group">
+							<input type="number" name="basic" maxlength="50" class="form-control" [(ngModel)]="nilDipValue" (ngModelChange)="addTotalTax()"
+							 readonly>
+							<span>NIl Dip</span>
+						</div>
+					</div>
+					<div class="col-sm-1">
+						<span>+</span>
+					</div>
+					<div class="col-sm-2">
+						<div class="input-group">
+							<div *ngIf="secondVehicle == true">
+								<input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="total" readonly>
+							</div>
+							<div *ngIf="secondVehicle == false || lifetax">
+								<input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="lifeTax" readonly>
+							</div>
+							<span>LifeTax</span>
+							<!-- <span *ngIf="secondVehicle == true">LifeTax(14%)</span> -->
+						</div>
+					</div>
+					<div class="col-sm-1">
+						<span>+</span>
+					</div>
+				</div>
+				<div class="row form-group">
+					<label class="col-sm-3 col-form-label required"> </label>
+					<div class="col-sm-2">
+						<div class="input-group">
+							<input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="VehicleInsu" readonly>
+							<span>insurance</span>
+						</div>
+					</div>
+					<div class="col-sm-1">
+						<span>+</span>
+					</div>
+					<div class="col-sm-2">
+						<div class="input-group">
+							<input type="number" min="0" name="basic" maxlength="50" (keypress)="only_allow_number($event)" class="form-control"
+							 [(ngModel)]="HandlingC" readonly>
+
+							<span> Handling C</span>
+						</div>
+					</div>
+					<div class="col-sm-1">
+						<span>+</span>
+					</div>
+					<div class="col-sm-2">
+						<div class="input-group">
+							<input type="number" min="0" name="basic" maxlength="50" (keypress)="only_allow_number($event)" class="form-control"
+							 [(ngModel)]="Registration" readonly>
+							<span> Registration</span>
+						</div>
+					</div>
+					<div class="col-sm-1">
+						<span>+</span>
+					</div>
+				</div>
+				<div class="row form-group">
+					<label class="col-sm-3 col-form-label required"> </label>
+					<div class="col-sm-2">
+						<div class="input-group">
+							<input type="number" min="0" name="basic" maxlength="50" (keypress)="only_allow_number($event)" class="form-control"
+							 [(ngModel)]="StandardAcc" readonly>
+							<span>Standard Accessories</span>
+						</div>
+					</div>
+					<div class="col-sm-1">
+						<span>+</span>
+					</div>
+					<div class="col-sm-2">
+						<div class="input-group">
+							<input type="number" name="basic" maxlength="50" class="form-control" [(ngModel)]="vehicleAcc" (ngModelChange)="addTotalTax()"
+							 readonly>
+							<span>Accessories</span>
+						</div>
+					</div>
+					<div *ngIf="newUser || exchangeUser">
+						<div class="col-sm-1">
+							<span>+</span>
+						</div>
+						<div class="col-sm-2">
+							<div class="input-group">
+								<input type="number" name="basic" maxlength="50" class="form-control" [(ngModel)]="VehicleHp" (ngModelChange)="addTotalTax()"
+								 readonly>
+								<span> HP</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-1">
+						<span>-</span>
+					</div>
+				</div>
+				<div class="row form-group">
+					<label class="col-sm-3 col-form-label required"> </label>
+
+					<div class="col-sm-2">
+						<div class="input-group">
+							<input type="number" min="0" name="basic" maxlength="50" (keypress)="only_allow_number($event)" class="form-control"
+							 [(ngModel)]="discount" (ngModelChange)="addTotalTax();approvedEmpEnable()" [disabled]="discountEnable">
+							<span>Discount</span>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="tableShow" [style.visibility]="disableApprovedBy">
+					<div class="row form-group">
+						<label class="col-sm-4 col-form-label required">Discount Approved By
+							<span style="color:red">*</span>
+						</label>
+						<div class="col-sm-5">
+							<select name="emp" class="form-control" [(ngModel)]="discountApprovedBy" (ngModelChange)="selectedManager()">
+								<option value="0">select</option>
+								<option *ngFor="let manager of branchManagerData" [ngValue]="manager">{{manager.name}}</option>
+							</select>
+						</div>
+						<div class="col-sm-1"></div>
+						<div class="col-sm-1">
+							<button type="submit" class="btn btn-warning" (click)="sendOtp()">Send</button>
+						</div>
+					</div>
+					<div class="row form-group">
+						<label class="col-sm-4 col-form-label required">Enter OTP
+							<span style="color:red">*</span>
+						</label>
+						<div class="col-sm-5">
+							<input type="number" min="0" class="form-control" [(ngModel)]="otp">
+						</div>
+						<div class="col-sm-1"></div>
+						<div class="col-sm-1">
+							<button type="submit" class="btn btn-warning" (click)="sendOtp()">Resend</button>
+						</div>
+					</div>
+				</div>
+				<div class="row form-group">
+					<label class="col-sm-4 col-form-label required">Total Amount
+					</label>
+					<div class="col-sm-5">
+						<input type="number" name="model" maxlength="50" class="form-control" [(ngModel)]="onRoadPrice">
+					</div>
+				</div>
+				<div *ngIf="_bookingData" class="booking-form">
+					<div class="row form-group">
+						<label class="col-sm-4 col-form-label required">Advance Amount Paid
+						</label>
+						<div class="col-sm-5">
+							<input type="number" name="model" maxlength="50" class="form-control" [(ngModel)]="bookingAdvanceAmount"
+							 readonly>
+						</div>
+					</div>
+					<div class="row form-group">
+						<label class="col-sm-4 col-form-label required">Approved Amount
+						</label>
+						<div class="col-sm-5">
+							<input type="number" name="model" maxlength="50" class="form-control" [(ngModel)]="bookingApprovedAmount"
+							 readonly>
+						</div>
+					</div>
+					<div class="row form-group">
+						<label class="col-sm-4 col-form-label required">Approved By
+						</label>
+						<div class="col-sm-5">
+							<input type="text" name="model" maxlength="50" class="form-control" [(ngModel)]="bookingApprovedby" readonly>
+						</div>
+					</div>
+					<div class="row form-group">
+						<label class="col-sm-4 col-form-label required">Vehicle Color</label>
+						<div class="col-sm-5">
+							<input type="text" name="color" maxlength="50" class="form-control" [(ngModel)]="bookingVehicleColor" readonly>
+						</div>
+					</div>
+					<div class="row form-group">
+						<label class="col-sm-4 col-form-label required">Vehicle Model </label>
+						<div class="col-sm-5">
+							<input type="text" name="color" maxlength="50" class="form-control" [(ngModel)]="bookingVehicleModel" readonly>
+						</div>
+					</div>
+					<div class="row form-group">
+						<label class="col-sm-4 col-form-label required">Vehicle Variant</label>
+						<div class="col-sm-5">
+							<input type="text" name="color" maxlength="50" class="form-control" [(ngModel)]="bookingVehicleVariant" readonly>
+						</div>
+					</div>
+				</div>
+				<br>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+
+<div class="csd-form" *ngIf="csdUser">
+	<div class="container">
+		<div class="col-sm-8" style="padding-top:20px">
+			<div class=" row form-group">
+				<label class="col-sm-4 col-form-label required">Pay Order
+					<span style="color:red">*</span>
+				</label>
+				<div class="col-sm-5">
+					<input type="file" name="payorder" accept="image/*" (change)="getFileDetails($event,'pay')">
+				</div>
+				<div class="col-sm-3">
+					<img *ngIf="payOrderPerview" [src]="payOrderPerview.result" height="50">
+					<br />
+				</div>
+			</div>
+			<div class=" row form-group">
+				<label class="col-sm-4 col-form-label required">Delivery from showroom
+					<span style="color:red">*</span>
+				</label>
+				<div class="col-sm-5">
+					<input type="file" name="delivery" accept="image/*" (change)="getFileDetails($event,'delivery')">
+				</div>
+				<div class="col-sm-3">
+					<img *ngIf="deliveryFormPreview" [src]="deliveryFormPreview.result" height="50">
+					<br />
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div class="row form-group">
+			<div claas="container">
+				<button type="submit" class="btn btn-warning" style="float:right;margin-right: 20%" (click)="saveUserDeatils('2')">Submit</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div *ngIf="exchangeUser">
+	<div class="personal-info">
+		<div class="container">
+			<div class="col-sm-12">
+				<h3>Exchange</h3>
+			</div>
+			<div class="col-sm-6">
+				<div class="row form-group">
+					<label class="col-sm-4 col-form-label required">Vehicle No
+						<span style="color:red">*</span>
+					</label>
+					<div class="col-sm-5">
+						<input type="text" min="0" name="exchange" maxlength="50" (keypress)="allow_numbers_alphabets($event)" class="form-control"
+						 [(ngModel)]="exchangevehicleNo">
+					</div>
+				</div>
+				<div class="row form-group">
+					<label class="col-sm-4 col-form-label required">Engine No
+						<span style="color:red">*</span>
+					</label>
+					<div class="col-sm-5">
+						<input type="text" name="disbursement" maxlength="50" (keypress)="allow_numbers_alphabets($event)" class="form-control"
+						 [(ngModel)]="exchangeEngineNo">
+					</div>
+				</div>
+				<div class="row form-group">
+					<label class="col-sm-4 col-form-label required">frame No
+						<span style="color:red">*</span>
+					</label>
+					<div class="col-sm-5">
+						<input type="text" name="payment" maxlength="50" (keypress)="allow_numbers_alphabets($event)" class="form-control"
+						 [(ngModel)]="exchangeFrameNo">
+					</div>
+				</div>
+				<div class="row form-group">
+					<label class="col-sm-4 col-form-label required">Vehicle Color
+						<span style="color:red">*</span>
+					</label>
+					<div class="col-sm-5">
+						<input type="text" name="color" maxlength="50" (keypress)="omit_special_char($event)" class="form-control"
+						 [(ngModel)]="exchangeVehicleColor">
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+
+				<div class="row form-group">
+					<label class="col-sm-4 col-form-label required">Vehicle Model
+						<span style="color:red">*</span>
+					</label>
+					<div class="col-sm-5">
+						<input type="text" name="model" maxlength="50" (keypress)="allow_numbers_alphabets($event)" class="form-control"
+						 [(ngModel)]="exchangeVehicleModel">
+					</div>
+				</div>
+				<div class="row form-group">
+					<label class="col-sm-4 col-form-label required">Customer Name
+						<span style="color:red">*</span>
+					</label>
+					<div class="col-sm-5">
+						<input type="text" name="vat" (keypress)="omit_special_char($event)" class="form-control" [(ngModel)]="vehiclecustomerName"
+						 maxlength="50">
+					</div>
+				</div>
+				<div class="row form-group">
+					<label class="col-sm-4 col-form-label required"> Exchange Amount
+						<span style="color:red">*</span>
+					</label>
+					<div class="col-sm-5">
+						<input type="text" name="vat" maxlength="50" (keypress)="only_allow_number($event)" class="form-control"
+						 [(ngModel)]="exchangeAmount" (ngModelChange)="addTotalTax()">
+					</div>
+				</div>
+				<div class="row form-group">
+					<label class="col-sm-4 col-form-label required">Exchange Amount Approved By
+						<span style="color:red">*</span>
+					</label>
+					<div class="col-sm-5">
+						<select name="state" class="form-control" [(ngModel)]="exchangeApprovedBy">
+							<option value="" disabled select>select</option>
+							<option *ngFor="let manager of branchManagerData" [ngValue]="manager">{{manager.name}}</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div *ngIf="newUser || exchangeUser">
+	<div class="payment-mode">
+		<div class="container">
+			<div class="col-sm-6">
+				<h3>Payment Mode</h3>
+			</div>
+			<div class="col-sm-12">
+				<!-- <div class="row form-group">
+					<label class="col-sm-3 col-form-label required">Payment Mode
+						<span style="color:red">*</span>
+					</label>
+					<div class="col-sm-3">
+						<select name="state" class="form-control" [(ngModel)]="selectedAmountOption" [(ngModel)]="paymentEmi.paymentmode"
+						 (ngModelChange)="addTotalAmount()">
+							<option value="select" disabled select>Select</option>
+							<option value="0">Cash</option>
+							<option value="1">Finance</option>
+						</select>
+					</div>
+				</div> -->
+				<div *ngIf="hpSelect == '0'">
+					<!-- <div class="cash-form" *ngIf="selectedAmountOption == '0'"> -->
+					<div class="col-sm-12">
+						<div class="row form-group">
+							<div class="col-sm-4">
+								<input type="checkbox" name="myChk" id="myChk" for="myTxt" [(ngModel)]="paymentEmi.chequeSelect" (change)="triggerSomeEvent();addTotalAmount()" />
+								<label>Cheque</label>
+								<div class="tableShow" [style.visibility]="isDisabled">
+									<div class="row form-group">
+										<span class="col-sm-4  required">Amount
+											<span style="color:red">*</span>
+										</span>
+										<div class="col-sm-5">
+											<input type="number" min="0" name="myTxt" id="myTxt" (keypress)="only_allow_number($event)" value=""
+											 [(ngModel)]="paymentEmi.chequeAmount" (ngModelChange)="addTotalAmount()">
+										</div>
+									</div>
+									<div class="row form-group">
+										<span class="col-sm-4  required">Cheque No
+											<span style="color:red">*</span>
+										</span>
+										<div class="col-sm-5">
+											<input type="text" (keypress)="only_allow_number($event)" name="chequeNo" [(ngModel)]="paymentEmi.chequeNo">
+										</div>
+									</div>
+									<div class="row form-group">
+										<span class="col-sm-4  required">Cheque Date :
+											<span style="color:red">*</span>
+										</span>
+										<div class="col-sm-5">
+											<p-calendar [(ngModel)]="date2" name="chequedate" [monthNavigator]="true" [yearNavigator]="true" yearRange="1940:2030"
+											 [inputStyle]="{'width':'148px'}" [showIcon]="true" [(ngModel)]="paymentEmi.chequeDate" dateFormat="dd-mm-yy"
+											 (ngModelChange)=" getChequedate($event)"></p-calendar>
+										</div>
+									</div>
+									<div class="row form-group">
+										<span class="col-sm-4  required">Bank Name
+											<span style="color:red">*</span>
+										</span>
+										<div class="col-sm-5">
+											<input type="text" (keypress)="allow_numbers_alphabets($event)" name="bank" [(ngModel)]="paymentEmi.bankName">
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-4">
+								<input type="checkbox" name="myChk" id="myChk" for="cash" [(ngModel)]="paymentEmi.cashSelect" (change)="cashChangeEvent();addTotalAmount()" />
+								<label>Cash</label>
+								<div class="tableShow" [style.visibility]="disableCash">
+									<div class="row form-group">
+										<span class="col-sm-4  required">Amount
+											<span style="color:red">*</span>
+										</span>
+										<div class="col-sm-5">
+											<input type="number" name="cash" id="cash" (keypress)="only_allow_number($event)" value="" [(ngModel)]="paymentEmi.cashAmount"
+											 (ngModelChange)="addTotalAmount()">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<input type="checkbox" name="myChk" id="myChk" for="credit" [(ngModel)]="paymentEmi.creditcardSelect" (change)="creditCardEvent();addTotalAmount()" />
+								<label>Credit Card</label>
+								<div class="tableShow" [style.visibility]="disableCredit">
+									<div class="row form-group">
+										<span class="col-sm-4  required">Amount
+											<span style="color:red">*</span>
+										</span>
+										<div class="col-sm-5">
+											<input type="number" min="0" name="credit" (keypress)="only_allow_number($event)" id="credit" value=""
+											 [(ngModel)]="paymentEmi.creditcardAmount" (ngModelChange)="addTotalAmount()">
+										</div>
+									</div>
+									<div class="row form-group">
+										<span class="col-sm-4  required">Transaction Id
+											<span style="color:red">*</span>
+										</span>
+										<div class="col-sm-5">
+											<input type="text" name="transactionId" (keypress)="allow_numbers_alphabets($event)" value="" [(ngModel)]="paymentEmi.creditTransId">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row form-group">
+							<div class="col-sm-4">
+								<input type="checkbox" name="myChk" id="myChk" for="bank" [(ngModel)]="paymentEmi.accountTranferSelect"
+								 (change)="tranferEvent();addTotalAmount()" />
+								<label>Account Transfer</label>
+								<div class="tableShow" [style.visibility]="disableTransfer">
+									<div class="row form-group">
+										<span class="col-sm-4  required">Amount
+											<span style="color:red">*</span>
+										</span>
+										<div class="col-sm-5">
+											<input type="number" min="0" name="credit" (keypress)="only_allow_number($event)" id="bank" value=""
+											 [(ngModel)]="paymentEmi.accounttranferAmount" (ngModelChange)="addTotalAmount()">
+										</div>
+									</div>
+									<div class="row form-group">
+										<span class="col-sm-4  required">Transaction Id
+											<span style="color:red">*</span>
+										</span>
+										<div class="col-sm-5">
+											<input type="text" name="id" value="" (keypress)="allow_numbers_alphabets($event)" [(ngModel)]="paymentEmi.accountTranferId">
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-4">
+								<input type="checkbox" name="myChk" id="myChk" for="other" [(ngModel)]="paymentEmi.othersSelect" (change)="otherEvent();addTotalAmount()" />
+								<label>Other</label>
+								<div class="tableShow" [style.visibility]="disableOther">
+									<div class="row form-group">
+										<span class="col-sm-4  required">Mobile wallet
+											<span style="color:red">*</span>
+										</span>
+										<div class="col-sm-5">
+											<select name="state" class="form-control" [(ngModel)]="paymentEmi.mobileWallet" (ngModelChange)="selectedManager()">
+												<option value="" disabled select>Select</option>
+												<option *ngFor="let data of walletData" [ngValue]="data.payment_type_id">{{data.payment_name}}</option>
+											</select>
+										</div>
+									</div>
+									<div class="row form-group">
+										<span class="col-sm-4  required">Amount
+											<span style="color:red">*</span>
+										</span>
+										<div class="col-sm-5">
+											<input type="number" min="0" (keypress)="only_allow_number($event)" name="other" id="other" value=""
+											 [(ngModel)]="paymentEmi.othersAmount" (ngModelChange)="addTotalAmount()">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="input-group">
+									<input type="number" min="0" name="total" maxlength="50" class="form-control" [(ngModel)]="cashTotal">
+									<span>Total</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<br>
+					<br>
+
+					<!-- </div> -->
+				</div>
+				<div *ngIf="hpSelect == '1'">
+					<!-- <div class="emi-form" *ngIf="selectedAmountOption == '1'"> -->
+					<div class=" row form-group">
+						<label class="col-sm-3 col-form-label required">Financer Name
+							<span style="color:red">*</span>
+						</label>
+						<!-- <div class="col-sm-3">
+							<input type="text" (keypress)="omit_special_char($event)" placeholder="Financial Name" name="cost" maxlength="50"
+							 class="form-control" [(ngModel)]=">
+						</div> -->
+						<div class="col-sm-3">
+							<select name="state" class="form-control" [(ngModel)]="paymentEmi.financialName">
+								<option value="" disabled select>select</option>
+								<option *ngFor="let data of financierData" [ngValue]="data.finance_name">{{data.finance_name}}</option>
+							</select>
+						</div>
+					</div>
+					<div class=" row form-group">
+						<label class="col-sm-3 col-form-label required">Down Payment
+							<span style="color:red">*</span>
+						</label>
+						<div class="col-sm-3">
+							<input type="number" min="0" (keypress)="only_allow_number($event)" name="down" class="form-control" placeholder="Down Payment"
+							 [(ngModel)]="paymentEmi.downPayment" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+							 maxlength="10">
+						</div>
+					</div>
+					<div class=" row form-group">
+						<label class="col-sm-3 col-form-label required">Address Proof
+							<span style="color:red">*</span>
+						</label>
+						<div class="col-sm-5">
+							<input type="file" name="address" accept="image/*" (change)="getFileDetails($event,'a')">
+						</div>
+						<div class="col-sm-3">
+							<img *ngIf="addressPreview" [src]="addressPreview.result" height="50">
+							<br />
+						</div>
+					</div>
+					<div class=" row form-group">
+						<label class="col-sm-3 col-form-label required">ID Proof
+							<span style="color:red">*</span>
+						</label>
+						<div class="col-sm-5">
+							<input type="file" name="idproof" accept="image/*" (change)="getFileDetails($event,'i')">
+						</div>
+						<div class="col-sm-3">
+							<img *ngIf="idpreview" [src]="idpreview.result" height="50">
+						</div>
+					</div>
+					<div *ngFor="let bank of banks;let i=index">
+						<div class=" row form-group">
+							<label class="col-sm-3 col-form-label required">Bank statement
+								<span style="color:red">*</span>
+							</label>
+							<div class="col-sm-3">
+								<input type="file" name="bank" multiple accept=".pdf,.doc,.docx,image/*" (change)="getFileDetails($event,'b')">
+							</div>
+							<div *ngIf="i !==0">
+								<div class="col-sm-1">
+									<div class="delete-button">
+										<button type="submit" class="btn btn-danger" (click)="deleteBankStatement(i)">Delete</button>
+									</div>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-sm-1">
+									<div class="add-button">
+										<button type="submit" class="btn btn-success" (click)="addBankStatement(bank,i)">Add</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class=" row form-group">
+						<label class="col-sm-3 col-form-label required">cheque
+							<span style="color:red">*</span>
+						</label>
+						<div class="col-sm-5">
+							<input type="file" name="cheque" accept="image/*" (change)="getFileDetails($event,'c')">
+						</div>
+						<div class="col-sm-3">
+							<img *ngIf="chequepreview" [src]="chequepreview.result" height="50">
+							<br />
+						</div>
+					</div>
+					<!-- </div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<div *ngIf="newUser ">
+	<div class="row form-group">
+		<div claas="container">
+			<button type="submit" [disabled]=" finalSubmit" class="btn btn-warning" (click)="saveUserDeatils('0')" style="float:right;margin-right: 20%">Submit</button>
+		</div>
+	</div>
+</div>
+<div *ngIf=" exchangeUser">
+	<div class="row form-group">
+		<div claas="container">
+			<button type="submit" [disabled]=" finalSubmit" class="btn btn-warning" style="float:right;margin-right: 20%"
+			 (click)="saveUserDeatils('1')">Submit</button>
+		</div>
+	</div>
+</div>
+
+
+<div id="showEngineNo" class="modal fade" data-backdrop="static">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="price-info">
+				<h2>Inventory List</h2>
+			</div>
+			<div style="margin:4px;">
+				<p-table #dt [value]="inventoryData" [columns]="cols" [paginator]="true" [rows]="5">
+					<ng-template pTemplate="caption">
+						<div style="text-align: right">
+							<i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+							<input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')"
+							 style="width:auto">
+						</div>
+					</ng-template>
+					<ng-template pTemplate="header" let-cols>
+						<tr>
+							<th *ngFor="let col of cols" [pSortableColumn]="col.field">
+								{{col.header}}
+								<p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
+								 ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+							</th>
+							<th>Select</th>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="body" let-car>
+						<tr>
+							<td *ngFor="let col of cols">
+								{{car[col.field]}}
+							</td>
+							<td> <input type="radio" name="select" id="select" (click)="selectedVechile(car)" /> </td>
+						</tr>
+					</ng-template>
+				</p-table>
+			</div>
+			<hr>
+			<div class="select-stylist-footer-right">
+				<ul>
+					<li>
+						<a data-dismiss="modal" *ngIf="_selectVec" (click)="selectedSubmite()">
+							<i class="fas fa-check" style="color: green"></i>
+							<br>Submite</a>
+					</li>
+					<li>
+						<a data-dismiss="modal">
+							<i class="fas fa-times"></i>
+							<br>Cancel</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#f5c585" type="ball-scale-multiple">
+	<p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner> -->
+<style>
+	.alertRed {
+		color: red;
+	}
+</style>
