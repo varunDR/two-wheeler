@@ -16,6 +16,9 @@ import { CalendarModule } from 'primeng/calendar';
 import { TableModule } from 'primeng/table';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ClipboardModule } from 'ngx-clipboard';
+import { BookingFormComponent } from './booking-form/booking-form.component';
+import { GlobalSearchComponent } from './global-search/global-search.component';
+import { ListBookingFormComponent } from './list-booking-form/list-booking-form.component';
 
 @NgModule({
   imports: [
@@ -37,7 +40,10 @@ import { ClipboardModule } from 'ngx-clipboard';
     NewSaleComponent,
     ViewSalesComponent,
     InvoiceListComponent,
-    DcFormComponent
+    DcFormComponent,
+    BookingFormComponent,
+    GlobalSearchComponent,
+    ListBookingFormComponent
   ],
   providers: [AuthGuard]
 })

@@ -1,0 +1,98 @@
+<div class="price-info">
+  <h2> Global Search</h2>
+</div>
+<simple-notifications [options]="options"></simple-notifications>
+<div class="globalsearch">
+  <!-- <div class="row form-group">
+    <label class="col-sm-4 ">
+    </label>
+    <div class="col-sm-4">
+      <div class="input-group">
+        <input type="text" name="search" placeholder="Search Vehicles" style="padding:5px;" class="form-control" [(ngModel)]="selectedValue"
+          (ngModelChange)="searchVehicleDetails()">
+        <span class="input-group-addon">
+          <i class="fas fa-search"></i>
+        </span>
+      </div>
+    </div>
+  </div> -->
+  <div class="row">
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <div class="form-group">
+        <label for="input" class="col-md-3 control-label">Model</label>
+        <div class="col-md-7">
+          <input type="text" placeholder="Search By Model" name="model" maxlength="50" [(ngModel)]="selectedValue" (ngModelChange)='modelSearch($event)'
+            [typeahead]="modelData" typeaheadOptionField="model_name" (typeaheadOnSelect)="onSelectModel($event)" class="form-control">
+        </div>
+        <div style="color:red" *ngIf="noResult">No Results Found</div>
+        <div class="clear"></div>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <div class="form-group">
+        <label for="input" class="col-md-3 control-label">Variant</label>
+        <div class="col-md-7">
+          <div class="input-group">
+            <input type="text" placeholder="Search By Variant" name="variant" class="form-control" [(ngModel)]="selectedVariant" (ngModelChange)="variantSearch($event)"
+              [typeahead]="variantData" typeaheadOptionField="variant_name" (typeaheadOnSelect)="onSelectVariant($event)">
+          </div>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <div class="form-group">
+        <label for="input" class="col-md-3 control-label">Color</label>
+        <div class="col-md-7">
+          <div class="input-group">
+            <input type="text" name="color" class="form-control" placeholder="Search By Color" [(ngModel)]="selectedColor" (ngModelChange)="colorSearch($event)"
+              [typeahead]="colorData" typeaheadOptionField="color_name" (typeaheadOnSelect)="onSelectColor($event)">
+          </div>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+    <div class="col-md-1 col-sm-1 col-xs-12">
+    </div>
+    <div class="col-md-1 col-sm-1 col-xs-12">
+      <button type="submit" class="btn btn-primary" (click)="searchVehicleDetails()">Search</button>
+    </div>
+    <div class="col-md-1 col-sm-1 col-xs-12">
+      <button type="submit" class="btn btn-warning" (click)="detailsReset()">Reset</button>
+    </div>
+  </div>
+</div>
+
+<div class="tableShow" [style.visibility]="titleStyle">
+  <p-table #dt [columns]="cols" [value]="searchList" [paginator]="true" [rows]="4">
+    <ng-template pTemplate="caption">
+      <div style="text-align: right">
+        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+        <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')"
+          style="width:auto">
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let col of cols" [pSortableColumn]="col.field">
+          {{col.header}}
+          <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+        </th>
+
+      </tr>
+
+    </ng-template>
+    <ng-template pTemplate="body" let-i="rowIndex" let-vehicle>
+      <tr>
+        <td *ngFor="let col of cols">
+          {{vehicle[col.field]}}
+        </td>
+
+      </tr>
+
+    </ng-template>
+
+  </p-table>
+</div>

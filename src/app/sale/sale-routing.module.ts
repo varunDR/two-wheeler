@@ -6,6 +6,9 @@ import { NewSaleComponent } from './new-sale/new-sale.component';
 import { ViewSalesComponent } from './view-sales/view-sales.component';
 import { InvoiceListComponent } from './invoice-list/invoice-list.component';
 import { DcFormComponent } from './dc-form/dc-form.component';
+import { BookingFormComponent } from './booking-form/booking-form.component';
+import { GlobalSearchComponent } from './global-search/global-search.component';
+import { ListBookingFormComponent } from './list-booking-form/list-booking-form.component';
  
 const routes: Routes = [
   {
@@ -43,6 +46,21 @@ const routes: Routes = [
       {
         path: 'dc-form',
         component: DcFormComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'booking-form',
+        component: BookingFormComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'global-search',
+        component: GlobalSearchComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'bookings-list',
+        component: ListBookingFormComponent,
         canActivate: [AuthGuard]
       }
     ]
