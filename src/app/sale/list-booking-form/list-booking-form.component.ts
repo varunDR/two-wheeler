@@ -63,7 +63,7 @@ export class ListBookingFormComponent implements OnInit {
   }
 
   redirectToBookingForm() {
-    this.router.navigate(['booking-form'])
+    this.router.navigate(['sale/booking-form'])
   }
 
 }
