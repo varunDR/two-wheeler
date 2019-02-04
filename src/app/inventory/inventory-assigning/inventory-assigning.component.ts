@@ -104,7 +104,7 @@ export class InventoryAssigningComponent implements OnInit {
   deleteInventoryAssign(index) {
     this.vehicles.splice(index, 1)
   }
-  
+
   addInventoryAssign(data, index) {
     this.vehicles.push({
       engineno: "",
@@ -185,7 +185,7 @@ export class InventoryAssigningComponent implements OnInit {
       br_mgr_comment: this.managerNote,
       generated_shipping_id: this.generatedShippedId,
       status: this.status,
-      vechile_details: JSON.stringify(this.vehicles) 
+      vechile_details: JSON.stringify(this.vehicles)
     }
     var finalData = this.addInvPipe.transform(data);
     this.service.addInventoryAssign(finalData).subscribe(res => {
@@ -202,8 +202,10 @@ export class InventoryAssigningComponent implements OnInit {
           }
         )
       }
-    }) 
-    this.indentservice.addIndent({indent_id:this.indentId,status: "0"}).subscribe(res => {})
+    })
+    if (this._indentData) {
+      this.indentservice.addIndent({ indent_id: this.indentId, status: "0" }).subscribe(res => { })
+    }
   }
   omit_special_char(event) {
     var k;

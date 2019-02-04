@@ -18,14 +18,14 @@ declare var $: any;
   styleUrls: ['./new-sale.component.css']
 })
 export class NewSaleComponent implements OnInit {
-  
+
   newUser = true;
   exchangeUser = false;
   csdUser = false;
   forCsd = 0;
   branchManagerData: any = [];
-  financierData:any = [];
-  walletData:any = [];
+  financierData: any = [];
+  walletData: any = [];
   personalData: any;
   loginData: any = [];
   branchName: '';
@@ -224,13 +224,13 @@ export class NewSaleComponent implements OnInit {
       { field: 'variant_name', header: 'Variant' },
       { field: 'color_name', header: 'Color' }
     ];
-   }
+  }
 
   ngOnInit() {
     this.loginData = JSON.parse(sessionStorage.getItem('userSession'));
     this.branchName = this.loginData._results.branch_name
     this.branchId = this.loginData._results.employee_branch_id
-    console.log(sessionStorage)
+    console.log(sessionStorage.salesdata)
     if (sessionStorage.salesdata) {
       this.fieldsData = JSON.parse(sessionStorage.getItem('salesdata'))
       this.name = this.fieldsData.name;
@@ -247,14 +247,13 @@ export class NewSaleComponent implements OnInit {
       this.addressProof = this.fieldsData.addressProof;
       this.addressProofNo = this.fieldsData.addressProofNo
     }
-
     if (sessionStorage.bookingData) {
+      console.log(sessionStorage.bookingData)
       this.name = " ";
       this.dob = " ";
       this.address = " ";
       this.mobile = " ";
       this.email = " ";
-      // if(this._bookingData){
       this._bookingData = JSON.parse(sessionStorage.getItem('bookingData'));
       console.log(this._bookingData)
       setTimeout(() => {
@@ -271,14 +270,15 @@ export class NewSaleComponent implements OnInit {
         this.bookingAdvanceAmount = this._bookingData.advance_payment;
         // this.status = '1';
       }, 1);
-    } else {
-      this.name = " ";
-      this.dob = " ";
-      this.address = " ";
-      this.mobile = " ";
-      this.email = null;
-
     }
+    // else {
+    //   this.name = " ";
+    //   this.dob = " ";
+    //   this.address = " ";
+    //   this.mobile = " ";
+    //   this.email = null;
+
+    // }
 
     this.http.get(environment.host + 'discount-otp-no').subscribe(res => {
       if (res.json().status == true) {
@@ -367,7 +367,7 @@ export class NewSaleComponent implements OnInit {
       this.paymentEmi.creditTransId = null
     } else {
       this.disableCredit = 'visible';
-    } 
+    }
   }
 
   tranferEvent() {
@@ -458,15 +458,15 @@ export class NewSaleComponent implements OnInit {
 
   hpChargeshecked() {
     console.log(this.hpSelect)
-    if(this.forCsd == 0){
-    if (this.hpSelect == '1') {
-      this.VehicleHp = this.tempAcce.hp;
-      console.log(this.VehicleHp)
+    if (this.forCsd == 0) {
+      if (this.hpSelect == '1') {
+        this.VehicleHp = this.tempAcce.hp;
+        console.log(this.VehicleHp)
+      }
+      if (this.hpSelect == '0') {
+        this.VehicleHp = ''
+      }
     }
-    if (this.hpSelect == '0') {
-      this.VehicleHp = ''
-    }
-  }
   }
   //complete sale details
   get f() { return this.personalinfoForm.controls; }
@@ -998,7 +998,7 @@ export class NewSaleComponent implements OnInit {
           this.finalSubmit = true;
         }
       }
-    }else{
+    } else {
       this.finalSubmit = false;
     }
   }
@@ -1152,5 +1152,5 @@ export class NewSaleComponent implements OnInit {
         this.tempOnRoadPrice = this.onRoadPrice;
       });
     }
-  }  
+  }
 }
