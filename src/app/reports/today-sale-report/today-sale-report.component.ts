@@ -87,7 +87,7 @@ export class TodaySaleReportComponent implements OnInit {
   xlDownload() {
     this.excelService.exportAsExcelFile(this.todaySaleList, 'TodaySalesList');
   }
-  
+
   detailsReset() {
     this.service.getTodayFilter(this.branchId, this.url).subscribe(res => {
       console.log(res.json().result)
@@ -148,6 +148,6 @@ export class TodaySaleReportComponent implements OnInit {
     })
   }
 
- 
+
 
 }
