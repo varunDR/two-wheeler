@@ -9,7 +9,10 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { AuthGuard } from '../common-session/session.check'
+import { AuthGuard } from '../common-session/session.check';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+import { TableModule } from 'primeng/table';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,10 @@ import { AuthGuard } from '../common-session/session.check'
     AppRoutingModule,
     HttpModule,
     BrowserAnimationsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    TypeaheadModule.forRoot(),
+    SimpleNotificationsModule.forRoot(),
+    TableModule
   ],
   providers:[AuthGuard],
   bootstrap: [AppComponent]

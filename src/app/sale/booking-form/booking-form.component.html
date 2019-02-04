@@ -1,0 +1,283 @@
+<simple-notifications [options]="options"></simple-notifications>
+
+<div class="tab-content" id="myTabContent">
+   <div id="sales" role="tabpanel" aria-labelledby="sales-tab">
+      <div class="sales-tab">
+         <div class="sales-tab1">
+            <div class="col-md-12 col-sm-12 sales-tab-left">
+               <div class="stl-title">
+                  <h2>Booking Form
+                     <span>
+                        <span id="demonew"></span>&nbsp;&nbsp;
+                        <strong>
+                           <span id="demo"></span>
+                        </strong>
+                     </span>
+                  </h2>
+               </div>
+					<div class="row">
+						<div class="container">
+							<div class="col-sm-9">
+							</div>
+							<div class="col-sm-3" style="margin-bottom: 5px;">
+								<button type="button" class="btn btn-success" (click)="redirectToBookingForm()">View Bookings</button>
+							</div>
+						</div>
+					</div>
+            </div>
+            <div class="clear"></div>
+         </div>
+      </div>
+      <div class="clear"></div>
+   </div>
+</div>
+<div class="clear"></div>
+
+<div class="personal-info">
+   <div class="container">
+      <form [formGroup]="bookingForm">
+         <div class="col-sm-6">
+            <h3>Personal Information</h3>
+            <div class="row form-group">
+               <label class="col-sm-4 col-form-label required">Name of the Customer
+                  <span style="color:red">*</span>
+               </label>
+               <div class="col-sm-5">
+                  <input type="text" formControlName="firstName" (keypress)="omit_special_char($event)" maxlength="50"
+                     placeholder="Customer Name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"
+                     [(ngModel)]="name">
+                  <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                     <div *ngIf="f.firstName.errors.required" style="color:#ff0000">First Name is required</div>
+                  </div>
+               </div>
+            </div>
+            <div class="row form-group">
+               <label class="col-sm-4 col-form-label required">Date Of Birth
+                  <span style="color:red">*</span>
+               </label>
+               <div class="col-sm-5">
+                  <p-calendar [(ngModel)]="date1" [monthNavigator]="true" [yearNavigator]="true" yearRange="1940:2030"
+                     [inputStyle]="{'width':'190px'}" [showIcon]="true" dateFormat="dd-mm-yy" [(ngModel)]="dob"
+                     (ngModelChange)=" getreqDate($event)" [(ngModel)]="showMoreControls" [ngModelOptions]="{standalone: true}"></p-calendar>
+               </div>
+            </div>
+            <!-- <div class="row form-group">
+               <label class="col-sm-4 col-form-label required">Father/Daughter/Wife
+                  <span style="color:red">*</span>
+               </label>
+               <div class="col-sm-5">
+                  <input type="text" formControlName="relation" (keypress)="omit_special_char($event)" placeholder="Relation Name"
+                     maxlength="50" class="form-control" [(ngModel)]="relationName" (mouseleave)="leaveFields()"
+                     [ngClass]="{ 'is-invalid': submitted && f.relation.errors }">
+                  <div *ngIf="submitted && f.relation.errors" class="invalid-feedback">
+                     <div *ngIf="f.relation.errors.required" style="color:#ff0000"> Relation Name is required</div>
+                  </div>
+               </div>
+            </div> -->
+            <div class="row form-group">
+               <label class="col-sm-4 col-form-label required">Address
+                  <span style="color:red">*</span>
+               </label>
+               <div class="col-sm-5">
+                  <textarea class="form-control" formControlName="custAddress" placeholder="Address" maxlength="1000"
+                     rows="2" name="address" style="padding-left:1.6em" [(ngModel)]="address" [ngClass]="{ 'is-invalid': submitted && f.custAddress.errors }"></textarea>
+                  <div *ngIf="submitted && f.custAddress.errors" class="invalid-feedback">
+                     <div *ngIf="f.custAddress.errors.required" style="color:#ff0000"> Address is required</div>
+                  </div>
+               </div>
+            </div>
+            <!-- <div class="row form-group">
+               <label class="col-sm-4 col-form-label required">Mandal
+                  <span style="color:red">*</span>
+               </label>
+               <div class="col-sm-5">
+                  <input type="text" formControlName="custMandal" placeholder="Mandal" (keypress)="omit_special_char($event)"
+                     maxlength="50" class="form-control" [(ngModel)]="mandal" (mouseleave)="leaveFields()" [ngClass]="{ 'is-invalid': submitted && f.custMandal.errors }">
+                  <div *ngIf="submitted && f.custMandal.errors" class="invalid-feedback">
+                     <div *ngIf="f.custMandal.errors.required" style="color:#ff0000"> Mandal is required</div>
+                  </div>
+               </div>
+            </div> -->
+            <!-- <div class="row form-group">
+               <label class="col-sm-4 col-form-label required">Pincode
+                  <span style="color:red">*</span>
+               </label>
+               <div class="col-sm-5">
+                  <input type="number" formControlName="custPinecode" (keypress)="only_allow_number($event)"
+                     placeholder="Pincode" min="0" class="form-control" [(ngModel)]="pincode" (mouseleave)="leaveFields()"
+                     [ngClass]="{ 'is-invalid': submitted && f.custPinecode.errors }" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                     maxlength="50">
+                  <div *ngIf="submitted && f.custPinecode.errors" class="invalid-feedback">
+                     <div *ngIf="f.custPinecode.errors.required" style="color:#ff0000"> pincode is required</div>
+                  </div>
+               </div>
+            </div> -->
+            <!-- <div class="row form-group">
+               <label class="col-sm-4 col-form-label required">District Name
+                  <span style="color:red">*</span>
+               </label>
+               <div class="col-sm-5">
+                  <input type="text" formControlName="custDistrict" (keypress)="omit_special_char($event)" placeholder="District Name"
+                     maxlength="50" class="form-control" [(ngModel)]="districtName" (mouseleave)="leaveFields()"
+                     [ngClass]="{ 'is-invalid': submitted && f.custDistrict.errors }">
+                  <div *ngIf="submitted && f.custDistrict.errors" class="invalid-feedback">
+                     <div *ngIf="f.custDistrict.errors.required" style="color:#ff0000"> District Name is required</div>
+                  </div>
+               </div>
+            </div> -->
+            <div class="row form-group">
+               <label class="col-sm-4 col-form-label required">Mobile
+                  <span style="color:red">*</span>
+               </label>
+               <div class="col-sm-5">
+                  <input type="number" formControlName="custMobile" (keypress)="only_allow_number($event)" placeholder="Mobile"
+                     min="0" class="form-control" [(ngModel)]="mobile" [ngClass]="{ 'is-invalid': submitted && f.custMobile.errors }"
+                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                     maxlength="50">
+                  <div *ngIf="submitted && f.custMobile.errors" class="invalid-feedback">
+                     <div *ngIf="f.custMobile.errors.required" style="color:#ff0000"> Mobile Number is required</div>
+                  </div>
+               </div>
+            </div>
+            <div class="row form-group">
+               <label class="col-sm-4 col-form-label required">Email Id
+                  <span style="color:red">*</span>
+               </label>
+               <div class="col-sm-5">
+                  <input type="text" formControlName="custEmail" placeholder="email id" min="0" maxlength="50" class="form-control"
+                     [(ngModel)]="email" [ngClass]="{ 'is-invalid': submitted && f.custEmail.errors }">
+                  <div *ngIf="submitted && f.custEmail.errors" class="invalid-feedback">
+                     <div *ngIf="f.custEmail.errors.required" style="color:#ff0000"> Email id is required</div>
+                     <div *ngIf="f.custEmail.errors.email" style="color:#ff0000">Email must be a valid email address</div>
+                  </div>
+               </div>
+            </div>
+            <!-- <div class=" row form-group">
+               <label for="input" class="col-sm-4 control-label">Vehicle Category
+                  <a style="color:red">*</a>
+               </label>
+               <div class="col-sm-5">
+                  <select class="form-control" formControlName="vehicleTypef" [(ngModel)]="vehicleType" [ngClass]="{ 'is-invalid': submitted && f.vehicleTypef.errors }">
+                     <option *ngFor="let data of this.typeData" [ngValue]=" data.vehicle_type_id">{{data.type_name}}</option>
+                  </select>
+                  <div *ngIf="submitted && f.vehicleTypef.errors" class="invalid-feedback">
+                     <div *ngIf="f.vehicleTypef.errors.required" style="color:red">Vehicle Type is required</div>
+                  </div>
+               </div>
+               <div class="clear"></div>
+            </div> -->
+
+            <div class=" row form-group">
+               <label for="input" class="col-sm-4 control-label">Vehicle Model
+                  <a style="color:red">*</a>
+               </label>
+               <div class="col-sm-5">
+                  <select class="form-control" formControlName="vehicleModelf" [(ngModel)]="vehicleModel" [ngClass]="{ 'is-invalid': submitted && f.vehicleModelf.errors }">
+                     <option *ngFor="let data of this.modelData" [ngValue]=" data.vehicle_model_id">{{data.model_name}}</option>
+                  </select>
+                  <div *ngIf="submitted && f.vehicleModelf.errors" class="invalid-feedback">
+                     <div *ngIf="f.vehicleModelf.errors.required" style="color:red">Vehicle Model is required</div>
+                  </div>
+               </div>
+               <div class="clear"></div>
+            </div>
+
+            <div class=" row form-group">
+               <label for="input" class="col-sm-4 control-label">Vehicle Variant
+                  <a style="color:red">*</a>
+               </label>
+               <div class="col-sm-5">
+                  <select class="form-control" formControlName="vehicleVariantf" [(ngModel)]="vehicleVariant"
+                     (ngModelChange)="estimationPrice()" [ngClass]="{ 'is-invalid': submitted && f.vehicleVariantf.errors }">
+                     <option *ngFor="let data of this.variantData" [ngValue]=" data.vehicle_variant_id">{{data.variant_name}}</option>
+                  </select>
+                  <div *ngIf="submitted && f.vehicleVariantf.errors" class="invalid-feedback">
+                     <div *ngIf="f.vehicleVariantf.errors.required" style="color:red">Vehicle Variant is required</div>
+                  </div>
+               </div>
+               <div class="clear"></div>
+            </div>
+
+            <div class=" row form-group">
+               <label for="input" class="col-sm-4 control-label">Vehicle Color
+                  <a style="color:red">*</a>
+               </label>
+               <div class="col-sm-5">
+                  <select class="form-control" formControlName="vehicleColorf" [(ngModel)]="vehicleColor" [ngClass]="{ 'is-invalid': submitted && f.vehicleColorf.errors }">
+                     <option *ngFor="let data of this.colorData" [ngValue]=" data.vehicle_color_id">{{data.color_name}}</option>
+                  </select>
+                  <div *ngIf="submitted && f.vehicleColorf.errors" class="invalid-feedback">
+                     <div *ngIf="f.vehicleColorf.errors.required" style="color:red">Vehicle Color is required</div>
+                  </div>
+               </div>
+               <div class="clear"></div>
+            </div>
+         </div>
+         <div class="col-sm-6">
+            <h3>Particulars</h3>
+            <div class="row form-group">
+               <label class="col-sm-4 col-form-label required">Price Estimation
+                  <span style="color:red">*</span>
+               </label>
+               <div class="col-sm-5">
+                  <input type="text" class="form-control" name="estimation" placeholder="Price Estimation" [(ngModel)]="priceEstimation"
+                     [(ngModel)]="showMoreControls" [ngModelOptions]="{standalone: true}" readonly>
+               </div>
+            </div>
+            <div class="row form-group">
+               <label class="col-sm-4 col-form-label required">Approved Amount
+                  <span style="color:red">*</span>
+               </label>
+               <div class="col-sm-5">
+                  <input type="text" formControlName="amountApproved" (keypress)="only_allow_number($event)"
+                     placeholder="Approved Amount" maxlength="50" class="form-control" [(ngModel)]="approvedAmount"
+                     [ngClass]="{ 'is-invalid': submitted && f.amountApproved.errors }">
+                  <div *ngIf="submitted && f.amountApproved.errors" class="invalid-feedback">
+                     <div *ngIf="f.amountApproved.errors.required" style="color:#ff0000"> Mandal is required</div>
+                  </div>
+               </div>
+            </div>
+            <div class="row form-group">
+               <label class="col-sm-4 col-form-label required">Approved By
+                  <span style="color:red">*</span>
+               </label>
+               <div class="col-sm-5">
+                  <select name="emp" class="form-control" [(ngModel)]="approvedBy" [(ngModel)]="showMoreControls"
+                     [ngModelOptions]="{standalone: true}">
+                     <option value="0">select</option>
+                     <option *ngFor="let emp of employeedata" [ngValue]="emp.employee_id">{{emp.employee_firstname}}</option>
+                  </select>
+               </div>
+            </div>
+            <div class="row form-group">
+               <label class="col-sm-4 col-form-label required">Advance Payment
+                  <span style="color:red">*</span>
+               </label>
+               <div class="col-sm-5">
+                  <input type="text" formControlName="payment" (keypress)="only_allow_number($event)" placeholder="Advance Payment"
+                     maxlength="50" class="form-control" [(ngModel)]="advancePayment" [ngClass]="{ 'is-invalid': submitted && f.payment.errors }">
+                  <div *ngIf="submitted && f.payment.errors" class="invalid-feedback">
+                     <div *ngIf="f.estimatpaymention.errors.required" style="color:#ff0000"> Advance Payment is
+                        required</div>
+                  </div>
+               </div>
+            </div>
+            <div class="row form-group">
+               <label class="col-sm-4 col-form-label required">Appropriate Date Of Delivery
+                  <span style="color:red">*</span>
+               </label>
+               <div class="col-sm-5">
+                  <p-calendar [(ngModel)]="date2" [monthNavigator]="true" [yearNavigator]="true" yearRange="1940:2030"
+                     [inputStyle]="{'width':'190px'}" [showIcon]="true" dateFormat="dd-mm-yy" [(ngModel)]="dateOfDelivery"
+                     (ngModelChange)=" getDeliveryDate($event)" [(ngModel)]="showMoreControls" [ngModelOptions]="{standalone: true}"></p-calendar>
+               </div>
+            </div>
+
+            <div class="row form-group">
+               <button type="submit" class="btn btn-warning" style="float:right;margin-right: 20%" (click)="addBookingForm()">Submit</button>
+            </div>
+         </div>
+      </form>
+      <div class="clear"></div>
+   </div>
+</div>
