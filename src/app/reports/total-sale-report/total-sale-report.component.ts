@@ -55,7 +55,7 @@ export class TotalSaleReportComponent implements OnInit {
     let session = JSON.stringify(sessionStorage.getItem('reports'));
     console.log(session);
     if (session == '"y"') {
-      this.router.navigate(['sale-dashboard']);
+      this.router.navigate(['./sale/dashboard']);
     } else {
       this.router.navigate(['reports']);
     }
