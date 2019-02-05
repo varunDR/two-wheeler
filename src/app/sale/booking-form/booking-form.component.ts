@@ -104,7 +104,7 @@ export class BookingFormComponent implements OnInit {
   get f() { return this.bookingForm.controls; }
 
   redirectToBookingForm(){
-    this.router.navigate(['list-bookings']);
+    this.router.navigate(['sale/bookings-list']);
   }
 
   estimationPrice() {

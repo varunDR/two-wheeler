@@ -35,11 +35,12 @@ export class FooterComponent implements OnInit {
   }
 
   newSaleClick() {
-    this.router.navigate(['sale/new-sale']);
     sessionStorage.removeItem('bookingData');
+    sessionStorage.removeItem('salesdata')
+    this.router.navigate(['sale/new-sale']);
   }
 
-  bookingFormClick(){
+  bookingFormClick() {
     this.router.navigate(['sale/booking-form']);
   }
 
@@ -88,7 +89,7 @@ export class FooterComponent implements OnInit {
       }
     }
   }
-  
+
   detailsReset() {
     this.pricelistStyle = "hidden"
     this.selectedVariant = '';

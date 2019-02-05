@@ -58,7 +58,7 @@ export class ListBookingFormComponent implements OnInit {
     this.booking_form_id = val[index].booking_form_id;
     sessionStorage.setItem('bookingData', JSON.stringify(this.bookings[index]))
     setTimeout(() => {
-      this.router.navigate(['dashboard']);
+      this.router.navigate(['sale/new-sale']);
     }, 1000);
   }
 
