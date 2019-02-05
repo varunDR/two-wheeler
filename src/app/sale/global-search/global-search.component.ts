@@ -41,7 +41,9 @@ export class GlobalSearchComponent implements OnInit {
       { field: 'TVS-M Invoice No', header: 'Invoice No' },
       { field: 'variant_name', header: 'Variant ' },
       { field: 'model_name', header: 'Model ' },
-      { field: 'color_name', header: 'Color' }
+      { field: 'color_name', header: 'Color' },
+      { field: 'branch_name', header: 'Branch' }
+
     ];
     this.allvehicleservice.getColor().subscribe(data => {
       console.log(data.json())
