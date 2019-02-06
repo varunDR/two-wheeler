@@ -9,32 +9,27 @@
   </div>
 </div>
 &nbsp;
-<!-- <div class="add-bulk" style="padding-left: 450px;">
-  <div class="container">
-    <input type="file" style="display: inline-block;" (change)="incomingfile($event)" placeholder="Upload file" accept=".xlsx">
-    <button type="button" class="btn btn-info" (click)="Upload()">Upload</button> &nbsp;&nbsp;&nbsp;&nbsp;
-    <button type="button" class="btn btn-warning" (click)="addBulkVehicles()">Submit</button>
-  </div>
-
-</div> -->
 
 <div class="add-bulk" style="padding-left: 200px;">
   <div class="container">
-      <div class="row form-group">
-        <div class="col-sm-2"></div>
-          <label class="col-sm-3 col-form-label required" style="font-size: 16px;color:gray">Select Vehicles Excel
-              Sheet:<b style="color:red">*</b></label>
-          <div class="col-sm-7">
-              <div class="file">
-                  Choose File
-                  <input type="file" class="hide_file" style="display: inline-block;" (change)="incomingfile($event)"
-                      accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
-              </div> &nbsp;&nbsp;&nbsp;&nbsp;
-              <button *ngIf="file" type="button" class="btn btn-info" (click)="Upload()">Upload</button>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <button *ngIf="list.length!==0" type="button" class="btn btn-warning" (click)="addBulkVehicles()">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;
-          </div>
+    <div class="row form-group">
+      <label class="col-sm-4 col-form-label required" style="font-size: 16px;color:gray"><b>Select Vehicles Excel
+          Sheet:</b><b style="color:red">*</b></label>
+      <div class="col-sm-8">
+        <label class="custom-file-upload">
+          <input type="file" name="fileupload" id="fileupload" (change)="incomingfile($event)" />
+          Choose File
+        </label>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <span [style.visibility]="uploadStyle">
+          <button type="button" class="btn btn-info" (click)="Upload();">Upload</button>
+        </span>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button *ngIf="list.length!==0" type="button" class="btn btn-warning" (click)="addBulkVehicles()">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="button" class="btn btn-secondary" (click)="redirectToCoupons()">Back</button>
       </div>
+    </div>
+    <!-- <span *ngIf="errorMessage" style="color:red;margin-left: 296px;font-size: 17px">Invalid file format</span> -->
   </div>
 </div>
 
@@ -68,5 +63,5 @@
 </div>
 
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#f5c585" type="ball-scale-multiple">
-    <p style="font-size: 20px; color: white">Loading...</p>
-  </ngx-spinner>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

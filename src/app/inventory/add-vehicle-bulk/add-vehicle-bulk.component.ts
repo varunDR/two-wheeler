@@ -26,11 +26,8 @@ export class AddVehicleBulkComponent implements OnInit {
   cols: any[];
   public options = { position: ["top", "right"] }
   enableErrorData = 'hidden';
-  incomingfile(event) {
-    this.file = event.target.files[0];
-  }
   list: any = [];
-
+  uploadStyle = 'hidden';
 
 
   ngOnInit() {
@@ -62,6 +59,12 @@ export class AddVehicleBulkComponent implements OnInit {
   backToVehicleDetails() {
     this.router.navigate(['inventory/vehicle-details']);
   }
+
+  incomingfile(event) {
+    this.file = event.target.files[0];
+    this.uploadStyle = 'visible'
+  }
+
   Upload() {
     let fileReader = new FileReader();
     fileReader.onload = (e) => {
@@ -151,33 +154,33 @@ export class AddVehicleBulkComponent implements OnInit {
           this.errorData = res.json().errdata
           console.log(this.errorData)
           this.notif.alert(
-                'Error',
-                'Failed To Add below Fields',
-                {
-                  timeOut: 3000,
-                  showProgressBar: true,
-                  pauseOnHover: false,
-                  clickToClose: true,
-                  maxLength: 50
-                }
+            'Error',
+            'Failed To Add below Fields',
+            {
+              timeOut: 3000,
+              showProgressBar: true,
+              pauseOnHover: false,
+              clickToClose: true,
+              maxLength: 50
+            }
           )
-        }else{
-        this.notif.success(
-          'Success',
-          'Added Bulk Successfully',
-          {
-            timeOut: 3000,
-            showProgressBar: true,
-            pauseOnHover: false,
-            clickToClose: true,
-            maxLength: 50
-          }
-        )
-        setTimeout(() => {
-          this.router.navigate(['inventory/vehicle-details']);
-        }, 1000);
+        } else {
+          this.notif.success(
+            'Success',
+            'Added Bulk Successfully',
+            {
+              timeOut: 3000,
+              showProgressBar: true,
+              pauseOnHover: false,
+              clickToClose: true,
+              maxLength: 50
+            }
+          )
+          setTimeout(() => {
+            this.router.navigate(['inventory/vehicle-details']);
+          }, 1000);
         }
-      } 
+      }
       // else {
       //   this.notif.alert(
       //     'Error',

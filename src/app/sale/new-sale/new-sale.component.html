@@ -369,7 +369,7 @@
 					</label>
 					<div class="col-sm-2">
 						<div class="input-group">
-							<input type="number" name="basic" maxlength="50" class="form-control" [(ngModel)]="vehicleBasic" readonly>
+							<input type="number" name="basic" maxlength="50" class="form-control" [(ngModel)]="vehicleBasic" readonly style="font-size:12px">
 							<span>Basic Price</span>
 						</div>
 					</div>
@@ -379,7 +379,7 @@
 					<div class="col-sm-2">
 						<div class="input-group">
 							<input type="number" name="basic" maxlength="50" class="form-control" [(ngModel)]="nilDipValue" (ngModelChange)="addTotalTax()"
-							 readonly>
+							 readonly style="font-size:12px">
 							<span>NIl Dip</span>
 						</div>
 					</div>
@@ -389,10 +389,12 @@
 					<div class="col-sm-2">
 						<div class="input-group">
 							<div *ngIf="secondVehicle == true">
-								<input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="total" readonly>
+								<input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="total" readonly
+								 style="font-size:12px">
 							</div>
 							<div *ngIf="secondVehicle == false || lifetax">
-								<input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="lifeTax" readonly>
+								<input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="lifeTax" readonly
+								 style="font-size:12px">
 							</div>
 							<span>LifeTax</span>
 							<!-- <span *ngIf="secondVehicle == true">LifeTax(14%)</span> -->
@@ -406,7 +408,8 @@
 					<label class="col-sm-3 col-form-label required"> </label>
 					<div class="col-sm-2">
 						<div class="input-group">
-							<input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="VehicleInsu" readonly>
+							<input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="VehicleInsu" readonly
+							 style="font-size:12px">
 							<span>insurance</span>
 						</div>
 					</div>
@@ -416,8 +419,7 @@
 					<div class="col-sm-2">
 						<div class="input-group">
 							<input type="number" min="0" name="basic" maxlength="50" (keypress)="only_allow_number($event)" class="form-control"
-							 [(ngModel)]="HandlingC" readonly>
-
+							 [(ngModel)]="HandlingC" readonly style="font-size:12px">
 							<span> Handling C</span>
 						</div>
 					</div>
@@ -427,7 +429,7 @@
 					<div class="col-sm-2">
 						<div class="input-group">
 							<input type="number" min="0" name="basic" maxlength="50" (keypress)="only_allow_number($event)" class="form-control"
-							 [(ngModel)]="Registration" readonly>
+							 [(ngModel)]="Registration" readonly style="font-size:12px">
 							<span> Registration</span>
 						</div>
 					</div>
@@ -440,7 +442,7 @@
 					<div class="col-sm-2">
 						<div class="input-group">
 							<input type="number" min="0" name="basic" maxlength="50" (keypress)="only_allow_number($event)" class="form-control"
-							 [(ngModel)]="StandardAcc" readonly>
+							 [(ngModel)]="StandardAcc" readonly style="font-size:12px">
 							<span>Standard Accessories</span>
 						</div>
 					</div>
@@ -450,7 +452,7 @@
 					<div class="col-sm-2">
 						<div class="input-group">
 							<input type="number" name="basic" maxlength="50" class="form-control" [(ngModel)]="vehicleAcc" (ngModelChange)="addTotalTax()"
-							 readonly>
+							 readonly style="font-size:12px">
 							<span>Accessories</span>
 						</div>
 					</div>
@@ -461,7 +463,7 @@
 						<div class="col-sm-2">
 							<div class="input-group">
 								<input type="number" name="basic" maxlength="50" class="form-control" [(ngModel)]="VehicleHp" (ngModelChange)="addTotalTax()"
-								 readonly>
+								 readonly style="font-size:12px">
 								<span> HP</span>
 							</div>
 						</div>
@@ -476,7 +478,7 @@
 					<div class="col-sm-2">
 						<div class="input-group">
 							<input type="number" min="0" name="basic" maxlength="50" (keypress)="only_allow_number($event)" class="form-control"
-							 [(ngModel)]="discount" (ngModelChange)="addTotalTax();approvedEmpEnable()" [disabled]="discountEnable">
+							 [(ngModel)]="discount" (ngModelChange)="addTotalTax();approvedEmpEnable()" [disabled]="discountEnable" style="font-size:12px">
 							<span>Discount</span>
 						</div>
 					</div>
