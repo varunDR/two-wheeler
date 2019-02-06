@@ -32,9 +32,13 @@ export class TotalSaleReportComponent implements OnInit {
       this.spinner.show();
       this.branchId = this.loginData._results.employee_branch_id;
       this.service.getTotalSalefilter(this.branchId, '').subscribe(response => {
-        this.spinner.hide();
         console.log(response.json().result);
-        this.totalSaleList = response.json().result;
+        if (response.json().status = true) {
+          this.totalSaleList = response.json().result;
+        } else {
+          this.totalSaleList = [];
+        }
+        this.spinner.hide();
       });
     }
     this.cols = [

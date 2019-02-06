@@ -57,7 +57,7 @@ export class SetupPriceListComponent implements OnInit {
   }
 
   redirctToAddPriceList() {
-    this.router.navigate(['setup/price-list/add-list'])
+    this.router.navigate(['setup/add-price-list'])
   }
 
 }

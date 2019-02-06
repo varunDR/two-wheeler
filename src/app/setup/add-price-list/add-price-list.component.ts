@@ -55,8 +55,10 @@ export class AddPriceListComponent implements OnInit {
           }
         });
       })
+      console.log(this.list)
     }
     fileReader.readAsArrayBuffer(this.file);
+
   }
 
   backToPriceSetup() {
