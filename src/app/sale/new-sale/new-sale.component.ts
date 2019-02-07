@@ -198,7 +198,6 @@ export class NewSaleComponent implements OnInit {
   userimagePreview: any;
   payOrderPerview: any;
   deliveryFormPreview: any;
-  finalSubmit: boolean = true;
 
   //to check status of api's
   userStatus: any;
@@ -989,18 +988,6 @@ export class NewSaleComponent implements OnInit {
       this.cashTotal = this.cashTotal + this.paymentEmi.othersAmount
     }
 
-    if (this.nomineeName && this.nomineeDob) {
-      console.log(this.otp);
-      if (this.disableApprovedBy == 'visible') {
-        if (this.otpNumber == this.otp) {
-          this.finalSubmit = false;
-        } else {
-          this.finalSubmit = true;
-        }
-      }
-    } else {
-      this.finalSubmit = false;
-    }
   }
   //this method  allow alphabets 
   omit_special_char(event) {

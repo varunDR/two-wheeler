@@ -963,15 +963,14 @@
 <div *ngIf="newUser ">
 	<div class="row form-group">
 		<div claas="container">
-			<button type="submit" [disabled]=" finalSubmit" class="btn btn-warning" (click)="saveUserDeatils('0')" style="float:right;margin-right: 20%">Submit</button>
+			<button type="submit" class="btn btn-warning" (click)="saveUserDeatils('0')" style="float:right;margin-right: 20%">Submit</button>
 		</div>
 	</div>
 </div>
 <div *ngIf=" exchangeUser">
 	<div class="row form-group">
 		<div claas="container">
-			<button type="submit" [disabled]=" finalSubmit" class="btn btn-warning" style="float:right;margin-right: 20%"
-			 (click)="saveUserDeatils('1')">Submit</button>
+			<button type="submit" class="btn btn-warning" style="float:right;margin-right: 20%" (click)="saveUserDeatils('1')">Submit</button>
 		</div>
 	</div>
 </div>
