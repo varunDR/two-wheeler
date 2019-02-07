@@ -124,12 +124,6 @@ export class ViewSalesComponent implements OnInit {
       }
     })
 
-    this.service.getTax().subscribe(res => {
-      this.taxData = res.json().result;
-      this.lifeTax = this.taxData[0].life_tax;
-      this.VehicleInsu = this.taxData[0].insurance;
-    });
-
     this.http.get(environment.host + 'employees').subscribe(employeedata => {
       if (employeedata.json().status == true) {
         this.employeedata = employeedata.json().result;

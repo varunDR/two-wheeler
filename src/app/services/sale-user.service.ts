@@ -24,9 +24,7 @@ export class SaleUserService {
   public saveExchangeVehicle(exchange: any) {
     return this.http.post(environment.host + 'sale-vechile-exchanges', exchange)
   }
-  public getTax() {
-    return this.http.get(environment.host + 'taxs');
-  }
+
 
   public getListDetails() {
     return this.http.get(environment.host + 'complete-sale-users');
