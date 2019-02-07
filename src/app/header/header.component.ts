@@ -27,17 +27,17 @@ export class HeaderComponent implements OnInit {
       this.redirect = "sale";
     }
 
-    if (URL.search('appt') == 1) {
-      this.redirect = "appt";
-    }
+    // if (URL.search('appt') == 1) {
+    //   this.redirect = "appt";
+    // }
 
     if (URL.search('time-clock') == 1) {
       this.redirect = "time-clock";
     }
 
-    if (URL.search('schedule') == 1) {
-      this.redirect = "schedule";
-    }
+    // if (URL.search('schedule') == 1) {
+    //   this.redirect = "schedule";
+    // }
 
     if (URL.search('report') == 1) {
       this.redirect = "reports";
@@ -72,14 +72,14 @@ export class HeaderComponent implements OnInit {
     this.redirect = "time-clock";
   }
 
-  redirectToSchedule() {
-    $('#secondaryLoginModal').modal('show')
-    this.redirect = "schedule";
-  }
+  // redirectToSchedule() {
+  //   $('#secondaryLoginModal').modal('show')
+  //   this.redirect = "schedule";
+  // }
 
-  redirectToAppointment() {
-    this.redirect = "appt";
-  }
+  // redirectToAppointment() {
+  //   this.redirect = "appt";
+  // }
 
   redirectToManager() {
     $('#secondaryLoginModal').modal('show');
@@ -148,15 +148,16 @@ export class HeaderComponent implements OnInit {
               sessionStorage.setItem('manager', JSON.stringify(loginData.json()));
               this.router.navigate(['manager/side-bar'])
               this.spinner.hide()
-            } else if (this.redirect == 'schedule') {
-              sessionStorage.setItem('schedule', JSON.stringify(loginData.json()));
-              this.router.navigate(['scheduler'])
-              this.spinner.hide()
             } else if (this.redirect == 'reports') {
               sessionStorage.setItem('reports', JSON.stringify(loginData.json()));
               this.router.navigate(['reports'])
               this.spinner.hide()
             }
+            // else if (this.redirect == 'schedule') {
+            //   sessionStorage.setItem('schedule', JSON.stringify(loginData.json()));
+            //   this.router.navigate(['scheduler'])
+            //   this.spinner.hide()
+            // }
           }
         });
       }
