@@ -208,21 +208,18 @@ export class InventoryAssigningComponent implements OnInit {
     }
   }
   omit_special_char(event) {
-    var k;
-    k = event.charCode;  //  k = event.keyCode;  (Both can be used)
+    var k = event.charCode;  //  k = event.keyCode;  (Both can be used)
     return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 0 || k == 32);
   }
   //This Method  allow Numbers
   only_allow_number(event) {
-    var n;
-    n = event.charCode
+    var n = event.charCode
     return (n == 8 || n == 0 || n == 32 || (n >= 48 && n <= 57))
   }
   //this method allow bothe numbers and alphabets
   allow_numbers_alphabets(event) {
-    var a;
-    a = event.charCode
-    return ((a > 64 && a < 91) || (a > 96 && a < 123) || a == 8 || a == 0 || (a >= 48 && a <= 57));
+    var a = event.charCode
+    return ((a > 64 && a < 91) || (a > 96 && a < 123) || a == 8 || a == 0 || a == 32 || (a >= 48 && a <= 57));
   }
 
 }

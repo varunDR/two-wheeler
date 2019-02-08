@@ -49,7 +49,7 @@ export class HeaderComponent implements OnInit {
       console.log("inventory")
       this.redirect = "inventory";
     }
-    if (URL.search('setup')  == 1) {
+    if (URL.search('setup') == 1) {
       this.redirect = "setup";
     }
   }
@@ -120,17 +120,23 @@ export class HeaderComponent implements OnInit {
     sessionStorage.removeItem('manager');
     sessionStorage.removeItem('time-clock');
     sessionStorage.removeItem('reports');
-    this.spinner.show();
     if (this.mailId && this.password) {
       if (this.redirect == "time-clock") {
+        this.spinner.show();
         this.service.loginEmployee(data).subscribe(res => {
           this.spinner.hide()
-          sessionStorage.setItem('time-clock', JSON.stringify(res.json()));
-          this.router.navigate(['time-clock']);
-          $('#secondaryLoginModal').modal('hide');
+          if (res.json().status == false) {
+            this.errorMessage = true;
+          } else {
+            sessionStorage.setItem('time-clock', JSON.stringify(res.json()));
+            this.router.navigate(['time-clock']);
+            $('#secondaryLoginModal').modal('hide');
+          }
         })
       } else {
+        this.spinner.show()
         this.loginService.dataLogin(data).subscribe(loginData => {
+          this.spinner.hide()
           if (loginData.json().status == false) {
             this.errorMessage = true;
           } else {
