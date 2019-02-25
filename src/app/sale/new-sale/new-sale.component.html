@@ -313,8 +313,8 @@
 						<span style="color:red">*</span>
 					</label>
 					<div class="col-sm-5">
-						<input type="radio" name="pr" value="1" [(ngModel)]="prYesChecked" (change)="prChecked()">Yes &nbsp;&nbsp;
-						<input type="radio" name="pr" value="0" [(ngModel)]="prYesChecked" (change)="prChecked()">No &nbsp;&nbsp;
+						<input type="radio" name="pr" value="1" [(ngModel)]="prYesChecked" (change)="prChecked();addTotalTax()">Yes &nbsp;&nbsp;
+						<input type="radio" name="pr" value="0" [(ngModel)]="prYesChecked" (change)="prChecked();addTotalTax()">No &nbsp;&nbsp;
 					</div>
 				</div>
 
@@ -428,8 +428,8 @@
 					</div>
 					<div class="col-sm-2">
 						<div class="input-group">
-							<input type="number" min="0" name="basic" maxlength="50" (keypress)="only_allow_number($event)" class="form-control"
-							 [(ngModel)]="Registration" readonly style="font-size:12px">
+							<input type="number" min="0" name="basic" maxlength="50" class="form-control" [(ngModel)]="Registration"
+								(ngModelChange)="addTotalTax()" readonly style="font-size:12px">
 							<span> Registration</span>
 						</div>
 					</div>

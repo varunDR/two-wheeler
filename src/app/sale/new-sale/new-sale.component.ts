@@ -93,10 +93,11 @@ export class NewSaleComponent implements OnInit {
   lifeTax: number;
   VehicleInsu: number;
   HandlingC: number;
-  Registration: number;
+  Registration: any;
   StandardAcc: number;
   VehicleHp: any = null;
   nilDip: number
+  pr:number
   discountApprovedBy: any = {
     'discountsendotp_id': null,
     'name': '',
@@ -419,6 +420,13 @@ export class NewSaleComponent implements OnInit {
 
   prChecked() {
     console.log(this.prYesChecked);
+    console.log(this.tempAcce);
+    if (this.prYesChecked == '1') {
+      this.Registration = this.pr;
+    }
+    if (this.prYesChecked == '0') {
+      this.Registration = '';
+    }
   }
   // accessriesChecked() {
   //   console.log(this.accessriesYes)
@@ -777,7 +785,7 @@ export class NewSaleComponent implements OnInit {
         this.lifeTax = res.json().result[0]["LTAX & TR"];
         this.VehicleInsu = res.json().result[0]["INS - 1 Yr Comprehensive and 5 Yr Third Party"];
         this.HandlingC = res.json().result[0]["FACILIATION CHARGES"];
-        this.Registration = res.json().result[0]["Permantent Registation Cost"];
+        this.pr = res.json().result[0]["Permantent Registation Cost"];
         this.StandardAcc = res.json().result[0]["STD ACC"];
         this.nilDip = res.json().result[0]["Optional NIL DIP"]
         if (this.vehicleBasic) {
@@ -949,6 +957,9 @@ export class NewSaleComponent implements OnInit {
     if (this.isNumber(this.nilDipValue)) {
       sum = sum + this.nilDipValue * 1;
     }
+    if (this.isNumber(this.Registration)) {
+      sum = sum + this.Registration * 1;
+    }
     if (this.isNumber(this.VehicleHp)) {
       sum = sum + this.VehicleHp * 1
     }
@@ -1112,7 +1123,7 @@ export class NewSaleComponent implements OnInit {
         this.lifeTax = res.json().result[0]["LTAX & TR"];
         this.VehicleInsu = res.json().result[0]["INS - 1 Yr Comprehensive and 5 Yr Third Party"];
         this.HandlingC = res.json().result[0]["FACILIATION CHARGES"];
-        this.Registration = res.json().result[0]["Permantent Registation Cost"];
+        this.pr = res.json().result[0]["Permantent Registation Cost"];
         this.StandardAcc = res.json().result[0]["STD ACC"];
         this.nilDip = res.json().result[0]["Optional NIL DIP"]
         if (this.vehicleBasic) {
