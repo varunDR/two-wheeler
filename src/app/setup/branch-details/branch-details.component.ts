@@ -12,28 +12,23 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class BranchDetailsComponent implements OnInit {
   branchData: any = [];
-  editBranchData: any = [];
-  deleteData: any = [];
   cols: any[];
-  branchName: '';
-  branchAddress: '';
-  branchArea: '';
-  branchLocation: '';
-  contactNumber: '';
+  branch: any = {
+    'branchId': '',
+    'branchName': '',
+    'branchAddress': '',
+    'branchArea': '',
+    'branchLocation': '',
+    'contactNumber': '',
+    'status':''
+  }
   temp: any;
   temp1: any
-  branch_id: '';
-  branch_name: '';
-  branch_address: '';
-  branch_area: '';
-  branch_location: '';
-  branch_contact_number: '';
 
   public options = { position: ["top", "right"] }
-  constructor(private router: Router,private setupservice: SetupServiceService, private notif: NotificationsService, private spinner: NgxSpinnerService) { }
+  constructor(private router: Router, private setupservice: SetupServiceService, private notif: NotificationsService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
-
     this.cols = [
       { field: 'branch_name', header: 'Name' },
       { field: 'branch_address', header: ' Address' },
@@ -56,11 +51,11 @@ export class BranchDetailsComponent implements OnInit {
   }
   addBranch() {
     var data = {
-      branch_name: this.branchName,
-      branch_address: this.branchAddress,
-      branch_area: this.branchArea,
-      branch_location: this.branchLocation,
-      branch_contact_number: this.contactNumber,
+      branch_name: this.branch.branchName,
+      branch_address: this.branch.branchAddress,
+      branch_area: this.branch.branchArea,
+      branch_location: this.branch.branchLocation,
+      branch_contact_number: this.branch.contactNumber,
       rec_status: 1
     }
     console.log(data);
@@ -80,39 +75,39 @@ export class BranchDetailsComponent implements OnInit {
           }
         )
       }
-      $('#addBranch').modal('hide');
+      $('#addEditBranch').modal('hide');
     })
   }
 
   removeFields() {
-    this.branchName = '',
-      this.branchAddress = '',
-      this.branchArea = '',
-      this.branchLocation = '',
-      this.contactNumber = ''
+      this.branch.branchName = '',
+      this.branch.branchAddress = '',
+      this.branch.branchArea = '',
+      this.branch.branchLocation = '',
+      this.branch.contactNumber = ''
   }
 
   editBranch(data, index) {
-    this.editBranchData = data;
     data.index = index;
     this.temp = index;
-    this.branch_id = this.editBranchData[index].branch_id;
-    this.branch_name = this.editBranchData[index].branch_name;
-    this.branch_address = this.editBranchData[index].branch_address;
-    this.branch_area = this.editBranchData[index].branch_area;
-    this.branch_location = this.editBranchData[index].branch_location;
-    this.branch_contact_number = this.editBranchData[index].branch_contact_number;
+    this.branch.branchId = data.branch_id;
+    this.branch.branchName = data.branch_name;
+    this.branch.branchAddress = data.branch_address;
+    this.branch.branchArea = data.branch_area;
+    this.branch.branchLocation = data.branch_location;
+    this.branch.contactNumber = data.branch_contact_number;
+    this.branch.status = data.rec_status;
   }
 
   updateBranch() {
     var data = {
-      branch_id: this.branch_id,
-      branch_name: this.branch_name,
-      branch_address: this.branch_address,
-      branch_area: this.branch_area,
-      branch_location: this.branch_location,
-      branch_contact_number: this.branch_contact_number,
-      rec_status: 1
+      branch_id: this.branch.branchId,
+      branch_name: this.branch.branchName,
+      branch_address: this.branch.branchAddress,
+      branch_area: this.branch.branchArea,
+      branch_location: this.branch.branchLocation,
+      branch_contact_number: this.branch.contactNumber,
+      rec_status: this.branch.rec_status
     }
     this.setupservice.saveBranch(data).subscribe(res => {
       if (res.json().status == true) {
@@ -128,29 +123,27 @@ export class BranchDetailsComponent implements OnInit {
           }
         )
       }
-      this.editBranchData[this.temp].branch_name = data.branch_name;
-      this.editBranchData[this.temp].branch_address = data.branch_address;
-      this.editBranchData[this.temp].branch_area = data.branch_area;
-      this.editBranchData[this.temp].branch_location = data.branch_location;
-      this.editBranchData[this.temp].branch_contact_number = data.branch_contact_number;
-      this.editBranchData[this.temp].rec_status = data.rec_status;
+      this.branchData[this.temp].branch_name = data.branch_name;
+      this.branchData[this.temp].branch_address = data.branch_address;
+      this.branchData[this.temp].branch_area = data.branch_area;
+      this.branchData[this.temp].branch_location = data.branch_location;
+      this.branchData[this.temp].branch_contact_number = data.branch_contact_number;
+      this.branchData[this.temp].rec_status = data.rec_status;
       this.temp = " ";
     });
     this.removeFields();
-    $('#editBranch').modal('hide')
+    $('#addEditBranch').modal('hide')
   }
 
-  deleteBranch(val, index) {
+  deleteBranch(data, index) {
     this.temp1 = index;
-    this.deleteData = val;
-    val.index = index;
-    this.branch_id = this.deleteData[index].branch_id;
+    this.branch.branchId = data.branch_id;
   }
-  
+
   yesBranchDelete() {
     this.branchData.splice(this.temp1, 1)
     var data = {
-      branch_id: this.branch_id,
+      branch_id: this.branch.branchId,
       rec_status: "0"
     }
     this.setupservice.saveBranch(data).subscribe(res => {

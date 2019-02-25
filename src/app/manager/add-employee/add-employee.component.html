@@ -20,7 +20,7 @@
         </div>
       </div>&nbsp;
   
-      <p-table #dt [columns]="cols" [value]="employees" [paginator]="true" [rows]="4">
+      <p-table #dt [columns]="cols" [value]="employees" [paginator]="true" [rows]="4" [responsive]="false" [scrollable]="true" scrollHeight="10%" scrollWidth="10%">
         <ng-template pTemplate="caption">
           <div style="text-align: right">
             <i class="fa fa-search" style="margin:4px 4px 0 0"></i>

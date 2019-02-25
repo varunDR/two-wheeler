@@ -9622,7 +9622,8 @@ td {
     font-size: 14px;
     font-weight: 500;
     color: #444444;
-    overflow: overlay;
+    overflow-wrap: break-word;
+    /* overflow: overlay; */
 }
 .inventort-hand {
   background: #fff;
