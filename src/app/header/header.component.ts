@@ -151,8 +151,10 @@ export class HeaderComponent implements OnInit {
               this.router.navigate(['inventory/side-bar'])
               this.spinner.hide()
             } else if (this.redirect == 'manager') {
+              // if(loginData.json()._results.emp_type_id == 1 || loginData.json()._results.emp_type_id == 2 ){
               sessionStorage.setItem('manager', JSON.stringify(loginData.json()));
               this.router.navigate(['manager/side-bar'])
+              // }
               this.spinner.hide()
             } else if (this.redirect == 'reports') {
               sessionStorage.setItem('reports', JSON.stringify(loginData.json()));

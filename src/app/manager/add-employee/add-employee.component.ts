@@ -49,12 +49,12 @@ export class AddEmployeeComponent implements OnInit {
   employeeType: '';
   passwordLogin = "";
   mailId = "";
-  loginData :any
+  loginData: any;
 
-
-  constructor( private http: Http, private formBuilder: FormBuilder, private router: Router, private service: ManagerServiceService, private empTypePipe: EmpTypePipe, private cdr: ChangeDetectorRef) { }
+  constructor(private http: Http, private formBuilder: FormBuilder, private router: Router, private service: ManagerServiceService, private empTypePipe: EmpTypePipe, private cdr: ChangeDetectorRef, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
+    this.spinner.show();
     this.loginData = JSON.parse(sessionStorage.getItem('manager'));
     console.log(this.loginData)
     var brurl = '';
@@ -66,6 +66,7 @@ export class AddEmployeeComponent implements OnInit {
       } else {
         this.employees = [];
       }
+      this.spinner.hide();
     })
 
     this.http.get(environment.host + 'emp-types').subscribe(data => {
@@ -112,7 +113,7 @@ export class AddEmployeeComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  toGetData(){
+  toGetData() {
     console.log(this.loginData._results.emp_type_id)
     if (this.loginData.status == true && this.loginData._results.emp_type_id == 1 || this.loginData._results.emp_type_id == 2 || this.loginData._results.emp_type_id == 3) {
       if (this.loginData._results.emp_type_id == 3) {
