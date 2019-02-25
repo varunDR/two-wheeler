@@ -11,6 +11,10 @@ import { NotificationsService } from 'angular2-notifications';
 import * as moment from 'moment';
 import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';
 import { IndentService } from '../../services/indent.service'
+import { NgxSpinnerService } from 'ngx-spinner';
+import { CompleteVehicleService } from '../../services/complete-vehicle.service';
+import { AllVehicleService } from '../../services/all-vehicle.service';
+declare var $: any;
 
 @Component({
   selector: 'app-inventory-assigning',
@@ -42,7 +46,13 @@ export class InventoryAssigningComponent implements OnInit {
   newDate: any;
   newDate2: any;
   public options = { position: ["top", "right"] }
-
+  colorData: any[];
+  vechiles: any[];
+  cols: any[];
+  variantData: any[];
+  selectedColorFilter = undefined;
+  selectedVariantFilter = undefined;
+  _selectVec: any;
   vehicles: any = [
     {
       engineno: "",
@@ -53,7 +63,7 @@ export class InventoryAssigningComponent implements OnInit {
       model: "",
     }
   ];
-  constructor(private router: Router, private http: Http, private service: InventoryAssigningService, private formBuilder: FormBuilder, private pipe: InventoryListPipe, private addInvPipe: InventoryAddPipe, private notif: NotificationsService, private indentservice: IndentService) {
+  constructor(private router: Router, private http: Http, private service: InventoryAssigningService, private formBuilder: FormBuilder, private pipe: InventoryListPipe, private addInvPipe: InventoryAddPipe, private notif: NotificationsService, private indentservice: IndentService, private spinner: NgxSpinnerService, private completevehicle: CompleteVehicleService, private allvehicleservice: AllVehicleService) {
   }
   ngOnInit() {
     this._indentData = JSON.parse(sessionStorage.getItem('indentData'));
@@ -99,6 +109,16 @@ export class InventoryAssigningComponent implements OnInit {
       managerNote: ['', Validators.required],
       status: ['', Validators.required]
     });
+
+    this.cols = [
+      { field: 'TVS-M Invoice No', header: 'Invoice No' },
+      { field: 'Sourced from', header: 'Sorce From' },
+      { field: 'model_name', header: 'Model' },
+      { field: 'color_name', header: 'Color' },
+      { field: 'variant_name', header: 'Variant' },
+      { field: 'Engine No', header: 'Engine No' },
+      { field: 'Frame No', header: 'Frame No' },
+    ];
   }
 
   deleteInventoryAssign(index) {
@@ -222,4 +242,95 @@ export class InventoryAssigningComponent implements OnInit {
     return ((a > 64 && a < 91) || (a > 96 && a < 123) || a == 8 || a == 0 || a == 32 || (a >= 48 && a <= 57));
   }
 
+  getVechicleDetail() {
+    this.spinner.show();
+    this.allvehicleservice.getVehicleDetails().subscribe(res => {
+      if (res.json().status == true) {
+        this.vechiles = res.json().result
+      } else {
+        this.vechiles = [];
+      }
+      this.spinner.hide();
+    });
+
+    let _color = this.completevehicle.getColor();
+    if (Object.keys(_color).length) {
+      this.colorData = _color
+    } else {
+      this.allvehicleservice.getColor().subscribe(data => {
+        if (data.json().status == true) {
+          this.colorData = data.json().result;
+          this.completevehicle.addColor(data.json().result)
+        } else {
+          this.colorData = [];
+        }
+      });
+    }
+    let _variant = this.completevehicle.getVariant();
+    if (Object.keys(_variant).length) {
+      this.variantData = _variant
+    } else {
+      this.allvehicleservice.getVariant().subscribe(data => {
+        if (data.json().status == true) {
+          this.variantData = data.json().result;
+          this.completevehicle.addVariant(data.json().result)
+        } else {
+          this.variantData = [];
+        }
+      })
+    }
+  }
+
+  detailsGo() {
+    var url = '';
+    if (!(isNaN(this.selectedVariantFilter))) {
+      url = url + '&variant=' + this.selectedVariantFilter;
+    }
+    if (!(isNaN(this.selectedColorFilter))) {
+      url = url + '&color=' + this.selectedColorFilter;
+    }
+    this.allvehicleservice.getVehicleFilter(url).subscribe(res => {
+      if (res.json().status == true) {
+        this.vechiles = res.json().result;
+        this.notif.success(
+          'Success',
+          'Filter Applied Successfully',
+          {
+            timeOut: 3000,
+            showProgressBar: true,
+            pauseOnHover: false,
+            clickToClose: true,
+            maxLength: 50
+          }
+        )
+      } else {
+        this.vechiles = [];
+        this.notif.warn(
+          'Sorry',
+          'No Records Found',
+          {
+            timeOut: 3000,
+            showProgressBar: true,
+            pauseOnHover: false,
+            clickToClose: true,
+            maxLength: 50
+          }
+        )
+      }
+    })
+  }
+
+  detailsReset() {
+    this.selectedVariantFilter = undefined;
+    this.selectedColorFilter = undefined;
+  }
+  selectedSubmite() {
+    $('#showVechileDetail').modal('hide');
+    console.log("submite");
+    console.log(this._selectVec)
+  }
+  selectedVechile(val) {
+    this._selectVec = val;
+    console.log(val)
+  }
 }

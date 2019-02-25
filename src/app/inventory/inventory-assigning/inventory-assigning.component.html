@@ -40,7 +40,8 @@
                 <span style="color:red">*</span>
               </label>
               <div class="col-sm-5">
-                <select class="form-control" formControlName="branchId" [(ngModel)]="branchId" [ngClass]="{ 'is-invalid': submitted && f.branchId.errors }">
+                <select class="form-control" formControlName="branchId" [(ngModel)]="branchId"
+                  [ngClass]="{ 'is-invalid': submitted && f.branchId.errors }">
                   <option value="" disabled select></option>
                   <option *ngFor="let branch of branchData" [ngValue]="branch.branch_id">{{branch.branch_name}}</option>
                 </select>
@@ -68,7 +69,8 @@
                 <span style="color:red">*</span>
               </label>
               <div class="col-sm-5">
-                <select class="form-control" formControlName="shippedBy" [(ngModel)]="shippedBy" [ngClass]="{ 'is-invalid': submitted && f.shippedBy.errors }">
+                <select class="form-control" formControlName="shippedBy" [(ngModel)]="shippedBy"
+                  [ngClass]="{ 'is-invalid': submitted && f.shippedBy.errors }">
                   <option value="" disabled select></option>
                   <option value="0">Auto</option>
                   <option value="1">Trolley</option>
@@ -83,8 +85,8 @@
               <label class="col-sm-4 col-form-label required"> Shipped Vehicle No.
               </label>
               <div class="col-sm-5">
-                <input type="text" maxlength="50" class="form-control" formControlName="shippedIn" [(ngModel)]="shippedIn"
-                  [ngClass]="{ 'is-invalid': submitted && f.shippedIn.errors }">
+                <input type="text" maxlength="50" class="form-control" formControlName="shippedIn"
+                  [(ngModel)]="shippedIn" [ngClass]="{ 'is-invalid': submitted && f.shippedIn.errors }">
                 <div *ngIf="submitted && f.shippedIn.errors" class="invalid-feedback">
                   <div *ngIf="f.shippedIn.errors.required" style="color:red">shippimg No. is required</div>
                 </div>
@@ -95,8 +97,9 @@
                 <a style="color:red">*</a>
               </label>
               <div class="col-sm-5">
-                <input type="number" class="form-control" formControlName="assQuantity" placeholder="Enter Assaigned Quantity"
-                  [(ngModel)]="assQuantity" [ngClass]="{ 'is-invalid': submitted && f.assQuantity.errors }" (keypress)="only_allow_number($event)"
+                <input type="number" class="form-control" formControlName="assQuantity"
+                  placeholder="Enter Assaigned Quantity" [(ngModel)]="assQuantity"
+                  [ngClass]="{ 'is-invalid': submitted && f.assQuantity.errors }" (keypress)="only_allow_number($event)"
                   maxlength="50">
                 <div *ngIf="submitted && f.assQuantity.errors" class="invalid-feedback">
                   <div *ngIf="f.assQuantity.errors.required" style="color:red">Assaigned Quantity is required</div>
@@ -150,7 +153,8 @@
                 <span style="color:red">*</span>
               </label>
               <div class="col-sm-5">
-                <select class="form-control" formControlName="managerAck" [(ngModel)]="managerAck" [ngClass]="{ 'is-invalid': submitted && f.managerAck.errors }">
+                <select class="form-control" formControlName="managerAck" [(ngModel)]="managerAck"
+                  [ngClass]="{ 'is-invalid': submitted && f.managerAck.errors }">
                   <option value="0" selected>Yes</option>
                   <option value="1">No</option>
                 </select>
@@ -165,7 +169,8 @@
                 <span style="color:red">*</span>
               </label>
               <div class="col-sm-5">
-                <select class="form-control" formControlName="status" [(ngModel)]="status" [ngClass]="{ 'is-invalid': submitted && f.status.errors }">
+                <select class="form-control" formControlName="status" [(ngModel)]="status"
+                  [ngClass]="{ 'is-invalid': submitted && f.status.errors }">
                   <option value="" disabled select></option>
                   <option value="1">Processing</option>
                   <option *ngIf="!_indentData" value="0">Reject</option>
@@ -182,8 +187,9 @@
 
               </label>
               <div class="col-sm-5">
-                <textarea class="form-control" maxlength="1000" rows="2" formControlName="managerNote" [(ngModel)]="managerNote"
-                  [ngClass]="{ 'is-invalid': submitted && f.managerNote.errors }" (keypress)="allow_numbers_alphabets($event)"></textarea>
+                <textarea class="form-control" maxlength="1000" rows="2" formControlName="managerNote"
+                  [(ngModel)]="managerNote" [ngClass]="{ 'is-invalid': submitted && f.managerNote.errors }"
+                  (keypress)="allow_numbers_alphabets($event)"></textarea>
                 <div *ngIf="submitted && f.managerNote.errors" class="invalid-feedback">
                   <div *ngIf="f.managerNote.errors.required" style="color:red">Manager Note is required</div>
                 </div>
@@ -206,10 +212,14 @@
                 <label class="col-sm-5 col-form-label required"> Engine No
                   <span style="color:red">*</span>
                 </label>
-                <div class="col-sm-7">
-                  <input type="text" placeholder="Enter Engine Number" name="Engine" maxlength="50" [(ngModel)]="vehicle.engineno"
-                    (ngModelChange)='getEngineDetail($event,i)' [typeahead]="indentData" typeaheadOptionField="Engine No"
-                    (typeaheadOnSelect)="onSelect($event)" class="form-control">
+                <div class="col-sm-7" style="display: inline-table;">
+                  <input type="text" placeholder="Enter Engine Number" name="Engine" maxlength="50"
+                    [(ngModel)]="vehicle.engineno" (ngModelChange)='getEngineDetail($event,i)' [typeahead]="indentData"
+                    typeaheadOptionField="Engine No" (typeaheadOnSelect)="onSelect($event)" class="form-control">
+                  <span class="input-group-addon" (click)="getVechicleDetail()" data-toggle="modal"
+                    data-target="#showVechileDetail">
+                    <i class="fas fa-motorcycle"></i>
+                  </span>
                 </div>
               </div>
             </div>
@@ -284,3 +294,92 @@
   </div>
 </div>
 <br>
+
+<div id="showVechileDetail" class="modal fade" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="price-info">
+        <h2>Vechile Details</h2>
+      </div>
+      <div class="row form-group">
+        <div class="col-md-4 col-sm-4 col-xs-12">
+          <div class="form-group">
+            <label for="input" class="col-md-3 control-label">Color</label>
+            <div class="col-md-7">
+              <select class="form-control" [(ngModel)]="selectedColorFilter">
+                <option value="undefined" selected>All</option>
+                <option *ngFor="let data of this.colorData" [ngValue]=" data.vehicle_color_id">{{data.color_name}}
+                </option>
+              </select>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+          <div class="form-group">
+            <label for="input" class="col-md-3 control-label">Variant</label>
+            <div class="col-md-7">
+              <select class="form-control" [(ngModel)]="selectedVariantFilter">
+                <option value="undefined" selected>All</option>
+                <option *ngFor="let data of this.variantData" [ngValue]=" data.vehicle_variant_id">{{data.variant_name}}
+                </option>
+              </select>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+        <div class="col-md-1 col-sm-1 col-xs-12">
+          <button type="submit" class="btn btn-primary" (click)=" detailsGo()">Submit</button>
+        </div>
+        <div class="col-md-1 col-sm-1 col-xs-12">
+          <button type="submit" class="btn btn-warning" (click)="detailsReset()">Reset</button>
+        </div>
+      </div>
+      <div style="margin:4px;">
+        <p-table #dt [value]="vechiles" [columns]="cols" [paginator]="true" [rows]="5">
+          <ng-template pTemplate="caption">
+            <div style="text-align: right">
+              <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+              <input type="text" pInputText size="50" placeholder="Global Filter"
+                (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header" let-cols>
+            <tr>
+              <th *ngFor="let col of cols" [pSortableColumn]="col.field">
+                {{col.header}}
+                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                  ariaLabelDesc="Activate to sort in descending order"
+                  ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+              </th>
+              <th>Select</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-vechiles>
+            <tr>
+              <td *ngFor="let col of cols">
+                {{vechiles[col.field]}}
+              </td>
+              <td> <input type="radio" name="select" id="select" (click)="selectedVechile(vechiles)" /> </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+      <hr>
+      <div class="select-stylist-footer-right">
+        <ul>
+          <li>
+            <a data-dismiss="modal" *ngIf="_selectVec" (click)="selectedSubmite()">
+              <i class="fas fa-check" style="color: green"></i>
+              <br>Submite</a>
+          </li>
+          <li>
+            <a data-dismiss="modal">
+              <i class="fas fa-times"></i>
+              <br>Cancel</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

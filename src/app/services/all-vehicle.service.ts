@@ -46,6 +46,13 @@ export class AllVehicleService {
   }
 
   public addFinance(data: any) {
-    return this.http.post(environment.host + 'finance-name',data);
+    return this.http.post(environment.host + 'finance-name', data);
+  }
+  public getVehicleDetails() {
+    return this.http.get(environment.host + 'vehile-details ');
+  }
+  public getVehicleFilter(url: any) {
+    console.log(environment.host + 'vehile-details?' + url)
+    return this.http.get(environment.host + 'vehile-details?' + url)
   }
 }
