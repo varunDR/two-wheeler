@@ -333,4 +333,23 @@ export class InventoryAssigningComponent implements OnInit {
     this._selectVec = val;
     console.log(val)
   }
+  assignVechileCount() {
+    console.log(this.assQuantity)
+    if (!(isNaN(this.assQuantity))) {
+      if (this.assQuantity > 0) {
+        this.vehicles= [
+       
+        ]
+        for (let i = 0; i < this.assQuantity; i++)
+          this.vehicles.push({
+            engineno: "",
+            frameno: "",
+            color: "",
+            variant: "",
+            model: ""
+          })
+          console.log(this.vehicles)
+      } 
+    }
+  }
 }
