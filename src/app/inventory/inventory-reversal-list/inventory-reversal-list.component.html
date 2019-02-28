@@ -57,7 +57,8 @@
         <div class="col-md-7">
           <select class="form-control" [(ngModel)]="vehicleVariantFilter">
             <option value="0" selected>All</option>
-            <option *ngFor="let data of this.variantData" [ngValue]=" data.vehicle_variant_id">{{data.variant_name}}</option>
+            <option *ngFor="let data of this.variantData" [ngValue]=" data.vehicle_variant_id">{{data.variant_name}}
+            </option>
           </select>
         </div>
         <div class="clear"></div>
@@ -69,8 +70,9 @@
         <label for="input" class="col-md-3 control-label">From</label>
         <div class="col-md-7">
           <div class="input-group">
-            <p-calendar [(ngModel)]="fromDate" [inputStyle]="{'width':'190px'}" [showIcon]="true" placeholder="Select Date"
-              name="fromDate" (ngModelChange)="fromDa($event)" dateFormat="yy-mm-dd"></p-calendar>
+            <p-calendar [(ngModel)]="fromDate" [inputStyle]="{'width':'190px'}" [showIcon]="true"
+              placeholder="Select Date" name="fromDate" (ngModelChange)="fromDa($event)" dateFormat="yy-mm-dd">
+            </p-calendar>
           </div>
         </div>
         <div class="clear"></div>
@@ -82,8 +84,8 @@
         <label for="input" class="col-md-3 control-label">To</label>
         <div class="col-md-7">
           <div class="input-group">
-            <p-calendar [(ngModel)]="toDate" [inputStyle]="{'width':'190px'}" [showIcon]="true" placeholder="Select Date"
-              name="toDate" (ngModelChange)="toDa($event)" dateFormat="yy-mm-dd"></p-calendar>
+            <p-calendar [(ngModel)]="toDate" [inputStyle]="{'width':'190px'}" [showIcon]="true"
+              placeholder="Select Date" name="toDate" (ngModelChange)="toDa($event)" dateFormat="yy-mm-dd"></p-calendar>
           </div>
         </div>
         <div class="clear"></div>
@@ -106,16 +108,17 @@
     <ng-template pTemplate="caption">
       <div style="text-align: right">
         <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-        <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')"
-          style="width:auto">
+        <input type="text" pInputText size="50" placeholder="Global Filter"
+          (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
       </div>
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
         <th *ngFor="let col of cols" [pSortableColumn]="col.field">
           {{col.header}}
-          <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
-            ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+          <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+            ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order">
+          </p-sortIcon>
         </th>
         <th>Ack</th>
       </tr>
@@ -127,7 +130,8 @@
         </td>
         <td><button type="submit" data-toggle="modal" data-target="#toInventory" (click)="inventoryPop(bike,i)"><i
               class="fa fa-check" style="color:orange;font-size: 12px;"></i></button>
-          <button type="submit" (click)="noReversal(reversal,i)"><i class="fa fa-times" style="color:red;font-size: 12px;"></i></button>
+          <button type="submit" (click)=" rejectVehicleClick(bike,i)" data-toggle="modal"
+            data-target="#rejectVehicles"><i class="fa fa-times" style="color:red;font-size: 12px;"></i></button>
         </td>
         <!-- <td href="#" data-toggle="modal" data-target="#editIndent" (click)="editIndent(reversal,i)"><i class="fa fa-edit"
         style="color:orange"></i></td> -->
@@ -136,7 +140,8 @@
   </p-table>
 </div>
 
-<div class="modal fade" id="toInventory" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="toInventory" tabindex="-1" data-backdrop="static" role="dialog"
+  aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -160,7 +165,8 @@
               <td *ngFor="let column of columns">
                 {{car[column.field]}}
               </td>
-              <td><button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#inInventory" (click)="assaignButtonClick(car,i)">Assaign</button>
+              <td><button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#inInventory"
+                  (click)="assaignButtonClick(car,i)">Assaign</button>
               </td>
             </tr>
           </ng-template>
@@ -172,7 +178,8 @@
   </div>
 </div>
 
-<div class="modal fade" id="inInventory" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="inInventory" tabindex="-1" data-backdrop="static" role="dialog"
+  aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -190,47 +197,52 @@
               <a style="color:red">*</a>
             </label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" name="engine" id="eneg" placeholder="Engine Number" [(ngModel)]="vehicle.vehicleEngineNo"
-                [(ngModel)]="showMoreControls" [ngModelOptions]="{standalone: true}" maxlength="50" readonly>
+              <input type="text" class="form-control" name="engine" id="eneg" placeholder="Engine Number"
+                [(ngModel)]="vehicle.vehicleEngineNo" [(ngModel)]="showMoreControls"
+                [ngModelOptions]="{standalone: true}" maxlength="50" readonly>
             </div>
             <div class="clear"></div>
           </div>
 
           <div class="row form-group">
-              <div class="col-sm-1"></div>
+            <div class="col-sm-1"></div>
             <label class="col-sm-4 col-form-label required">Frame No
               <span style="color:red">*</span>
             </label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" name="frame" id="enege" placeholder="Frame Number" [(ngModel)]="vehicle.vehicleFrameNo"
-                [(ngModel)]="showMoreControls" [ngModelOptions]="{standalone: true}" maxlength="50" readonly>
+              <input type="text" class="form-control" name="frame" id="enege" placeholder="Frame Number"
+                [(ngModel)]="vehicle.vehicleFrameNo" [(ngModel)]="showMoreControls"
+                [ngModelOptions]="{standalone: true}" maxlength="50" readonly>
             </div>
           </div>
 
           <div class="row form-group">
-              <div class="col-sm-1"></div>
+            <div class="col-sm-1"></div>
             <label class="col-sm-4 col-form-label required">Vehicle Color</label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" name="colr" id="clr" placeholder="Color" [(ngModel)]="vehicle.vehicleColor"
-                [(ngModel)]="showMoreControls" [ngModelOptions]="{standalone: true}" maxlength="50" readonly>
+              <input type="text" class="form-control" name="colr" id="clr" placeholder="Color"
+                [(ngModel)]="vehicle.vehicleColor" [(ngModel)]="showMoreControls" [ngModelOptions]="{standalone: true}"
+                maxlength="50" readonly>
             </div>
           </div>
 
           <div class="row form-group">
-              <div class="col-sm-1"></div>
+            <div class="col-sm-1"></div>
             <label class="col-sm-4 col-form-label required">Vehicle Model </label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" name="mdl" id="mdl" placeholder="Model" [(ngModel)]="vehicle.vehicleModel"
-                [(ngModel)]="showMoreControls" [ngModelOptions]="{standalone: true}" maxlength="50" readonly>
+              <input type="text" class="form-control" name="mdl" id="mdl" placeholder="Model"
+                [(ngModel)]="vehicle.vehicleModel" [(ngModel)]="showMoreControls" [ngModelOptions]="{standalone: true}"
+                maxlength="50" readonly>
             </div>
           </div>
 
           <div class="row form-group">
-              <div class="col-sm-1"></div>
+            <div class="col-sm-1"></div>
             <label class="col-sm-4 col-form-label required">Vehicle Variant</label>
             <div class="col-sm-5">
-              <input type="text" class="form-control" name="var" id="var" placeholder="Variant" [(ngModel)]="vehicle.vehicleVariant"
-                [(ngModel)]="showMoreControls" [ngModelOptions]="{standalone: true}" maxlength="50" readonly>
+              <input type="text" class="form-control" name="var" id="var" placeholder="Variant"
+                [(ngModel)]="vehicle.vehicleVariant" [(ngModel)]="showMoreControls"
+                [ngModelOptions]="{standalone: true}" maxlength="50" readonly>
             </div>
           </div>
 
@@ -240,7 +252,8 @@
               <span style="color:red">*</span>
             </label>
             <div class="col-sm-5">
-              <select class="form-control" formControlName="shippedBy" [(ngModel)]="return.shippedBy" [ngClass]="{ 'is-invalid': submitted && f.shippedBy.errors }">
+              <select class="form-control" formControlName="shippedBy" [(ngModel)]="return.shippedBy"
+                [ngClass]="{ 'is-invalid': submitted && f.shippedBy.errors }">
                 <option value="" disabled select></option>
                 <option value="0">Auto</option>
                 <option value="1">Trolley</option>
@@ -257,8 +270,8 @@
             <label class="col-sm-4 col-form-label required"> Shipped Vehicle No.
             </label>
             <div class="col-sm-5">
-              <input type="text" maxlength="50" class="form-control" formControlName="shippedIn" [(ngModel)]="return.shippedIn"
-                [ngClass]="{ 'is-invalid': submitted && f.shippedIn.errors }">
+              <input type="text" maxlength="50" class="form-control" formControlName="shippedIn"
+                [(ngModel)]="return.shippedIn" [ngClass]="{ 'is-invalid': submitted && f.shippedIn.errors }">
               <div *ngIf="submitted && f.shippedIn.errors" class="invalid-feedback">
                 <div *ngIf="f.shippedIn.errors.required" style="color:red">shipping No. is required</div>
               </div>
@@ -270,7 +283,8 @@
             <label class="col-sm-4 col-form-label required">Comment
             </label>
             <div class="col-sm-5">
-              <textarea class="form-control" maxlength="1000" rows="2" formControlName="managerNote" [(ngModel)]="return.managerNote"
+              <textarea class="form-control" maxlength="1000" rows="2" formControlName="managerNote"
+                [(ngModel)]="return.managerNote"
                 [ngClass]="{ 'is-invalid': submitted && f.managerNote.errors }"></textarea>
               <div *ngIf="submitted && f.managerNote.errors" class="invalid-feedback">
                 <div *ngIf="f.managerNote.errors.required" style="color:red">Comment is required</div>
@@ -281,7 +295,70 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)=clearEditedData()>close</button>
-        <button type="button" class="btn btn-warning" data-dismiss="modal" (click)="updateReversalAssaigned()">Save</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal"
+          (click)="updateReversalAssaigned()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="rejectVehicles" tabindex="-1" data-backdrop="static" role="dialog"
+  aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h3 class="modal-title" id="myModalLabel">Reject comment</h3>
+      </div>
+      <div class="modal-body">
+        <br>
+        <div class="form-group">
+          <div class="col-md-1"></div>
+          <label for="input" class="col-md-3 control-label">Model
+            <a style="color:red">*</a>
+          </label>
+          <div class="col-md-6">
+            <input type="text" class="form-control" maxlength="50" [(ngModel)]="rejectList.model_name" readonly>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-1"></div>
+          <label for="input" class="col-md-3 control-label">Variant
+            <a style="color:red">*</a>
+          </label>
+          <div class="col-md-6">
+            <input type="text" class="form-control" maxlength="50" [(ngModel)]="rejectList.variant_name" readonly>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-1"></div>
+          <label for="input" class="col-md-3 control-label">Color
+            <a style="color:red">*</a>
+          </label>
+          <div class="col-md-6">
+            <input type="text" class="form-control" maxlength="50" [(ngModel)]="rejectList.color_name" readonly>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-1"></div>
+          <label for="input" class="col-md-3 control-label">Comment
+            <a style="color:red">*</a>
+          </label>
+          <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Enter Comment" maxlength="50"
+              [(ngModel)]="rejectList.reject_comment">
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="noAcknowledgement()">Submit</button>
       </div>
     </div>
   </div>

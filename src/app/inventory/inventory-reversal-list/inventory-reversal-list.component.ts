@@ -59,6 +59,14 @@ export class InventoryReversalListComponent implements OnInit {
   toDate = "";
   InventoryReturnForm: FormGroup;
   submitted = false;
+  temp: any = '';
+  rejectList: any = {
+    'return_inventory_id': '',
+    'model_name': '',
+    'variant_name': '',
+    'color_name': '',
+    'reject_comment': ''
+  }
 
   public options = { position: ["top", "right"] }
 
@@ -168,6 +176,11 @@ export class InventoryReversalListComponent implements OnInit {
     this.router.navigate(['inventory']);
   }
 
+  rejectVehicleClick(data, index) {
+    this.temp = index;
+    this.rejectList = data;
+  }
+
   inventoryPop(data, index) {
     this.return.returnInventoryId = data.return_inventory_id
     this.return.status = data.status
@@ -186,6 +199,32 @@ export class InventoryReversalListComponent implements OnInit {
         this.inventoryData = [];
       }
       this.spinner.hide();
+    });
+  }
+
+  noAcknowledgement() {
+    var data = {
+      return_inventory_id: this.rejectList.return_inventory_id,
+      status: "0",
+      reject_comment: this.rejectList.reject_comment
+    }
+    console.log(data);
+    this.reversalservice.addReversalInventory(data).subscribe(res => {
+      if (res.json().status == true) {
+        this.inventoryData.splice(this.temp, 1)
+        $('#rejectVehicles').modal('hide');
+        this.notif.success(
+          'Success',
+          'Rejected Successfully',
+          {
+            timeOut: 3000,
+            showProgressBar: true,
+            pauseOnHover: false,
+            clickToClose: true,
+            maxLength: 50
+          }
+        )
+      }
     });
   }
 
