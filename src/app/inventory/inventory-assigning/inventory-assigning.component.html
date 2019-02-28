@@ -96,15 +96,20 @@
               <label for="input" class="col-sm-4 control-label">Assaigned Quantity
                 <a style="color:red">*</a>
               </label>
-              <div class="col-sm-5">
+              <div class="col-sm-5" style="display: inline-table;">
                 <input type="number" class="form-control" formControlName="assQuantity"
-                  placeholder="Enter Assaigned Quantity" [(ngModel)]="assQuantity"
-                  [ngClass]="{ 'is-invalid': submitted && f.assQuantity.errors }" (ngModelChange)="assignVechileCount()" (keypress)="only_allow_number($event)"
-                  maxlength="50">
-                <div *ngIf="submitted && f.assQuantity.errors" class="invalid-feedback">
-                  <div *ngIf="f.assQuantity.errors.required" style="color:red">Assaigned Quantity is required</div>
-                </div>
+                  placeholder="Enter Assign Quantity" [(ngModel)]="assQuantity"
+                  [ngClass]="{ 'is-invalid': submitted && f.assQuantity.errors }" (ngModelChange)="assignVechileCount()"
+                  (keypress)="only_allow_number($event)" maxlength="50">
+                <span class="input-group-addon" style="border-radius: 4px;" (click)="getVechicleDetail()"
+                  data-toggle="modal" data-target="#showVechileDetail">
+                  <i class="fas fa-motorcycle"></i>
+                </span>
+
                 <div class="clear"></div>
+              </div>
+              <div *ngIf="submitted && f.assQuantity.errors" class="invalid-feedback">
+                <div *ngIf="f.assQuantity.errors.required" style="color:red">Assaigned Quantity is required</div>
               </div>
             </div>
 
@@ -200,11 +205,12 @@
         </div>
       </form>
     </div>
-    <div class="new-assign">
+     <div class="new-assign">
       <div class="container">
         <div class="col-sm-12">
           <h3>Vehicle details</h3>
         </div>
+        {{vehicles | json}} here
         <div *ngFor="let vehicle of vehicles;let i=index">
           <div class="col-sm-12">
             <div class="col-sm-4">
@@ -214,32 +220,19 @@
                 </label>
                 <div class="col-sm-7" style="display: inline-table;">
                   <input type="text" placeholder="Enter Engine Number" name="Engine" maxlength="50"
-                    [(ngModel)]="vehicle.engineno" (ngModelChange)='getEngineDetail($event,i)' [typeahead]="indentData"
+                    [(ngModel)]="vehicle['Engine No']" (ngModelChange)='getEngineDetail($event,i)' [typeahead]="indentData"
                     typeaheadOptionField="Engine No" (typeaheadOnSelect)="onSelect($event)" class="form-control">
-                  <span class="input-group-addon" (click)="getVechicleDetail()" data-toggle="modal"
-                    data-target="#showVechileDetail">
-                    <i class="fas fa-motorcycle"></i>
-                  </span>
+
                 </div>
               </div>
             </div>
-            <!-- <div class="col-sm-4">
-              <div class="row form-group">
-                <label class="col-sm-5 col-form-label required"> Chassis No
-                  <span style="color:red">*</span>
-                </label>
-                <div class="col-sm-7">
-                  <input type="text" maxlength="50" class="form-control" [(ngModel)]="vehicle.chassisno">
-                </div>
-              </div>
-            </div> -->
             <div class="col-sm-4">
               <div class="row form-group">
                 <label class="col-sm-5 col-form-label required"> Frame No
                   <span style="color:red">*</span>
                 </label>
                 <div class="col-sm-7">
-                  <input type="text" maxlength="50" class="form-control" [(ngModel)]="vehicle.frameno" readonly>
+                  <input type="text" maxlength="50" class="form-control" [(ngModel)]="vehicle['Frame No']" readonly>
                 </div>
               </div>
             </div>
@@ -251,7 +244,7 @@
                   <span style="color:red">*</span>
                 </label>
                 <div class="col-sm-7">
-                  <input type="text" maxlength="50" class="form-control" [(ngModel)]="vehicle.color" readonly>
+                  <input type="text" maxlength="50" class="form-control" [(ngModel)]="vehicle.color_name" readonly>
                 </div>
               </div>
             </div>
@@ -261,7 +254,7 @@
                   <span style="color:red">*</span>
                 </label>
                 <div class="col-sm-7">
-                  <input type="text" maxlength="50" class="form-control" [(ngModel)]="vehicle.variant" readonly>
+                  <input type="text" maxlength="50" class="form-control" [(ngModel)]="vehicle.variant_name" readonly>
                 </div>
               </div>
             </div>
@@ -271,26 +264,17 @@
                   <span style="color:red">*</span>
                 </label>
                 <div class="col-sm-7">
-                  <input type="text" maxlength="50" class="form-control" [(ngModel)]="vehicle.model" readonly>
+                  <input type="text" maxlength="50" class="form-control" [(ngModel)]="vehicle.model_name" readonly>
                 </div>
               </div>
             </div>
           </div>
-          <!-- <div class="delete-button">
-            <button type="submit" class="btn btn-danger" (click)="deleteInventoryAssign(i)">Delete</button>
-          </div> -->
         </div>
-        <!-- <div class="col-sm-12">
-          <div class="col-sm-11"></div>
-          <div class="col-sm-1">
-            <button type="submit" class="btn btn-success" (click)="addInventoryAssign(vehicles,i)">Add</button>
-          </div>
-        </div> -->
         <div class="inv-submit" style="float:right">
           <button type="submit" class="btn btn-primary" (click)="onSubmit()">Submit</button>
         </div>
       </div>
-    </div>
+    </div> 
   </div>
 </div>
 <br>
@@ -336,7 +320,7 @@
         </div>
       </div>
       <div style="margin:4px;">
-        <p-table #dt [value]="vechiles" [columns]="cols" [paginator]="true" [rows]="5">
+        <p-table #dt [value]="vechilesDetail" [columns]="cols" [paginator]="true" [rows]="5">
           <ng-template pTemplate="caption">
             <div style="text-align: right">
               <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
@@ -355,12 +339,13 @@
               <th>Select</th>
             </tr>
           </ng-template>
-          <ng-template pTemplate="body" let-vechiles>
+          <ng-template pTemplate="body" let-vecs>
             <tr>
               <td *ngFor="let col of cols">
-                {{vechiles[col.field]}}
+                {{vecs[col.field]}}
               </td>
-              <td> <input type="radio" name="select" id="select" (click)="selectedVechile(vechiles)" /> </td>
+              <td> <input type="checkbox" [(ngModel)]="vecs.check" name="select" id="select"
+                  (click)="selectedVechile(vecs)" /> </td>
             </tr>
           </ng-template>
         </p-table>
@@ -369,7 +354,7 @@
       <div class="select-stylist-footer-right">
         <ul>
           <li>
-            <a data-dismiss="modal" *ngIf="_selectVec" (click)="selectedSubmite()">
+            <a data-dismiss="modal" (click)="selectedSubmite()" >
               <i class="fas fa-check" style="color: green"></i>
               <br>Submite</a>
           </li>

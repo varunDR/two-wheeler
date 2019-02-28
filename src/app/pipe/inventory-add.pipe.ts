@@ -22,13 +22,13 @@ export class InventoryAddPipe implements PipeTransform {
         br_mgr_ack: value.br_mgr_ack,
         br_mgr_comment: value.br_mgr_comment,
         status: value.status,
-        chassis_number: value.vechile_details[j].chassisno,
-        color: value.vechile_details[j].vehicle_color_id,
-        engineno: value.vechile_details[j].engineno,
-        frameno: value.vechile_details[j].frameno,
-        variant: value.vechile_details[j].vehicle_variant_id,
-        model: value.vechile_details[j].vehicle_model_id,
-        vechile_id:value.vechile_details[j].vechile_id
+        chassis_number: value.vechile_details[j]["Frame No"],
+        color: value.vechile_details[j].vehicle_color,
+        engineno: value.vechile_details[j]["Engine No"],
+        frameno: value.vechile_details[j]["Frame No"],
+        variant: value.vechile_details[j].vehicle_variant,
+        model: value.vechile_details[j].vehicle_model,
+        vechile_id:value.vechile_details[j].vehicle_id
       });
     }
     console.log(data);
