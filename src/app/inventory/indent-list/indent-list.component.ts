@@ -137,24 +137,24 @@ export class IndentListComponent implements OnInit {
     this.router.navigate(['inventory']);
   }
 
-  indent:any={
-    'indentId' : '',
-    'indentReqId' : '',
-    'empId' : '',
-    'brId' : '',
-    'vehColor' : '',
-    'vehType' : '',
-    'vehVariant' : '',
-    'vehModel' : '',
-    'reqQty' : '',
-    'assignedQty' : '',
-    'reqOnDate' : '',
-    'assignedOn' : '',
-    'assignedBy' : '',
-    'status' : '',
-    'shipping_status' : '',
-    'shippedVechileNo' : '',
-    'shippedBy' : ''
+  indent: any = {
+    'indentId': '',
+    'indentReqId': '',
+    'empId': '',
+    'brId': '',
+    'vehColor': '',
+    'vehType': '',
+    'vehVariant': '',
+    'vehModel': '',
+    'reqQty': '',
+    'assignedQty': '',
+    'reqOnDate': '',
+    'assignedOn': '',
+    'assignedBy': '',
+    'status': '',
+    'shipping_status': '',
+    'shippedVechileNo': '',
+    'shippedBy': ''
   }
 
   editIndent(data, index) {
@@ -181,43 +181,67 @@ export class IndentListComponent implements OnInit {
   }
 
   updateIndent() {
-    var data = {
-      indent_id: this.indent.indentId,
-      indent_req_id: this.indent.indentReqId,
-      emp_id: this.indent.empId,
-      br_id: this.indent.brId,
-      veh_type: this.indent.vehType,
-      veh_color: this.indent.vehColor,
-      veh_variant: this.indent.vehVariant,
-      veh_model: this.indent.vehModel,
-      req_qty: this.indent.reqQty,
-      assigned_qty: this.indent.assignedQty,
-      shippind_id: this.shipId,
-      shipped_by: this.indent.shippedBy,
-      shipped_vechile_no: this.indent.shippedVechileNo,
-      shipping_status: this.indent.status,
-      status: "1"
-    }
-    this.service.addIndent(data).subscribe(res => {
-      if (res.json().status == true) {
-        this.notif.success(
-          'Success',
-          'Indent Updated Successfully',
-          {
-            timeOut: 3000,
-            showProgressBar: true,
-            pauseOnHover: false,
-            clickToClose: true,
-            maxLength: 50
-          }
-        )
-        sessionStorage.setItem('indentData', JSON.stringify(this.indents[this.temp]))
-        setTimeout(() => {
-          this.router.navigate(['inventory/inventory-assigning']);
-        }, 1000);
-        // this.indents.splice(this.temp, 1)
+    console.log(this.indent.shipping_status)
+    if (this.indent.shipping_status == 0) {
+      var data = {
+        indent_id: this.indent.indentId,
+        indent_req_id: this.indent.indentReqId,
+        emp_id: this.indent.empId,
+        br_id: this.indent.brId,
+        veh_type: this.indent.vehType,
+        veh_color: this.indent.vehColor,
+        veh_variant: this.indent.vehVariant,
+        veh_model: this.indent.vehModel,
+        req_qty: this.indent.reqQty,
+        assigned_qty: this.indent.assignedQty,
+        shippind_id: this.shipId,
+        shipped_by: this.indent.shippedBy,
+        shipped_vechile_no: this.indent.shippedVechileNo,
+        shipping_status: this.indent.status,
+        status: "1"
       }
-    })
+      this.service.addIndent(data).subscribe(res => {
+        if (res.json().status == true) {
+          this.notif.success(
+            'Success',
+            'Indent Updated Successfully',
+            {
+              timeOut: 3000,
+              showProgressBar: true,
+              pauseOnHover: false,
+              clickToClose: true,
+              maxLength: 50
+            }
+          )
+          sessionStorage.setItem('indentData', JSON.stringify(this.indents[this.temp]))
+          setTimeout(() => {
+            this.router.navigate(['inventory/inventory-assigning']);
+          }, 1000);
+        }
+      })
+    } else {
+      var data1 = {
+        indent_id: this.indent.indentId,
+        status: "2"
+      }
+      this.indents.splice(this.temp, 1)
+      this.service.addIndent(data1).subscribe(res => {
+        if (res.json().status == true) {
+          this.notif.alert(
+            'Error',
+            'Indent Rejected Successfully',
+            {
+              timeOut: 3000,
+              showProgressBar: true,
+              pauseOnHover: false,
+              clickToClose: true,
+              maxLength: 50
+            }
+          )
+        }
+      })
+    }
+
   }
 
   detailsGo() {
