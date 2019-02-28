@@ -17,6 +17,7 @@ export class InvSidebarComponent implements OnInit {
   acknowledgement = false;
   reversal = false;
   reversallist = false;
+  rejectedlist = false;
 
 
   constructor(private router: Router) { }
@@ -37,6 +38,7 @@ export class InvSidebarComponent implements OnInit {
         this.acknowledgement = true;
         this.reversal = true;
         this.reversallist = true;
+        this.rejectedlist = true
       } else if (loginData.status == true && loginData._results.emp_type_id == 2) {
         this.inventorylist = true;
         this.indentraise = true;
@@ -47,6 +49,7 @@ export class InvSidebarComponent implements OnInit {
         this.listindent = true;
         this.inventoryass = true;
         this.reversal = true;
+        this.rejectedlist = true
       }
       // else if (loginData.status == false ){
       //   this.errorMessage = true;
@@ -79,13 +82,18 @@ export class InvSidebarComponent implements OnInit {
     this.router.navigate(['inventory/inventory-acknowledge'])
   }
 
-  redirectToInvReverse(){
+  redirectToInvReverse() {
     this.router.navigate(['inventory/inventory-reversal'])
   }
 
-  redirectToInvReverseList(){
+  redirectToInvReverseList() {
     this.router.navigate(['inventory/inventory-reversal-list'])
   }
+
+  redirectToInvRejectedList(){
+    this.router.navigate(['inventory/inventory-rejected-list'])
+  }
+
 
   // RedirectToHome() {
   //   this.router.navigate(['sale-dashboard']);

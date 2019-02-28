@@ -21,8 +21,7 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { InventoryListPipe } from '../pipe/inventory-list.pipe';
 import { InventoryAddPipe } from '../pipe/inventory-add.pipe';
 import { EmpTypePipe } from '../pipe/emp-type.pipe';
-
-
+import { RejectedListComponent } from './rejected-list/rejected-list.component';
 
 @NgModule({
   imports: [
@@ -46,7 +45,8 @@ import { EmpTypePipe } from '../pipe/emp-type.pipe';
     InventoryListComponent,
     InventoryReversalComponent,
     InventoryReversalListComponent,
-    VehicleDetailsComponent
+    VehicleDetailsComponent,
+    RejectedListComponent
   ],
   providers: [AuthGuard, InventoryListPipe, InventoryAddPipe, EmpTypePipe]
 })

@@ -11,6 +11,7 @@ import { InventoryListComponent } from './inventory-list/inventory-list.componen
 import { InventoryReversalComponent } from './inventory-reversal/inventory-reversal.component';
 import { InventoryReversalListComponent } from './inventory-reversal-list/inventory-reversal-list.component';
 import { VehicleDetailsComponent } from './vehicle-details/vehicle-details.component';
+import { RejectedListComponent } from './rejected-list/rejected-list.component';
 
 const routes: Routes = [
   {
@@ -73,6 +74,11 @@ const routes: Routes = [
         component: VehicleDetailsComponent,
         canActivate: [AuthGuard]
       },
+      {
+        path: 'inventory-rejected-list',
+        component: RejectedListComponent,
+        canActivate: [AuthGuard]
+      }
     ]
   }
 ];
