@@ -21,6 +21,10 @@ export class HeaderComponent implements OnInit {
 
   constructor(private location: Location, private spinner: NgxSpinnerService, private router: Router, private loginService: LoginService, private service: TimeClocksService) {
 
+  }
+
+  ngOnInit() {
+
     let URL = this.location.path();
 
     if (URL.search('sale') == 1) {
@@ -52,9 +56,6 @@ export class HeaderComponent implements OnInit {
     if (URL.search('setup') == 1) {
       this.redirect = "setup";
     }
-  }
-
-  ngOnInit() {
   }
 
   redirectToDashbaord() {
@@ -97,6 +98,7 @@ export class HeaderComponent implements OnInit {
   }
 
   redirectToHome() {
+    this.ngOnInit();
     this.router.navigate(['sale']);
   }
 
@@ -140,23 +142,29 @@ export class HeaderComponent implements OnInit {
           if (loginData.json().status == false) {
             this.errorMessage = true;
           } else {
-            $('#secondaryLoginModal').modal('hide');
+            console.log(loginData.json())
             if (this.redirect == 'setup') {
               sessionStorage.setItem('setup', JSON.stringify(loginData.json()));
               this.router.navigate(['setup'])
+              $('#secondaryLoginModal').modal('hide');
               this.spinner.hide()
             } else if (this.redirect == 'inventory') {
               sessionStorage.setItem('inventory', JSON.stringify(loginData.json()));
               console.log("in Inventory")
+              $('#secondaryLoginModal').modal('hide');
               this.router.navigate(['inventory/side-bar'])
               this.spinner.hide()
             } else if (this.redirect == 'manager') {
-              // if(loginData.json()._results.emp_type_id == 1 || loginData.json()._results.emp_type_id == 2 ){
-              sessionStorage.setItem('manager', JSON.stringify(loginData.json()));
-              this.router.navigate(['manager/side-bar'])
-              // }
+              if (loginData.json()._results.emp_type_id == 1 || loginData.json()._results.emp_type_id == 2) {
+                $('#secondaryLoginModal').modal('hide');
+                sessionStorage.setItem('manager', JSON.stringify(loginData.json()));
+                this.router.navigate(['manager/side-bar'])
+              } else {
+                this.errorMessage = true;
+              }
               this.spinner.hide()
             } else if (this.redirect == 'reports') {
+              $('#secondaryLoginModal').modal('hide');
               sessionStorage.setItem('reports', JSON.stringify(loginData.json()));
               this.router.navigate(['reports'])
               this.spinner.hide()

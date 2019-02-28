@@ -7,6 +7,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { AllVehicleService } from '../../services/all-vehicle.service';
 import { CompleteVehicleService } from '../../services/complete-vehicle.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+declare var $: any;
 
 @Component({
   selector: 'app-inventory-acknowledge',
@@ -21,11 +22,22 @@ export class InventoryAcknowledgeComponent implements OnInit {
   modelData: any[];
   colorData: any[];
   variantData: any[];
+  temp: any;
 
   inventory: any = {
     'status': '',
     'inventoryAssignId': '',
     'branchName': ''
+  }
+  //reject vehicle
+  rejectList: any = {
+    'inventory_assign_id': '',
+    'engineno': '',
+    'frameno': '',
+    'model_name': '',
+    'variant_name': '',
+    'color_name': '',
+    'reject_comment': ''
   }
 
   //vehicleTypeFilter = "";
@@ -242,16 +254,23 @@ export class InventoryAcknowledgeComponent implements OnInit {
       }
     });
   }
-  
-  noAcknowledgement(data, index) {
-    this.inventory.inventoryAssignId = data.inventory_assign_id;
-    var val = {
-      inventory_assign_id: this.inventory.inventoryAssignId,
-      status: "0"
+
+  rejectVehicleClick(data, index) {
+    this.temp = index;
+    this.rejectList = data;
+  }
+
+
+  noAcknowledgement() {
+    var data = {
+      inventory_assign_id: this.rejectList.inventory_assign_id,
+      status: "0",
+      reject_comment: this.rejectList.reject_comment
     }
-    this.service.addInventoryAssign(val).subscribe(res => {
+    this.service.addInventoryAssign(data).subscribe(res => {
       if (res.json().status == true) {
-        this.inventoryData.splice(index, 1)
+        this.inventoryData.splice(this.temp, 1)
+        $('#rejectVehicles').modal('hide');
         this.notif.success(
           'Success',
           'Rejected Successfully',
