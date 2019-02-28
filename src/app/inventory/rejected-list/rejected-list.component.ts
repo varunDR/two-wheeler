@@ -16,11 +16,11 @@ export class RejectedListComponent implements OnInit {
   constructor(private router: Router, private spinner: NgxSpinnerService, private service: InventoryAssigningService, ) { }
 
   ngOnInit() {
-    let loginData = JSON.parse(sessionStorage.getItem('inventory'));
-    var brurl = '';
-    brurl = brurl + '&branchid=' + loginData._results.employee_branch_id;
+    // let loginData = JSON.parse(sessionStorage.getItem('inventory'));
+    // var brurl = '';
+    // brurl = brurl + '&branchid=' + loginData._results.employee_branch_id;
     this.spinner.show();
-    this.service.getRejectedList(brurl).subscribe(res => {
+    this.service.getRejectedList().subscribe(res => {
       if (res.json().status == true) {
         this.inventoryData = res.json().result;
       } else {
@@ -35,7 +35,9 @@ export class RejectedListComponent implements OnInit {
       { field: 'model_name', header: 'Model' },
       { field: 'variant_name', header: 'Variant' },
       { field: 'color_name', header: 'Color' },
-      { field: 'reject_comment', header: 'Comment' }
+      { field: 'reject_comment', header: 'Comment' },
+      { field: 'branch_name', header: 'Rejected By' }
+
     ];
   }
   backToInventory() {

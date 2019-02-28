@@ -22,8 +22,8 @@ export class InventoryAssigningService {
     return this.http.get(environment.host + 'invassigns?status=2' + brurl);
   }
 
-  public getRejectedList(brurl: any) {
-    return this.http.get(environment.host + 'invassigns?status=0' + brurl);
+  public getRejectedList() {
+    return this.http.get(environment.host + 'invassigns?status=0');
   }
 
 }
