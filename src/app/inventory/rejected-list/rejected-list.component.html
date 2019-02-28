@@ -9,6 +9,70 @@
     </div>
   </div>
 </div>
+<simple-notifications [options]="options"></simple-notifications>
+
+<div class="indent-list">
+  <div class="col-md-4 col-sm-4 col-xs-12">
+    <div class="form-group">
+      <label for="input" class="col-md-3 control-label">Branch</label>
+      <div class="col-md-7">
+        <select class="form-control" [(ngModel)]="vehicleBranchFilter">
+          <option value="" selected>All</option>
+          <option *ngFor="let data of this.brData" [ngValue]=" data.branch_id ">{{data.branch_name}}</option>
+        </select>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+  <div class="col-md-4 col-sm-4 col-xs-12">
+    <div class="form-group">
+      <label for="input" class="col-md-3 control-label">Model</label>
+      <div class="col-md-7">
+        <select class="form-control" [(ngModel)]="vehicleModelFilter">
+          <option value="" selected>All</option>
+          <option *ngFor="let data of this.modelData" [ngValue]=" data.vehicle_model_id">{{data.model_name}}</option>
+        </select>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+  <div class="col-md-4 col-sm-4 col-xs-12">
+    <div class="form-group">
+      <label for="input" class="col-md-3 control-label">Color</label>
+      <div class="col-md-7">
+        <select class="form-control" [(ngModel)]="vehicleColorFilter">
+          <option value="" selected>All</option>
+          <option *ngFor="let data of this.colorData" [ngValue]=" data.vehicle_color_id">{{data.color_name}}</option>
+        </select>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+  <div class="col-md-4 col-sm-4 col-xs-12">
+    <div class="form-group">
+      <label for="input" class="col-md-3 control-label">Variant</label>
+      <div class="col-md-7">
+        <select class="form-control" [(ngModel)]="vehicleVariantFilter">
+          <option value="" selected>All</option>
+          <option *ngFor="let data of this.variantData" [ngValue]=" data.vehicle_variant_id">{{data.variant_name}}
+          </option>
+        </select>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+  <div class="col-md-4 col-sm-4 col-xs-12">
+  </div>
+  <div class="col-md-4 col-sm-4 col-xs-12"></div>
+  <div class="col-md-4 col-sm-4 col-xs-12"></div>
+  <div class="col-md-1 col-sm-1 col-xs-12">
+    <button type="submit" class="btn btn-primary" (click)="detailsGo()">Submit</button>
+  </div>
+  <div class="col-md-1 col-sm-1 col-xs-12">
+    <button type="submit" class="btn btn-warning" (click)="detailsReset()">Reset</button>
+  </div>
+  <div class="clear"></div>
+</div>&nbsp;
 
 <p-table #dt [value]="inventoryData" [columns]="cols" [paginator]="true" [rows]="5">
   <ng-template pTemplate="caption">
