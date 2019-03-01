@@ -22,6 +22,7 @@ import { InventoryListPipe } from '../pipe/inventory-list.pipe';
 import { InventoryAddPipe } from '../pipe/inventory-add.pipe';
 import { EmpTypePipe } from '../pipe/emp-type.pipe';
 import { RejectedListComponent } from './rejected-list/rejected-list.component';
+import { RaisedIndentsComponent } from './raised-indents/raised-indents.component';
 
 @NgModule({
   imports: [
@@ -46,7 +47,8 @@ import { RejectedListComponent } from './rejected-list/rejected-list.component';
     InventoryReversalComponent,
     InventoryReversalListComponent,
     VehicleDetailsComponent,
-    RejectedListComponent
+    RejectedListComponent,
+    RaisedIndentsComponent
   ],
   providers: [AuthGuard, InventoryListPipe, InventoryAddPipe, EmpTypePipe]
 })

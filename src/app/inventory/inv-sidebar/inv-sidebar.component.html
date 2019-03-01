@@ -11,7 +11,7 @@
         role="tab" aria-controls="indlist" aria-selected="true" *ngIf="listindent">List Of Indent</a>
       <!-- <a class="nav-link com-mark-info" id="v-pills-home-tab" (click)="sparePartClick()" data-toggle="pill" href="#reports"
       role="tab" aria-controls="reports" aria-selected="true">Spare Parts</a> -->
-      <a class="nav-link inventory-assn" id="v-pills-home-tab" (click)="redirectToInvAss()" data-toggle="pill" href="#inventoryAssaign"
+      <a class="nav-link inventory-assn" id="v-pills-home-tab" (click)="redirectToInvAss()" data-toggle="pill" href="#inventoryAssign"
         role="tab" aria-controls="invassn" aria-selected="true" *ngIf="inventoryass">Inventory Assigning</a>
       <a class="nav-link inventory-ack" id="v-pills-home-tab" (click)="redirectToInvAck()" data-toggle="pill" href="#acknowledgement"
         role="tab" aria-controls="invack" aria-selected="true" *ngIf="acknowledgement">Acknowledgement</a>
@@ -19,8 +19,10 @@
         role="tab" aria-controls="invrev" aria-selected="true" *ngIf="reversal">Reversal</a>
       <a class="nav-link inventory-revlist" id="v-pills-home-tab" (click)="redirectToInvReverseList()" data-toggle="pill" href="#reversalList"
         role="tab" aria-controls="invrevlist" aria-selected="true" *ngIf="reversallist">Reversal Request List</a>
-        <a class="nav-link inventory-rejected" id="v-pills-home-tab" (click)="redirectToInvRejectedList()"  data-toggle="pill" href="#rejectedList"
+      <a class="nav-link inventory-rejected" id="v-pills-home-tab" (click)="redirectToInvRejectedList()"  data-toggle="pill" href="#rejectedList"
         role="tab" aria-controls="invreverse" aria-selected="true" *ngIf="rejectedlist">Rejected List</a>
+      <a class="nav-link raised-indents" id="v-pills-home-tab" (click)="redirectToInvRaisedIndents()"  data-toggle="pill" href="#raisedIndents"
+        role="tab" aria-controls="invreverse" aria-selected="true" *ngIf="raisedIndents">Raised Indents</a>
     </div>
   </div>
 </div>

@@ -18,7 +18,7 @@ export class InvSidebarComponent implements OnInit {
   reversal = false;
   reversallist = false;
   rejectedlist = false;
-
+  raisedIndents = false;
 
   constructor(private router: Router) { }
 
@@ -38,12 +38,14 @@ export class InvSidebarComponent implements OnInit {
         this.acknowledgement = true;
         this.reversal = true;
         this.reversallist = true;
-        this.rejectedlist = true
+        this.rejectedlist = true;
+        this.raisedIndents = true;
       } else if (loginData.status == true && loginData._results.emp_type_id == 2) {
         this.inventorylist = true;
         this.indentraise = true;
         this.acknowledgement = true;
         this.reversallist = true;
+        this.raisedIndents = true;
       } else if (loginData.status == true && loginData._results.emp_type_id == 3) {
         this.vehicledetails = true;
         this.listindent = true;
@@ -92,6 +94,10 @@ export class InvSidebarComponent implements OnInit {
 
   redirectToInvRejectedList(){
     this.router.navigate(['inventory/inventory-rejected-list'])
+  }
+
+  redirectToInvRaisedIndents(){
+    this.router.navigate(['inventory/raised-indents'])
   }
 
 

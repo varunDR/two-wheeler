@@ -19,7 +19,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
     AppComponent,
     LoginComponent,
     HeaderComponent,
-    FooterComponent  
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

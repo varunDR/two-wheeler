@@ -12,6 +12,7 @@ import { InventoryReversalComponent } from './inventory-reversal/inventory-rever
 import { InventoryReversalListComponent } from './inventory-reversal-list/inventory-reversal-list.component';
 import { VehicleDetailsComponent } from './vehicle-details/vehicle-details.component';
 import { RejectedListComponent } from './rejected-list/rejected-list.component';
+import { RaisedIndentsComponent } from './raised-indents/raised-indents.component';
 
 const routes: Routes = [
   {
@@ -77,6 +78,11 @@ const routes: Routes = [
       {
         path: 'inventory-rejected-list',
         component: RejectedListComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'raised-indents',
+        component: RaisedIndentsComponent,
         canActivate: [AuthGuard]
       }
     ]

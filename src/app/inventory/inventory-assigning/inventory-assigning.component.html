@@ -93,16 +93,16 @@
               </div>
             </div>
             <div class=" row form-group">
-              <label for="input" class="col-sm-4 control-label">Assaigned Quantity
+              <label for="input" class="col-sm-4 control-label">Assigned Quantity
                 <a style="color:red">*</a>
               </label>
               <div class="col-sm-5">
                 <input type="number" class="form-control" formControlName="assQuantity"
-                  placeholder="Enter Assaigned Quantity" [(ngModel)]="assQuantity"
+                  placeholder="Enter Assigned Quantity" [(ngModel)]="assQuantity"
                   [ngClass]="{ 'is-invalid': submitted && f.assQuantity.errors }" (ngModelChange)="assignVechileCount()" (keypress)="only_allow_number($event)"
                   maxlength="50">
                 <div *ngIf="submitted && f.assQuantity.errors" class="invalid-feedback">
-                  <div *ngIf="f.assQuantity.errors.required" style="color:red">Assaigned Quantity is required</div>
+                  <div *ngIf="f.assQuantity.errors.required" style="color:red">Assigned Quantity is required</div>
                 </div>
                 <div class="clear"></div>
               </div>
@@ -127,7 +127,7 @@
 
           <div class="col-sm-6">
             <!-- <div class=" row form-group">
-          <label for="input" class="col-sm-4 control-label">Assaigned On</label>
+          <label for="input" class="col-sm-4 control-label">Assigned On</label>
           <div class="col-sm-8">
             <div class="input-group">
                 <p-calendar [(ngModel)]="date2" name="assignedby" [monthNavigator]="true" [yearNavigator]="true" yearRange="1990:2030" [inputStyle]="{'width':'190px'}"
