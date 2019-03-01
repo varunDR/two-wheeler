@@ -227,7 +227,7 @@ export class InventoryAssigningComponent implements OnInit {
       if (res.json().status == true) {
         this.notif.success(
           'Success',
-          'Inventory Assigned Successfully',
+          'Inventory Assaigned Successfully',
           {
             timeOut: 3000,
             showProgressBar: true,

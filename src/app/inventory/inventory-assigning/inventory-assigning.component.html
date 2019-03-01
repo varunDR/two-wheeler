@@ -98,12 +98,6 @@
               </label>
               <div class="col-sm-5" style="display: inline-table;">
                 <input type="number" class="form-control" formControlName="assQuantity"
-                  placeholder="Enter Assigned Quantity" [(ngModel)]="assQuantity"
-                  [ngClass]="{ 'is-invalid': submitted && f.assQuantity.errors }" (ngModelChange)="assignVechileCount()" (keypress)="only_allow_number($event)"
-                  maxlength="50">
-                <div *ngIf="submitted && f.assQuantity.errors" class="invalid-feedback">
-                  <div *ngIf="f.assQuantity.errors.required" style="color:red">Assigned Quantity is required</div>
-                </div>
                   placeholder="Enter Assign Quantity" [(ngModel)]="assQuantity"
                   [ngClass]="{ 'is-invalid': submitted && f.assQuantity.errors }" (ngModelChange)="assignVechileCount()"
                   (keypress)="only_allow_number($event)" maxlength="50">
@@ -115,7 +109,7 @@
                 <div class="clear"></div>
               </div>
               <div *ngIf="submitted && f.assQuantity.errors" class="invalid-feedback">
-                <div *ngIf="f.assQuantity.errors.required" style="color:red">Assaigned Quantity is required</div>
+                <div *ngIf="f.assQuantity.errors.required" style="color:red">Assigned Quantity is required</div>
               </div>
             </div>
 
