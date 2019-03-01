@@ -213,8 +213,8 @@ export class InventoryReversalListComponent implements OnInit {
       if (res.json().status == true) {
         this.inventoryData.splice(this.temp, 1)
         $('#rejectVehicles').modal('hide');
-        this.notif.success(
-          'Success',
+        this.notif.alert(
+          'Error',
           'Rejected Successfully',
           {
             timeOut: 3000,
