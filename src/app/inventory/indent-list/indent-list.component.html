@@ -59,7 +59,8 @@
         <div class="col-md-7">
           <select class="form-control" [(ngModel)]="vehicleVariantFilter">
             <option value="0" selected>All</option>
-            <option *ngFor="let data of this.variantData" [ngValue]=" data.vehicle_variant_id">{{data.variant_name}}</option>
+            <option *ngFor="let data of this.variantData" [ngValue]=" data.vehicle_variant_id">{{data.variant_name}}
+            </option>
           </select>
         </div>
         <div class="clear"></div>
@@ -71,8 +72,9 @@
         <label for="input" class="col-md-3 control-label">From</label>
         <div class="col-md-7">
           <div class="input-group">
-            <p-calendar [(ngModel)]="fromDate" [inputStyle]="{'width':'190px'}" [showIcon]="true" placeholder="Select Date"
-              name="fromDate" (ngModelChange)="fromDa($event)" dateFormat="yy-mm-dd"></p-calendar>
+            <p-calendar [(ngModel)]="fromDate" [inputStyle]="{'width':'190px'}" [showIcon]="true"
+              placeholder="Select Date" name="fromDate" (ngModelChange)="fromDa($event)" dateFormat="yy-mm-dd">
+            </p-calendar>
           </div>
         </div>
         <div class="clear"></div>
@@ -84,8 +86,8 @@
         <label for="input" class="col-md-3 control-label">To</label>
         <div class="col-md-7">
           <div class="input-group">
-            <p-calendar [(ngModel)]="toDate" [inputStyle]="{'width':'190px'}" [showIcon]="true" placeholder="Select Date"
-              name="toDate" (ngModelChange)="toDa($event)" dateFormat="yy-mm-dd"></p-calendar>
+            <p-calendar [(ngModel)]="toDate" [inputStyle]="{'width':'190px'}" [showIcon]="true"
+              placeholder="Select Date" name="toDate" (ngModelChange)="toDa($event)" dateFormat="yy-mm-dd"></p-calendar>
           </div>
         </div>
         <div class="clear"></div>
@@ -109,16 +111,17 @@
     <ng-template pTemplate="caption">
       <div style="text-align: right">
         <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-        <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')"
-          style="width:auto">
+        <input type="text" pInputText size="50" placeholder="Global Filter"
+          (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
       </div>
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
         <th *ngFor="let col of cols" [pSortableColumn]="col.field">
           {{col.header}}
-          <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
-            ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+          <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+            ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order">
+          </p-sortIcon>
         </th>
         <th>Assign</th>
       </tr>
@@ -138,7 +141,8 @@
 
 <br>
 
-<div class="modal fade" id="editIndent" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="editIndent" tabindex="-1" data-backdrop="static" role="dialog"
+  aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -161,7 +165,6 @@
           <div class="clear"></div>
         </div>
 
-
         <div class=" row form-group">
           <div class="col-md-1"></div>
           <label for="input" class="col-sm-4 control-label">Vehicle Type
@@ -180,7 +183,8 @@
           </label>
           <div class="col-sm-5">
             <select class="form-control" [(ngModel)]="indent.vehModel">
-              <option *ngFor="let data of this.modelData" [ngValue]=" data.vehicle_model_id">{{data.model_name}}</option>
+              <option *ngFor="let data of this.modelData" [ngValue]=" data.vehicle_model_id">{{data.model_name}}
+              </option>
             </select>
           </div>
           <div class="clear"></div>
@@ -192,7 +196,8 @@
           </label>
           <div class="col-sm-5">
             <select class="form-control" [(ngModel)]="indent.vehVariant">
-              <option *ngFor="let data of this.variantData" [ngValue]=" data.vehicle_variant_id">{{data.variant_name}}</option>
+              <option *ngFor="let data of this.variantData" [ngValue]=" data.vehicle_variant_id">{{data.variant_name}}
+              </option>
             </select>
           </div>
           <div class="clear"></div>
@@ -205,7 +210,8 @@
           </label>
           <div class="col-sm-5">
             <select class="form-control" [(ngModel)]="indent.vehColor">
-              <option *ngFor="let data of this.colorData" [ngValue]=" data.vehicle_color_id">{{data.color_name}}</option>
+              <option *ngFor="let data of this.colorData" [ngValue]=" data.vehicle_color_id">{{data.color_name}}
+              </option>
             </select>
           </div>
           <div class="clear"></div>
@@ -276,6 +282,16 @@
               <option value="0">Shipped</option>
               <option value="1">Rejected</option>
             </select>
+          </div>
+        </div>
+        <div *ngIf="indent.shipping_status ==1">
+          <div class="row form-group">
+            <div class="col-md-1"></div>
+            <label class="col-sm-4 col-form-label required">
+            </label>
+            <div class="col-sm-5">
+              <input type="text" class="form-control" placeholder="Enter comment">
+            </div>
           </div>
         </div>
 

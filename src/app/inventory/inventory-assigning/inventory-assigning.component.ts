@@ -14,7 +14,10 @@ import { IndentService } from '../../services/indent.service'
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CompleteVehicleService } from '../../services/complete-vehicle.service';
 import { AllVehicleService } from '../../services/all-vehicle.service';
+import { forEach } from '@angular/router/src/utils/collection';
 declare var $: any;
+import { Observable, of } from 'rxjs';
+// import { Observable } from 'rxjs'
 
 @Component({
   selector: 'app-inventory-assigning',
@@ -27,7 +30,7 @@ export class InventoryAssigningComponent implements OnInit {
   employeedata: any = [];
   InventoryAssignForm: FormGroup;
   submitted = false;
-
+  isCheckAssignQty: boolean;
   indentId = '';
   branchId = '';
   empId = '';
@@ -47,12 +50,13 @@ export class InventoryAssigningComponent implements OnInit {
   newDate2: any;
   public options = { position: ["top", "right"] }
   colorData: any[];
-  vechiles: any[];
+  // vechiles: any[];
   cols: any[];
   variantData: any[];
   selectedColorFilter = undefined;
   selectedVariantFilter = undefined;
-  _selectVec: any;
+  _selectVec: any = [];
+  vechilesDetail: any = [];
   vehicles: any = [
     {
       engineno: "",
@@ -66,6 +70,16 @@ export class InventoryAssigningComponent implements OnInit {
   constructor(private router: Router, private http: Http, private service: InventoryAssigningService, private formBuilder: FormBuilder, private pipe: InventoryListPipe, private addInvPipe: InventoryAddPipe, private notif: NotificationsService, private indentservice: IndentService, private spinner: NgxSpinnerService, private completevehicle: CompleteVehicleService, private allvehicleservice: AllVehicleService) {
   }
   ngOnInit() {
+    this.spinner.show();
+    this.allvehicleservice.getVehicleDetails().subscribe(res => {
+      if (res.json().status == true) {
+        this.vechilesDetail = res.json().result
+      } else {
+        this.vechilesDetail = [];
+      }
+      this.spinner.hide();
+    });
+
     this._indentData = JSON.parse(sessionStorage.getItem('indentData'));
     if (this._indentData) {
       this.branchId = this._indentData.br_id;
@@ -121,19 +135,19 @@ export class InventoryAssigningComponent implements OnInit {
     ];
   }
 
-  deleteInventoryAssign(index) {
-    this.vehicles.splice(index, 1)
-  }
+  // deleteInventoryAssign(index) {
+  //   this.vehicles.splice(index, 1)
+  // }
 
-  addInventoryAssign(data, index) {
-    this.vehicles.push({
-      engineno: "",
-      frameno: "",
-      color: "",
-      variant: "",
-      model: ""
-    })
-  }
+  // addInventoryAssign(data, index) {
+  //   this.vehicles.push({
+  //     engineno: "",
+  //     frameno: "",
+  //     color: "",
+  //     variant: "",
+  //     model: ""
+  //   })
+  // }
 
   backToInventory() {
     this.router.navigate(['inventory']);
@@ -161,16 +175,16 @@ export class InventoryAssigningComponent implements OnInit {
         } else {
           this.noResult = false;
           // this.indentData = this.temp.pop();
-          this.vehicles[index].engineno = data.json().result[0]["Engine No"];
-          this.vehicles[index].color = data.json().result[0].color_name;
-          this.vehicles[index].frameno = data.json().result[0]["Frame No"];
-          this.vehicles[index].chassisno = data.json().result[0]["Frame No"];
-          this.vehicles[index].variant = data.json().result[0].variant_name;
-          this.vehicles[index].model = data.json().result[0].model_name;
-          this.vehicles[index].vechile_id = data.json().result[0].vehicle_id;
-          this.vehicles[index].vehicle_color_id = data.json().result[0].vehicle_color;
-          this.vehicles[index].vehicle_model_id = data.json().result[0].vehicle_model;
-          this.vehicles[index].vehicle_variant_id = data.json().result[0].vehicle_variant;
+          // this.vehicles[index].engineno = data.json().result[0]["Engine No"];
+          // this.vehicles[index].color = data.json().result[0].color_name;
+          // this.vehicles[index].frameno = data.json().result[0]["Frame No"];
+          // this.vehicles[index].chassisno = data.json().result[0]["Frame No"];
+          // this.vehicles[index].variant = data.json().result[0].variant_name;
+          // this.vehicles[index].model = data.json().result[0].model_name;
+          // this.vehicles[index].vechile_id = data.json().result[0].vehicle_id;
+          // this.vehicles[index].vehicle_color_id = data.json().result[0].vehicle_color;
+          // this.vehicles[index].vehicle_model_id = data.json().result[0].vehicle_model;
+          // this.vehicles[index].vehicle_variant_id = data.json().result[0].vehicle_variant;
         }
       })
     } else {
@@ -186,13 +200,14 @@ export class InventoryAssigningComponent implements OnInit {
   get f() { return this.InventoryAssignForm.controls; }
 
   onSubmit() {
-    console.log("came here");
     this.submitted = true;
     // stop here if form is invalid
     if (this.InventoryAssignForm.invalid) {
       return;
     }
-    console.log("***************");
+    if (!this.isCheckAssignQty) {
+      return;
+    }
     this.generatedShippedId = Math.floor(Math.random() * 899999 + 100000);
     this.loginData = JSON.parse(sessionStorage.getItem('userSession'));
     var data: any = {
@@ -243,16 +258,6 @@ export class InventoryAssigningComponent implements OnInit {
   }
 
   getVechicleDetail() {
-    this.spinner.show();
-    this.allvehicleservice.getVehicleDetails().subscribe(res => {
-      if (res.json().status == true) {
-        this.vechiles = res.json().result
-      } else {
-        this.vechiles = [];
-      }
-      this.spinner.hide();
-    });
-
     let _color = this.completevehicle.getColor();
     if (Object.keys(_color).length) {
       this.colorData = _color
@@ -291,7 +296,7 @@ export class InventoryAssigningComponent implements OnInit {
     }
     this.allvehicleservice.getVehicleFilter(url).subscribe(res => {
       if (res.json().status == true) {
-        this.vechiles = res.json().result;
+        this.vechilesDetail = res.json().result;
         this.notif.success(
           'Success',
           'Filter Applied Successfully',
@@ -304,7 +309,7 @@ export class InventoryAssigningComponent implements OnInit {
           }
         )
       } else {
-        this.vechiles = [];
+        this.vechilesDetail = [];
         this.notif.warn(
           'Sorry',
           'No Records Found',
@@ -326,30 +331,53 @@ export class InventoryAssigningComponent implements OnInit {
   }
   selectedSubmite() {
     $('#showVechileDetail').modal('hide');
-    console.log("submite");
-    console.log(this._selectVec)
+    let count = 0;
+    this.vechilesDetail.forEach((val, key, arr) => {
+      if (val.check) {
+        count++;
+        this.vehicles[key] = val;
+      }
+      if (Object.is(arr.length - 1, key)) {
+        if (count == this.assQuantity) {
+          this.isCheckAssignQty = true;
+        } else {
+          this.notif.error(
+            'Error',
+            'Assign Require Quantity',
+            {
+              timeOut: 3000,
+              showProgressBar: true,
+              pauseOnHover: false,
+              clickToClose: true,
+              maxLength: 50
+            }
+          )
+          this.isCheckAssignQty = false;
+        }
+      }
+    });
   }
   selectedVechile(val) {
-    this._selectVec = val;
-    console.log(val)
+    // this._selectVec.push(val);
+    // console.log(this._selectVec)
+
   }
   assignVechileCount() {
-    console.log(this.assQuantity)
     if (!(isNaN(this.assQuantity))) {
       if (this.assQuantity > 0) {
-        this.vehicles= [
-       
-        ]
-        for (let i = 0; i < this.assQuantity; i++)
+        this.vehicles = [];
+        for (let i = 0; i < this.assQuantity; i++) {
           this.vehicles.push({
             engineno: "",
             frameno: "",
             color: "",
             variant: "",
-            model: ""
+            model: "",
+            vehicle_color: ""
           })
-          console.log(this.vehicles)
-      } 
+        }
+      }
     }
+
   }
 }
