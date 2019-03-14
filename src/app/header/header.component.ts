@@ -112,6 +112,10 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  clearInvalidCredentials(){
+    this.errorMessage = false;
+  }
+
   loginSubmite() {
     var data = {
       password: this.password,
@@ -144,9 +148,13 @@ export class HeaderComponent implements OnInit {
           } else {
             console.log(loginData.json())
             if (this.redirect == 'setup') {
+              if (loginData.json()._results.emp_type_id == 1) { 
               sessionStorage.setItem('setup', JSON.stringify(loginData.json()));
               this.router.navigate(['setup'])
               $('#secondaryLoginModal').modal('hide');
+            } else {
+              this.errorMessage = true;
+            }
               this.spinner.hide()
             } else if (this.redirect == 'inventory') {
               sessionStorage.setItem('inventory', JSON.stringify(loginData.json()));

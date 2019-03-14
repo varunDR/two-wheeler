@@ -31,7 +31,7 @@ export class FooterComponent implements OnInit {
       { field: 'STD ACC', header: 'Standard Accessories' },
       { field: 'Permantent Registation Cost', header: 'Registation' },
       { field: ' HP Charges', header: ' HP Charges' },
-      { field: 'price_list_type', header: 'CSD' }
+      { field: 'price_type', header: 'Type' }
     ];
   }
 

@@ -208,9 +208,9 @@
      <div class="new-assign">
       <div class="container">
         <div class="col-sm-12">
-          <h3>Vehicle details</h3>
+          <h3>Vehicle Details</h3>
         </div>
-        {{vehicles | json}} here
+        <!-- {{vehicles | json}} here -->
         <div *ngFor="let vehicle of vehicles;let i=index">
           <div class="col-sm-12">
             <div class="col-sm-4">
@@ -222,7 +222,6 @@
                   <input type="text" placeholder="Enter Engine Number" name="Engine" maxlength="50"
                     [(ngModel)]="vehicle['Engine No']" (ngModelChange)='getEngineDetail($event,i)' [typeahead]="indentData"
                     typeaheadOptionField="Engine No" (typeaheadOnSelect)="onSelect($event)" class="form-control">
-
                 </div>
               </div>
             </div>

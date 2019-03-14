@@ -48,7 +48,7 @@ export class SetupPriceListComponent implements OnInit {
       { field: 'TOTAL RS. With I Year + 5Y TP INS - With NIL Dip', header: 'TOTAL RS. With I Year + 5Y TP INS - With NIL Dip' },
       { field: 'Customer To Pay - Without PR/NIL DIP', header: 'Customer To Pay - Without PR/NIL DIP' },
       { field: 'Customer To Pay - with PR+NIL DIP', header: 'Customer To Pay - with PR+NIL DIP' },
-      { field: 'price_list_type', header: 'Type' },
+      { field: 'price_type', header: 'Type' },
     ];
   }
 
