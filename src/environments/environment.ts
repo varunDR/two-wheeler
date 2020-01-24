@@ -4,8 +4,10 @@
 
 export const environment = {
   production: false,
-  host:' http://ec2-54-88-194-105.compute-1.amazonaws.com:3005/'
+  // host:' http://ec2-54-88-194-105.compute-1.amazonaws.com:3005/'
   // host:'http://localhost:3001/'
+  // host:'http://202.53.92.38:3003/'
+  host:'http://pos.digitalrupay.com:3003/'
 };
 
 /*
